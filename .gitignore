@@ -1,0 +1,6 @@
+### Apache Cordova ###
+platforms/*
+plugins/*
+
+### Node ###
+node_modules
