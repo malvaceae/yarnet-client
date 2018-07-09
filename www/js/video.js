@@ -69,12 +69,12 @@ function setupCallEventHandlers(call){
 
   existingCall = call;
 
-  call.one('stream', function(stream){
+  call.on('stream', function(stream){
     addVideo(call,stream);
     setupEndCallUI();
     $('#their-id').text(call.remoteId);
   });
-  call.one('close', function(){
+  call.on('close', function(){
     setupMakeCallUI();
     $('#video').removeClass('open');
   });
