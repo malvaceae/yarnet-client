@@ -47,18 +47,21 @@ $('#end-call').on('submit', function(){
 });
 
 peer.on('call', function(call){
-  $('#video').addClass('open');
+  $('#answer-call').css('display','block');
+  $('#no-call').css('display','block');
   //応答
   $('#answer-call').one('click',function(){
     call.answer(localStream);
     setupCallEventHandlers(call);
-    $('#answer-call').css('display','none');
-    $('#no-call').css('display','none');
+
   });
   //拒否
   $('#no-call').one('click',function(){
+    $('#answer-call').css('display','none');
+    $('#no-call').css('display','none');
     setupMakeCallUI();
-    $('#video').removeClass('open');
+    call.close();
+  //  $('#video').removeClass('open');
   });
 });
 
@@ -72,6 +75,8 @@ function setupCallEventHandlers(call){
   call.on('stream', function(stream){
     addVideo(call,stream);
     setupEndCallUI();
+    $('#answer-call').css('display','none');
+    $('#no-call').css('display','none');
     $('#their-id').text(call.remoteId);
   });
   call.on('close', function(){

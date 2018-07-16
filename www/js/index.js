@@ -167,8 +167,7 @@ $(function($) {
 
 getMap.getAddress();
 
-/*
-$.getJSON('http://10.40.0.231/users/0').done(function(data) {
- console.log(data.message);
+$.getJSON('https://api.yarnet.ml/tweets', {'q': '王塚'}).done(function(tweets) {
+  tweets
+  console.log(tweets);
 });
-*/
