@@ -115,23 +115,23 @@ var getMap = (function() {
   return {
     getAddress: function() {
       // ボタンに指定したid要素を取得
-      var button = document.getElementById("map_button");
+      var button = $("#map_button");
 
       // ボタンが押された時の処理
-      button.onclick = function() {
+      button.on('click', function() {
         // フォームに入力された住所情報を取得
-        var address = document.getElementById("address").value;
+        var address = $("#address").val();
         // 取得した住所を引数に指定してcodeAddress()関数を実行
         codeAddress(address);
-      }
+      });
 
       //読み込まれたときに地図を表示
-      window.onload = function(){
+      $(window).on('load', function(){
         // フォームに入力された住所情報を取得
-        var address = document.getElementById("address").value;
+        var address = $("#address").val();
         // 取得した住所を引数に指定してcodeAddress()関数を実行
         codeAddress(address);
-      }
+      });
     }
 
   };
@@ -144,6 +144,35 @@ $(function($) {
 
   $(document).ready(function() {
     $('#search_form').submit(function(){ //クリックしたら
+      $.getJSON('https://api.yarnet.ml/tweets', {'q': $("#address").val()}).done(function(tweets) {
+        console.log(tweets);
+        tweets.forEach(tweet => {
+          console.log(tweet);
+          $article = $('<article>');
+          $article.append($('<header>'));
+
+          $header = $('<header>');
+          $header.append($('<img>').attr('src', tweet.user_profile_img));//prof img
+          $header.append($('<div>').text(tweet.spot_id));
+          $header.append($('<div>').text(tweet.user_name));//userid
+          $header.append($('<div>').text(tweet.user_screem_name));
+          $header.append($('<div>').text(tweet.date));//投稿時刻
+
+          $header.append($('<div>').text(tweet.date));
+
+
+          $article.append($header);
+          $('#nav-content').append($article);
+
+
+
+
+
+
+
+        });
+      });
+
       if($('.drawr').is(":animated")){
         return false;
       }else{
@@ -166,8 +195,3 @@ $(function($) {
 
 
 getMap.getAddress();
-
-$.getJSON('https://api.yarnet.ml/tweets', {'q': '王塚'}).done(function(tweets) {
-  tweets
-  console.log(tweets);
-});
