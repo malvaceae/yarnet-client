@@ -151,23 +151,23 @@ $(function($) {
           $article = $('<article>');
 
           $header = $('<header>');
-          $header.append($('<img>').attr('src', tweet.user_profile_img));//prof img
-          $header.append($('<div>').text(tweet.spot_id));
-          $header.append($('<div>').text(tweet.user_name));//userid
-          $header.append($('<div>').text(tweet.user_screem_name));
-          $header.append($('<div>').text(tweet.date));//投稿時刻
-          $header.append($('<div>').text(tweet.body));
+          $header.append($('<img class ="profile_img">').attr('src', tweet.user_profile_img));//prof img
+          $header.append($('<div class ="spot_id">').text(tweet.spot_id));
+          $header.append($('<div class ="user_name">').text(tweet.user_name));//userid
+          $header.append($('<div class ="screen_name">').text(tweet.user_screem_name));
+          $header.append($('<div class ="date">').text(tweet.date));//投稿時刻
+          $header.append($('<div class ="body">').text(tweet.body));
 
+          $photos = $('<div class="photos_' + tweet.photos.length + '">');
+
+          for (var i = 0; i < tweet.photos.length; i++) {
+              $photos.append($('<img class ="photos_img' + i + '">').attr('src', tweet.photos[i]));
+          }
+
+          $header.append($photos);
 
           $article.append($header);
           $('#nav-content').append($article);
-
-
-
-
-
-
-
         });
       });
 

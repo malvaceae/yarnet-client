@@ -345,7 +345,65 @@ body > header{
   background-color:transparent;
 }
 
-article{
+/*ツイート*/
+.profile_img{
+  border-radius: 20px;
+  height: 40px;
+  width: 40px;
+}
+
+.user_name{
+  position: relative;
+  bottom: 40px;
+  left: 50px;
+  float: left;
+  margin-right: 5px;
+}
+
+.date{
+  position: relative;
+  bottom: 40px;
+  left: 50px;
+}
+
+.body{
+  position: relative;
+  bottom: 40px;
+  left: 50px;
+  clear: both;
+}
+
+.photos_1 > .photos_img0 {
+  height : 200px;
+  width  : 200px;
+}
+.photos_2 > .photos_img0 {
+  height : 200px;
+  width  : 100px;
+}
+.photos_2 > .photos_img1 {
+  height : 200px;
+  width  : 100px;
+  left: 50px;
+}
 
 
+
+
+
+.photos_4 > .photos_img0 {
+  height : 300px;
+  width  : 300px;
+}
+.photos_4 > .photos_img1 {
+  height : 100px;
+  width  : 100px;
+}
+.photos_4 > .photos_img2 {
+  height : 100px;
+  width  : 100px;
+}
+.photos_4 > .photos_img3 {
+  height : 100px;
+  width  : 100px;
 }
