@@ -149,7 +149,6 @@ $(function($) {
         tweets.forEach(tweet => {
           console.log(tweet);
           $article = $('<article>');
-          $article.append($('<header>'));
 
           $header = $('<header>');
           $header.append($('<img>').attr('src', tweet.user_profile_img));//prof img
@@ -157,8 +156,7 @@ $(function($) {
           $header.append($('<div>').text(tweet.user_name));//userid
           $header.append($('<div>').text(tweet.user_screem_name));
           $header.append($('<div>').text(tweet.date));//投稿時刻
-
-          $header.append($('<div>').text(tweet.date));
+          $header.append($('<div>').text(tweet.body));
 
 
           $article.append($header);

@@ -336,7 +336,7 @@ header {
   display:block;
 }
 
-header{
+body > header{
   position: absolute;
   top: 0;
   z-index: 1000;
@@ -346,6 +346,6 @@ header{
 }
 
 article{
-  
+
 
 }
