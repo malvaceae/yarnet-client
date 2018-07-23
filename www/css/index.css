@@ -93,13 +93,9 @@ body {
   /*　↓検索フォーム↓　*/
   #search_form{
     position: relative;
-    top: 5%;
-    left: 50%;
-    width: 350px;
-    height: 40px;
+    height: 50px;
     border-radius: 40px;
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-    transform: translate(-50%, -50%);
     background: #fff;
     transition: all 0.3s ease;
   }
@@ -124,6 +120,11 @@ body {
 
   #address::-webkit-search-cancel-button {
     appearance: none;
+  }
+
+  .head{
+    background-color: #EEEEEE;
+    
   }
 
   /*
@@ -151,10 +152,12 @@ outline: none;
 }
 
 #map_button svg {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   fill: #5a6674;
 }
+
+
 
 .search-option {
   position: absolute;
@@ -392,12 +395,12 @@ body > header{
 
 
 .photos_4 > .photos_img0 {
-  height : 300px;
-  width  : 300px;
+  height : 70%;
+  width  : 70%;
 }
 .photos_4 > .photos_img1 {
-  height : 100px;
-  width  : 100px;
+  height : 30%;
+  width  : 30;
 }
 .photos_4 > .photos_img2 {
   height : 100px;
