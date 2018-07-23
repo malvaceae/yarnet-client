@@ -165,12 +165,15 @@ $(function($) {
           $photos = $('<div class="photos_' + tweet.photos.length + '">');
 
           for (var i = 0; i < tweet.photos.length; i++) {
-              $photos.append($('<img class ="photos_img' + i + '">').attr('src', tweet.photos[i]));
+            $wrapper = $('<div class="photos_img_wrapper_' + i + '">');
+            $wrapper.append($('<img src="' + tweet.photos[i] + '">'));
+
+            $photos.append($wrapper);
           }
 
           $header.append($photos);
-
           $article.append($header);
+
           $('#nav-content').append($article);
         });
       });
