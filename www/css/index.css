@@ -107,8 +107,8 @@ body {
   #address{
     position: absolute;
     top: 10px;
-    left: 38px;
-    font-size: 14px;
+    left: 50px;
+    font-size: 20px;
     background: none;
     color: #5a6674;
     width: 195px;
@@ -352,25 +352,28 @@ body > header{
   border-radius: 20px;
   height: 40px;
   width: 40px;
+  position: absolute;
 }
 
 .user_name{
   position: relative;
-  bottom: 40px;
+  bottom: 10px;
   left: 50px;
   float: left;
   margin-right: 5px;
+  font-weight: bold;
+  font-size: 15px;
 }
 
 .date{
   position: relative;
-  bottom: 40px;
+  bottom: 8px;
   left: 50px;
 }
 
 .body{
   position: relative;
-  bottom: 40px;
+  bottom: 10px;
   left: 50px;
   clear: both;
 }

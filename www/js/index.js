@@ -92,6 +92,7 @@ var getMap = (function() {
     map.addListener('click', function(e) {
       getClickLatLng(e.latLng, map);
 
+
     });
     map.addListener('center_changed', function() {
       console.log(map);
@@ -150,11 +151,12 @@ $(function($) {
   $(document).ready(function() {
     $('#search_form').submit(function(){ //クリックしたら
       $.getJSON('https://api.yarnet.ml/tweets', {'q': $("#address").val()}).done(function(tweets) {
+      $('article').remove();
         console.log(tweets);
         tweets.forEach(tweet => {
           console.log(tweet);
-          $article = $('<article>');
 
+          $article = $('<article class "Tweet_List">');
           $header = $('<header>');
           $header.append($('<img class ="profile_img">').attr('src', tweet.user_profile_img));//prof img
           $header.append($('<div class ="user_name">').text(tweet.user_name));//userid
