@@ -1,38 +1,20 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 var app = {
-    // Application Constructor
-    initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-    },
+  // Application Constructor
+  initialize: function() {
+    document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+  },
 
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-        this.receivedEvent('deviceready');
-    },
+  // deviceready Event Handler
+  //
+  // Bind any cordova events here. Common events are:
+  // 'pause', 'resume', etc.
+  onDeviceReady: function() {
+    this.receivedEvent('deviceready');
+  },
 
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-    }
+  // Update DOM on a Received Event
+  receivedEvent: function(id) {
+  }
 
 };
 
@@ -81,7 +63,7 @@ var getMap = (function() {
           position: results[0].geometry.location
         });
 
-      // ジオコーディングが成功しなかった場合
+        // ジオコーディングが成功しなかった場合
       } else {
         console.log('Geocode was not successful for the following reason: ' + status);
       }
@@ -92,12 +74,31 @@ var getMap = (function() {
     map.addListener('click', function(e) {
       getClickLatLng(e.latLng, map);
 
+      // 住所を取得
+      var address = e.placeId;
+      room = peer.joinRoom(address);
 
+      chatlog('<i>' + address + '</i>に入室しました');
+
+      // チャットを受信
+      room.on('data', function(data){
+        chatlog('ID: ' + data.src + '> ' + data.data); // data.src = 送信者のpeerid, data.data = 送信されたメッセージ
+      });
+
+      var service = new google.maps.places.PlacesService(map);
+      service.getDetails({placeId: address}, function(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          $("#address").val(results.name);
+          $('#search_form').submit();
+        }
+      });
     });
+
     map.addListener('center_changed', function() {
       console.log(map);
       console.log(marker);
     });
+
     function getClickLatLng(lat_lng, map) {
 
       //☆表示している地図上の緯度経度
@@ -151,7 +152,7 @@ $(function($) {
   $(document).ready(function() {
     $('#search_form').submit(function(){ //クリックしたら
       $.getJSON('https://api.yarnet.ml/tweets', {'q': $("#address").val()}).done(function(tweets) {
-      $('article').remove();
+        $('article').remove();
         console.log(tweets);
         tweets.forEach(tweet => {
           console.log(tweet);
@@ -197,5 +198,41 @@ $(function($) {
       $('.drawr').hide();
     }
   });
+
+  //右ドロワー
+  $(function($) {
+    WindowHeight = $(window).height();
+    $('.right-nav-drawer').css('height', WindowHeight); //メニューをwindowの高さいっぱいにする
+
+    $(document).ready(function() {
+      $('.right-btn').click(function(){ //クリックしたら
+        if($('.right-nav-drawer').is(":animated")){
+          return false;
+        }else{
+          $('.right-nav-drawer').animate({width:'toggle'}); //animateで表示・非表示
+          $(this).toggleClass('peke'); //toggleでクラス追加・削除
+          return false;
+        }
+      });
+    });
+
+    //別領域をクリックでメニューを閉じる
+    $(document).click(function(event) {
+      if (!$(event.target).closest('.right-nav-drawer').length) {
+        $('.right-btn').removeClass('peke');
+        $('.right-nav-drawer').hide();
+      }
+    });
+
+  });
+
+
+
+
+
+
+
+
+
 });
 getMap.getAddress();

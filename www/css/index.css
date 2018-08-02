@@ -156,16 +156,12 @@ outline: none;
   fill: #5a6674;
 }
 
-
-
 .search-option {
   position: absolute;
   text-align: right;
   top: 10px;
   right: 15px;
 }
-
-
 
 .search-option div {
   position: relative;
@@ -324,6 +320,52 @@ header {
   box-shadow: 6px 0 25px rgba(0,0,0,.15);
 }
 
+/*　↓ナビゲーションドロワー↓　RIGHT　*/
+.right-btn {
+  background: url(../img/com.jpeg)no-repeat;
+  display: block;
+  width:35px;
+  height: 35px;
+  position: absolute;
+  top:20px;
+  right:20px;
+  cursor: pointer;
+  z-index: 200;
+}
+.peke {
+  background-position: -35px 0;
+}
+.right-nav-drawer {
+  display: none;
+  background-color:rgb(255,255,255);
+  position: absolute;
+  top: 0px;
+  right:0;
+  width:470px;
+  padding:60px 0 20px 20px;
+  z-index: 100;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #answer-call{
   display: none;
 }
@@ -346,6 +388,10 @@ body > header{
   height: 50px;
   background-color:transparent;
 }
+
+
+
+
 
 /*ツイート*/
 .profile_img{
@@ -391,8 +437,8 @@ body > header{
   min-width         : 100%;
   min-height        : 100%;
   -webkit-transform : translate(-50%, -50%);
-      -ms-transform : translate(-50%, -50%);
-          transform : translate(-50%, -50%);
+  -ms-transform : translate(-50%, -50%);
+  transform : translate(-50%, -50%);
 }
 
 .photos_1,
