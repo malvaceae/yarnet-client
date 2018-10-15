@@ -8,7 +8,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/all.min.css" rel="stylesheet">
 
-  <title>google map</title>
+  <title>YarNet</title>
 </head>
 
 <body>
@@ -16,7 +16,7 @@
     <!--左上部ドロワー-->
     <div id ="nav-drawer">
       <input id = "nav-input" type = "checkbox" class = "nav-unshown">
-      <label id = "nav-open" for = "nav-input"><span></span></label>
+      <label id = "nav-open" for = "nav-input"><i class="fas fa-search fa-2x"></i></label>
       <label class="nav-unshown" id="nav-close" for="nav-input"></label>
       <!--フォーム-->
       <div id = "nav-content">
@@ -67,13 +67,36 @@
       </div>
     </div>
 
-
+    <ul>
+        <li><i class="fas fa-plus-circle fa-2x"></i></li>
+        <li>
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
+          <i class="fas fa-phone"></i>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="btn btn-primary btn-lg" id="right-btn">
+          <i class="fas fa-comments"></i>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
+          <i class="fas fa-user"></i>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
+          <i class="fas fa-search"></i>
+          </button>
+        </li>
+        <li><a href="#">5</a></li>
+    </ul>
 
 
 
 
     <!--右上部ドロワー-->
-    <a class="right-btn"></a>
+    <!--<a class="right-btn"></a>-->
     <!--テキストチャット-->
     <div class="right-nav-drawer">
       room: <input type="text" id="roomName"> <button id="join">入室</button>
@@ -92,9 +115,7 @@
   </div>
 
 
-  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
-  <i class="fas fa-phone"></i>
-  </button>
+
 
   <!-- モーダル・ダイアログ -->
   <div class="modal fade" id="sampleModal" tabindex="-1">
@@ -166,6 +187,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="cordova.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/zikes-circlemenu@0.1.1/jQuery.circleMenu.min.js"></script>
   <script src="js/index.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0ZnNFaybm9baTvzoAU4tDeDS1eeh5TIw&libraries=places&callback=initMap" async defer></script>
   <script src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>

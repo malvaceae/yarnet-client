@@ -270,7 +270,7 @@ header {
   border-radius: 3px;
   background: #555;
   display: block;
-  content: '';
+  content: 'f002';
   cursor: pointer;
 }
 #nav-open span:before {
@@ -321,7 +321,7 @@ header {
 }
 
 /*　↓ナビゲーションドロワー↓　RIGHT　*/
-.right-btn {
+/*.right-btn {
   background: url(../img/com.jpeg)no-repeat;
   display: block;
   width:35px;
@@ -332,6 +332,7 @@ header {
   cursor: pointer;
   z-index: 200;
 }
+*/
 .peke {
   background-position: -35px 0;
 }
@@ -346,7 +347,16 @@ header {
   z-index: 100;
 }
 
-
+ul {
+  display: block;
+  width:35px;
+  height: 35px;
+  position: absolute;
+  top:20px;
+  right:20px;
+  cursor: pointer;
+  z-index: 200;
+}
 
 
 

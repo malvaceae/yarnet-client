@@ -205,7 +205,7 @@ $(function($) {
     $('.right-nav-drawer').css('height', WindowHeight); //メニューをwindowの高さいっぱいにする
 
     $(document).ready(function() {
-      $('.right-btn').click(function(){ //クリックしたら
+      $('#right-btn').click(function(){ //クリックしたら
         if($('.right-nav-drawer').is(":animated")){
           return false;
         }else{
@@ -219,21 +219,17 @@ $(function($) {
     //別領域をクリックでメニューを閉じる
     $(document).click(function(event) {
       if (!$(event.target).closest('.right-nav-drawer').length) {
-        $('.right-btn').removeClass('peke');
+        $('#right-btn').removeClass('peke');
         $('.right-nav-drawer').hide();
       }
     });
   });
+});
 
-  
-
-
-
-
-
-
-
-
-
+//Circle Menu
+$('ul').circleMenu({
+    item_diameter: 40,
+    circle_radius: 100,
+    direction: 'bottom-left'
 });
 getMap.getAddress();
