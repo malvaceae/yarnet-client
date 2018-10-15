@@ -5,6 +5,8 @@
   <meta name="msapplication-tap-highlight" content="no">
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
   <link rel="stylesheet" href="css/index.css">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/all.min.css" rel="stylesheet">
 
   <title>google map</title>
 </head>
@@ -65,6 +67,11 @@
       </div>
     </div>
 
+
+
+
+
+
     <!--右上部ドロワー-->
     <a class="right-btn"></a>
     <!--テキストチャット-->
@@ -81,34 +88,89 @@
 
   <div id="maps">
 
+
   </div>
 
-  <!--ビデオチャット-->
-  <div id = "video" class = "open">
-    <video id="their-video" class = "theirv-show" width="500" height="500" autoplay playsinline></video>
+
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
+  <i class="fas fa-phone"></i>
+  </button>
+
+  <!-- モーダル・ダイアログ -->
+  <div class="modal fade" id="sampleModal" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+			</div>
+      <div class="modal-body">
+        <!--ビデオチャット-->
+
+
+        <p>Your id: <span id="my-id">...</span></p>
+        <h3>Make a call</h3>
+        <form id="make-call">
+          <input type="text" placeholder="Call user id..." id="callto-id">
+          <button href="#" type="submit">Call</button>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+
+
+
+
+      </div>
+    </div>
   </div>
-  <video id="my-video" class = "myvideo-show" width="300" height="300" muted="true" autoplay playsinline></video>
-  <button type="submit" value="応答" id="answer-call">応答</button>
-  <button type="submit" value="拒否" id="no-call">拒否</button>
+  </div>
+
+  <div id="video-alert" class="alert alert-info alert-dismissible fade" role="alert">
+  <button type="submit" class="btn btn-success" value="応答" id="answer-call">応答</button>
+  <button type="submit" class="btn btn-danger" value="拒否" id="no-call">拒否</button>
+  </div>
+
+  <div class="modal fade" id="call-modal" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-body">
+
+        <div id = "video" class = "open">
+          <video id="their-video" class = "theirv-show" width="500" height="500" autoplay playsinline></video>
+        </div>
+        <video id="my-video" class = "myvideo-show" width="300" height="300" muted="true" autoplay playsinline></video>
 
 
-  <p>Your id: <span id="my-id">...</span></p>
-  <p>Share this id with others so they can call you.</p>
-  <h3>Make a call</h3>
-  <form id="make-call">
-    <input type="text" placeholder="Call user id..." id="callto-id">
-    <button href="#" type="submit">Call</button>
-  </form>
-  <form id="end-call">
-    <p>Currently in call with <span id="their-id">...</span></p>
-    <button href="#" type="submit">End Call</button>
-  </form>
+
+
+			</div>
+			<div class="modal-footer">
+        <form id="end-call">
+          <p>Currently in call with <span id="their-id">...</span></p>
+          <button href="#" type="submit">End Call</button>
+        </form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<footer>
+
+</footer>
+
+
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="cordova.js"></script>
+  <script src="js/bootstrap.min.js"></script>
   <script src="js/index.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0ZnNFaybm9baTvzoAU4tDeDS1eeh5TIw&libraries=places&callback=initMap" async defer></script>
   <script src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
   <script src="js/video.js"></script>
   <script src="js/chat.js"></script>
+
 </body>
 </html>

@@ -40,6 +40,7 @@ $('#make-call').submit(function(e){
 });
 
 $('#end-call').on('submit', function(){
+  $('#call-modal').modal('hide');
   if (existingCall) {
     existingCall.close();
   }
@@ -47,18 +48,24 @@ $('#end-call').on('submit', function(){
 });
 
 peer.on('call', function(call){
-  $('#answer-call').css('display','block');
-  $('#no-call').css('display','block');
+
+
+  $('#video-alert').addClass('show');
+  // $('#answer-call').css('display','block');
+  // $('#no-call').css('display','block');
   //応答
   $('#answer-call').one('click',function(){
+    $('#call-modal').modal();
     call.answer(localStream);
     setupCallEventHandlers(call);
+    $('#video-alert').removeClass('show');
 
   });
   //拒否
   $('#no-call').one('click',function(){
-    $('#answer-call').css('display','none');
-    $('#no-call').css('display','none');
+    // $('#answer-call').css('display','none');
+    // $('#no-call').css('display','none');
+    $('#video-alert').removeClass('show');
     setupMakeCallUI();
     call.close();
   //  $('#video').removeClass('open');
@@ -73,10 +80,9 @@ function setupCallEventHandlers(call){
   existingCall = call;
 
   call.on('stream', function(stream){
+    $('#call-modal').modal();
     addVideo(call,stream);
     setupEndCallUI();
-    $('#answer-call').css('display','none');
-    $('#no-call').css('display','none');
     $('#their-id').text(call.remoteId);
   });
   call.on('close', function(){

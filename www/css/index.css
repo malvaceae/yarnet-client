@@ -366,12 +366,12 @@ header {
 
 
 
-#answer-call{
+/* #answer-call{
   display: none;
 }
 #no-call{
   display: none;
-}
+} */
 
 #video{
   display:none;
@@ -387,6 +387,10 @@ body > header{
   width: 100vw;
   height: 50px;
   background-color:transparent;
+}
+
+#video-alert{
+  width: 200px
 }
 
 
