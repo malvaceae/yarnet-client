@@ -227,9 +227,44 @@ $(function($) {
 });
 
 //Circle Menu
-$('ul').circleMenu({
+$('#menu-circle').circleMenu({
     item_diameter: 40,
     circle_radius: 100,
     direction: 'bottom-left'
 });
+
+//wiki
+function WikipediaAPI() {
+	//検索語
+	var query = document.getElementById('query').value;
+	//API呼び出し
+	$.ajax({
+		url: 'http://wikipedia.simpleapi.net/api',
+		data: {
+			output: 'json',
+			keyword: query
+		},
+		type: 'GET',
+		dataType: 'jsonp',			//Access-Control-Allow-Origin対策
+		timeout: 1000,
+		success: function(json) {
+			if (json != null && json.length > 0) {
+				$('#word').html('');
+				//結果表示
+				for (i = 0; i < json.length; i++) {
+					$('#word').append(
+						'<dt>' + (i + 1) + '：<a href="' +
+						json[i].url + '">' +
+						json[i].title + '</a>' +
+					 	'&nbsp;(' + json[i].datetime +
+					 	' 更新)</dt>' +
+				 		'<dd>' + json[i].body + '</dd>'
+				 	);
+				}
+			} else {
+				$('#word').html('検索結果なし');
+			}
+		}
+	});
+}
 getMap.getAddress();

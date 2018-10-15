@@ -347,7 +347,7 @@ header {
   z-index: 100;
 }
 
-ul {
+#menu-circle {
   display: block;
   width:35px;
   height: 35px;
@@ -400,7 +400,6 @@ body > header{
 }
 
 #video-alert{
-  width: 200px
 }
 
 
@@ -511,4 +510,10 @@ body > header{
 .photos_4 .photos_img_wrapper_3 {
   width  : 30%;
   height : 100px;
+}
+
+footer{
+    height:140px;
+     position:absolute;
+     bottom:0;
 }

@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <ul>
+    <ul id = menu-circle>
         <li><i class="fas fa-plus-circle fa-2x"></i></li>
         <li>
           <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
@@ -147,10 +147,7 @@
   </div>
   </div>
 
-  <div id="video-alert" class="alert alert-info alert-dismissible fade" role="alert">
-  <button type="submit" class="btn btn-success" value="応答" id="answer-call">応答</button>
-  <button type="submit" class="btn btn-danger" value="拒否" id="no-call">拒否</button>
-  </div>
+
 
   <div class="modal fade" id="call-modal" tabindex="-1">
 	<div class="modal-dialog modal-lg">
@@ -161,9 +158,6 @@
           <video id="their-video" class = "theirv-show" width="500" height="500" autoplay playsinline></video>
         </div>
         <video id="my-video" class = "myvideo-show" width="300" height="300" muted="true" autoplay playsinline></video>
-
-
-
 
 			</div>
 			<div class="modal-footer">
@@ -179,8 +173,35 @@
 
 
 <footer>
-
+  <div id="video-alert" class="alert alert-info alert-dismissible fade" role="alert">
+  <button type="submit" class="btn btn-success" value="応答" id="answer-call">応答</button>
+  <button type="submit" class="btn btn-danger" value="拒否" id="no-call">拒否</button>
+  </div>
 </footer>
+
+
+
+
+<div = wiki>
+  <form name="wiki_form">
+  キーワード：<input tyle="text" name="query" id="query" size="60" value="" />
+  <input type="button" name="execute" value="検索" onclick="WikipediaAPI();" />
+  </form>
+  <div id="refere"></div>
+  </div>
+  <hr />
+  <div id="word"></div>
+
+
+
+
+
+
+
+
+
+</div>
+
 
 
 
