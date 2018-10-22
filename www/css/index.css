@@ -247,6 +247,8 @@ header {
 
 #nav-drawer {
   position: relative;
+  width: 500px;
+
 }
 
 /*チェックボックス等は非表示に*/
@@ -270,7 +272,7 @@ header {
   border-radius: 3px;
   background: #555;
   display: block;
-  content: '';
+  content: 'f002';
   cursor: pointer;
 }
 #nav-open span:before {
@@ -321,7 +323,7 @@ header {
 }
 
 /*　↓ナビゲーションドロワー↓　RIGHT　*/
-.right-btn {
+/*.right-btn {
   background: url(../img/com.jpeg)no-repeat;
   display: block;
   width:35px;
@@ -332,6 +334,7 @@ header {
   cursor: pointer;
   z-index: 200;
 }
+*/
 .peke {
   background-position: -35px 0;
 }
@@ -346,7 +349,16 @@ header {
   z-index: 100;
 }
 
-
+#menu-circle {
+  display: block;
+  width:35px;
+  height: 35px;
+  position: absolute;
+  top:20px;
+  right:20px;
+  cursor: pointer;
+  z-index: 200;
+}
 
 
 
@@ -390,7 +402,6 @@ body > header{
 }
 
 #video-alert{
-  width: 200px
 }
 
 
@@ -502,3 +513,18 @@ body > header{
   width  : 30%;
   height : 100px;
 }
+
+footer{
+    height:140px;
+     position:absolute;
+     bottom:0;
+}
+
+/*#nav-tab{
+    position: absolute;
+    top: 90px;
+    left: 338px;
+    background: white;
+    transform: rotate(90deg);
+    z-index: 10000;
+  }*/
