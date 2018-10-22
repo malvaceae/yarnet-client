@@ -22,3 +22,7 @@ $('#login-form').on('submit', e => {
 $('[data-toggle="login"]').on('click', e => {
   $('.main').fadeOut('fast', () => $('.login').fadeIn());
 });
+
+$('[data-dismiss="login"]').on('click', e => {
+  $('.login').fadeOut('fast', () => $('.main').fadeIn());
+});
