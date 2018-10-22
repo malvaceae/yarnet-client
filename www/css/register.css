@@ -16,7 +16,7 @@ body {
 section.register { display : block; }
 section.main     { display :  none; }
 
-.text {
+.register_text {
   position: relative;
 }
 
