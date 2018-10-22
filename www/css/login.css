@@ -1,5 +1,5 @@
-section.login { display : block; }
-section.main  { display :  none; }
+section.login { display :  none; }
+section.main  { display : block; }
 
 section.login {
   width      : 330px;

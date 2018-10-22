@@ -18,3 +18,7 @@ $('#login-form').on('submit', e => {
         alert('ログインに失敗しました。');
       });
 });
+
+$('[data-toggle="login"]').on('click', e => {
+  $('.main').fadeOut('fast', () => $('.login').fadeIn());
+});
