@@ -64,32 +64,61 @@
             </symbol>
           </svg>
         </header>
+
+        <div class="col-xs-9">
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="home-vr">Home Tab.</div>
+            <div class="tab-pane" id="profile-vr">Profile Tab.</div>
+            <div class="tab-pane" id="messages-vr">Messages Tab.</div>
+            <div class="tab-pane" id="settings-vr">Settings Tab.</div>
+          </div>
+        </div>
+
+        <div class="col-xs-3"> <!-- required for floating -->
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs tabs-right sideways">
+            <li class="active"><a href="#home-vr" data-toggle="tab">Home</a></li>
+            <li><a href="#profile-vr" data-toggle="tab">Profile</a></li>
+            <li><a href="#messages-vr" data-toggle="tab">Messages</a></li>
+            <li><a href="#settings-vr" data-toggle="tab">Settings</a></li>
+          </ul>
+        </div>
+
+
+
+
+
+
+
+
+
       </div>
     </div>
 
     <ul id = menu-circle>
-        <li><i class="fas fa-plus-circle fa-2x"></i></li>
-        <li>
-          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
+      <li><i class="fas fa-plus-circle fa-2x"></i></li>
+      <li>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
           <i class="fas fa-phone"></i>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="btn btn-primary btn-lg" id="right-btn">
+        </button>
+      </li>
+      <li>
+        <button type="button" class="btn btn-primary btn-lg" id="right-btn">
           <i class="fas fa-comments"></i>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
+        </button>
+      </li>
+      <li>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
           <i class="fas fa-user"></i>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
+        </button>
+      </li>
+      <li>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
           <i class="fas fa-search"></i>
-          </button>
-        </li>
-        <li><a href="#">5</a></li>
+        </button>
+      </li>
+      <li><a href="#">5</a></li>
     </ul>
 
 
@@ -119,75 +148,75 @@
 
   <!-- モーダル・ダイアログ -->
   <div class="modal fade" id="sampleModal" tabindex="-1">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-			</div>
-      <div class="modal-body">
-        <!--ビデオチャット-->
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+        </div>
+        <div class="modal-body">
+          <!--ビデオチャット-->
 
 
-        <p>Your id: <span id="my-id">...</span></p>
-        <h3>Make a call</h3>
-        <form id="make-call">
-          <input type="text" placeholder="Call user id..." id="callto-id">
-          <button href="#" type="submit">Call</button>
-        </form>
+          <p>Your id: <span id="my-id">...</span></p>
+          <h3>Make a call</h3>
+          <form id="make-call">
+            <input type="text" placeholder="Call user id..." id="callto-id">
+            <button href="#" type="submit">Call</button>
+          </form>
 
 
-      </div>
-      <div class="modal-footer">
+        </div>
+        <div class="modal-footer">
 
 
 
 
+        </div>
       </div>
     </div>
-  </div>
   </div>
 
 
 
   <div class="modal fade" id="call-modal" tabindex="-1">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-body">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
 
-        <div id = "video" class = "open">
-          <video id="their-video" class = "theirv-show" width="500" height="500" autoplay playsinline></video>
+          <div id = "video" class = "open">
+            <video id="their-video" class = "theirv-show" width="500" height="500" autoplay playsinline></video>
+          </div>
+          <video id="my-video" class = "myvideo-show" width="300" height="300" muted="true" autoplay playsinline></video>
+
         </div>
-        <video id="my-video" class = "myvideo-show" width="300" height="300" muted="true" autoplay playsinline></video>
-
-			</div>
-			<div class="modal-footer">
-        <form id="end-call">
-          <p>Currently in call with <span id="their-id">...</span></p>
-          <button href="#" type="submit">End Call</button>
-        </form>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
-<footer>
-  <div id="video-alert" class="alert alert-info alert-dismissible fade" role="alert">
-  <button type="submit" class="btn btn-success" value="応答" id="answer-call">応答</button>
-  <button type="submit" class="btn btn-danger" value="拒否" id="no-call">拒否</button>
+        <div class="modal-footer">
+          <form id="end-call">
+            <p>Currently in call with <span id="their-id">...</span></p>
+            <button href="#" type="submit">End Call</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-</footer>
+
+
+
+  <footer>
+    <div id="video-alert" class="alert alert-info alert-dismissible fade" role="alert">
+      <button type="submit" class="btn btn-success" value="応答" id="answer-call">応答</button>
+      <button type="submit" class="btn btn-danger" value="拒否" id="no-call">拒否</button>
+    </div>
+  </footer>
 
 
 
 
-<div = wiki>
-  <form name="wiki_form">
-  キーワード：<input tyle="text" name="query" id="query" size="60" value="" />
-  <input type="button" name="execute" value="検索" onclick="WikipediaAPI();" />
-  </form>
-  <div id="refere"></div>
+  <div = wiki>
+    <form name="wiki_form">
+      キーワード：<input tyle="text" name="query" id="query" size="60" value="" />
+      <input type="button" name="execute" value="検索" onclick="WikipediaAPI();" />
+    </form>
+    <div id="refere"></div>
   </div>
   <hr />
   <div id="word"></div>
@@ -205,15 +234,15 @@
 
 
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="cordova.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/zikes-circlemenu@0.1.1/jQuery.circleMenu.min.js"></script>
-  <script src="js/index.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0ZnNFaybm9baTvzoAU4tDeDS1eeh5TIw&libraries=places&callback=initMap" async defer></script>
-  <script src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
-  <script src="js/video.js"></script>
-  <script src="js/chat.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="cordova.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/zikes-circlemenu@0.1.1/jQuery.circleMenu.min.js"></script>
+<script src="js/index.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0ZnNFaybm9baTvzoAU4tDeDS1eeh5TIw&libraries=places&callback=initMap" async defer></script>
+<script src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
+<script src="js/video.js"></script>
+<script src="js/chat.js"></script>
 
 </body>
 </html>
