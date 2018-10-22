@@ -16,18 +16,18 @@ body {
 section.register { display : block; }
 section.main     { display :  none; }
 
- .text {
-   position: relative;
- }
+.text {
+  position: relative;
+}
 
- .alert{
-   color: red;
-   position: absolute;
-   top: 0;
-   left: 300px;
-   width:200px;
-   text-align:left;
- }
+.alert{
+  color: red;
+  position: absolute;
+  top: 0;
+  left: 300px;
+  width:200px;
+  text-align:left;
+}
 
 .register {
   width: 300px;
