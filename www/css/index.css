@@ -247,6 +247,8 @@ header {
 
 #nav-drawer {
   position: relative;
+  width: 500px;
+
 }
 
 /*チェックボックス等は非表示に*/
@@ -517,3 +519,12 @@ footer{
      position:absolute;
      bottom:0;
 }
+
+/*#nav-tab{
+    position: absolute;
+    top: 90px;
+    left: 338px;
+    background: white;
+    transform: rotate(90deg);
+    z-index: 10000;
+  }*/
