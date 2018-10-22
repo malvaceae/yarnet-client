@@ -34,6 +34,11 @@ section.main     { display :  none; }
   margin: auto;
   text-align: center;
 }
+.register .close {
+  position : absolute;
+  top      : 20px;
+  right    : 20px;
+}
 
 .form-register {
   width: 100%;

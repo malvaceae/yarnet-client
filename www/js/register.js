@@ -25,4 +25,9 @@ $(function() {
 
     return false;
   });
+
+  $('[data-dismiss="register"]').on('click', e => {
+    $('.register').fadeOut('fast', () => $('.main').fadeIn());
+  });
+
 });
