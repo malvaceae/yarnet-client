@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - "8"
+
+env:
+  global:
+    - secure: "oKfbw6dsEWGayxe+TiLoe8MH657gBq5UGa2sZ/0SangMficIa4r6mHGgjZ59tp/Ii4iOfktZNe93eDcsc0h/hlzRE1UnoEn+f0/J7vsC7qD5e9kCAgk60scYQkJxakTWgAkTEPyNpQJQsst5P+miZihX6QFXHFPsHiGdTOMJ5bQiA3fo4DaXNeJjowGtLZbxaWHMZ/ZIXp7lLzeK77xJgSm55i7ytpWlUvf08WF6o5+VijLtZbYuSB1HVnuZglnfmTc4uGvbsoIbddfUdB0rFFJmLrLJl/teG8AcB021Qt8906wuqoEWavQT5/6Y5DXs5mpNNMokxCmyHBIgIFvi/oO6NPspguNGrxFwcaYakZtPLfFmmQGXjJCM5gDitaqNAB58axq/QdqShjbwj/BGM18oYta/q9z0cebg21rBnLUqOLmF+Zk1NF+d5QpMBi7NwWyI1kCfeZNz+lIREwyt6InFBwOLEvfqYCS+5p8duesEHm/wipEIHmhxSP7Dzut+NQHvBrc0DXORreut4VZbd8ggsOV0zJDw8RSKkweIL4SBR4wu8knoFbjvLMWFDVFNBP5wY/2ENs0jNw4Fupl9bO3e3zSWplhYQz6Ab5SFwlTp/Ew0t2Ti95rRbtGJuERzKodfhZPk3L29cFSoiyAj8XpARMlU/Ba+BFnoHMp+XoQ="
+
+branches:
+  only:
+    - master
+
+install:
+  - npm install -g cordova
+
+script:
+  - yes n | cordova prepare browser
+
+after_success:
+  - cd platforms/browser/www
+  - echo www.yarnet.ml>CNAME
+
+  - git config --global user.name  malvaceae
+  - git config --global user.email malvaceae@hotmail.com
+
+  - git init && git add -A && git commit -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
+  - git push -fq https://${GH_TOKEN}@github.com/yarnet/yarnet.github.io.git master
