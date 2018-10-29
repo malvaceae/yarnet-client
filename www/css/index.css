@@ -341,12 +341,14 @@ header {
 .right-nav-drawer {
   display: none;
   background-color:rgb(255,255,255);
-  position: absolute;
+  position: fixed;
   top: 0px;
   right:0;
+  bottom: 0;
   width:470px;
   padding:60px 0 20px 20px;
   z-index: 100;
+  overflow: auto;
 }
 
 #menu-circle {
@@ -528,3 +530,20 @@ footer{
     transform: rotate(90deg);
     z-index: 10000;
   }*/
+
+
+
+  #msg{
+    position: absolute;
+    bottom: 10px;
+    border:none;
+    border-radius:10px;
+    box-shadow: none;
+    padding: 2px 8px;
+  }
+  #send{
+    position: absolute;
+    bottom: 10px;
+    right: 50px;
+
+  }
