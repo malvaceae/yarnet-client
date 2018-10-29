@@ -20,12 +20,14 @@ var app = {
 
 app.initialize();
 
+
 function initMap() {
   var map = new google.maps.Map(document.getElementById('maps'), {
     center: {lat: 34.985, lng: 135.752},
     zoom: 15
   });
 }
+
 
 var getMap = (function() {
   function codeAddress(address) {
@@ -69,6 +71,37 @@ var getMap = (function() {
       }
 
     });
+
+    //マップクリック時に半径3km内のホテルを検索
+    map.addListener('click', function(e){
+      console.log(e.latLng.lat());
+      console.log(e.latLng.lng());
+      var x= e.latLng.lat();
+      var y= e.latLng.lng();
+      var url = 'https://app.rakuten.co.jp/services/api/Travel/SimpleHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + x + '&longitude='+y;
+      console.log(url);
+
+      $.ajax({
+        url:url,
+        type:'GET',
+        dataType:'json',
+        error:function(){
+          console.log("miss");
+        },
+        success:function(data){
+          data.hotels.forEach(hotel => {
+            console.log(hotel.hotel[0].hotelBasicInfo.hotelName);
+            console.log(hotel.hotel[0].hotelBasicInfo.latitude);
+            console.log(hotel.hotel[0].hotelBasicInfo.longitude);
+            console.log("done");
+          });
+        }
+      });
+
+    });
+
+
+
 
     // マップをクリックで位置変更
     map.addListener('click', function(e) {
@@ -150,36 +183,44 @@ $(function($) {
   $('.drawr').css('height', WindowHeight); //メニューをwindowの高さいっぱいにする
 
   $(document).ready(function() {
-    $('#search_form').submit(function(){ //クリックしたら
-      $.getJSON('https://api.yarnet.ml/tweets', {'q': $("#address").val()}).done(function(tweets) {
-        $('article').remove();
-        console.log(tweets);
-        tweets.forEach(tweet => {
-          console.log(tweet);
+    $('#search_form').on('submit', function(){ //クリックしたら
 
-          $article = $('<article class "Tweet_List">');
-          $header = $('<header>');
-          $header.append($('<img class ="profile_img">').attr('src', tweet.user_profile_img));//prof img
-          $header.append($('<div class ="user_name">').text(tweet.user_name));//userid
-          $header.append($('<div class ="screen_name">').text(tweet.user_screem_name));
-          $header.append($('<div class ="date">').text(tweet.date));//投稿時刻
-          $header.append($('<div class ="body">').text(tweet.body));
+      if ($('#nav-twitter-tab').hasClass('active')) {
+        $.getJSON('https://api.yarnet.ml/tweets', {'q': $("#address").val()}).done(function(tweets) {
+          $('article').remove();
+          console.log(tweets);
+          tweets.forEach(tweet => {
+            console.log(tweet);
 
-          $photos = $('<div class="photos_' + tweet.photos.length + '">');
+            $article = $('<article class "Tweet_List">');
+            $header = $('<header>');
+            $header.append($('<img class ="profile_img">').attr('src', tweet.user_profile_img));//prof img
+            $header.append($('<div class ="user_name">').text(tweet.user_name));//userid
+            $header.append($('<div class ="screen_name">').text(tweet.user_screem_name));
+            $header.append($('<div class ="date">').text(tweet.date));//投稿時刻
+            $header.append($('<div class ="body">').text(tweet.body));
 
-          for (var i = 0; i < tweet.photos.length; i++) {
-            $wrapper = $('<div class="photos_img_wrapper_' + i + '">');
-            $wrapper.append($('<img src="' + tweet.photos[i] + '">'));
+            $photos = $('<div class="photos_' + tweet.photos.length + '">');
 
-            $photos.append($wrapper);
-          }
+            for (var i = 0; i < tweet.photos.length; i++) {
+              $wrapper = $('<div class="photos_img_wrapper_' + i + '">');
+              $wrapper.append($('<img src="' + tweet.photos[i] + '">'));
 
-          $header.append($photos);
-          $article.append($header);
+              $photos.append($wrapper);
+            }
 
-          $('#nav-content').append($article);
+            $header.append($photos);
+            $article.append($header);
+
+            $('#nav-content').append($article);
+          });
         });
-      });
+      }
+
+      if ($('#nav-wikipedia-tab').hasClass('active')) {
+        WikipediaAPI();
+      }
+
 
       if($('.drawr').is(":animated")){
         return false;
@@ -233,10 +274,14 @@ $('#menu-circle').circleMenu({
     direction: 'bottom-left'
 });
 
+$('#nav-tab .nav-link').on('click', function() {
+  $('#search_form').submit();
+});
+
 //wiki
 function WikipediaAPI() {
 	//検索語
-	var query = document.getElementById('query').value;
+	var query = $('#address').val();
 	//API呼び出し
 	$.ajax({
 		url: 'http://wikipedia.simpleapi.net/api',
