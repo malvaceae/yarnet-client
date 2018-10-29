@@ -516,3 +516,11 @@ footer{
     transform: rotate(90deg);
     z-index: 10000;
   }*/
+
+#menu-circle                 .circleMenu-item {
+  opacity    : 0;
+  transition : opacity 500ms;
+}
+#menu-circle.circleMenu-open .circleMenu-item {
+  opacity : 1;
+}
