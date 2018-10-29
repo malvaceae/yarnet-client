@@ -21,23 +21,19 @@ var app = {
 app.initialize();
 
 
-function initMap() {
-  var map = new google.maps.Map(document.getElementById('maps'), {
-    center: {lat: 34.985, lng: 135.752},
-    zoom: 15
-  });
-}
-
-
-var getMap = (function() {
+//地図の初期化
+var initMap = (function() {
   function codeAddress(address) {
     // google.maps.Geocoder()コンストラクタのインスタンスを生成
     var geocoder = new google.maps.Geocoder();
 
     // 地図表示に関するオプション
     var mapOptions = {
-      zoom: 16,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      zoom              : 16,
+      mapTypeControl    : false,
+      scaleControl      : false,
+      streetViewControl : false,
+      fullscreenControl : false
     };
 
     // 地図を表示させるインスタンスを生成
@@ -73,14 +69,18 @@ var getMap = (function() {
     });
 
     //マップクリック時に半径3km内のホテルを検索
+    var markers = [];
+    var infowindows = [];
     map.addListener('click', function(e){
-      console.log(e.latLng.lat());
-      console.log(e.latLng.lng());
       var x= e.latLng.lat();
       var y= e.latLng.lng();
       var url = 'https://app.rakuten.co.jp/services/api/Travel/SimpleHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + x + '&longitude='+y;
       console.log(url);
-
+      markers.forEach(m => m.setMap(null));
+      markers.splice(0, markers.length);
+      infowindows.splice(0,infowindows.length);
+      //開始時刻
+      var startTime = new Date();
       $.ajax({
         url:url,
         type:'GET',
@@ -89,15 +89,33 @@ var getMap = (function() {
           console.log("miss");
         },
         success:function(data){
+          //終了時刻
+          var endTime = new Date();
+          console.log(endTime.getTime() - startTime.getTime()+"/1000秒 楽天トラベルのurlリクエストに掛かった時間");
           data.hotels.forEach(hotel => {
-            console.log(hotel.hotel[0].hotelBasicInfo.hotelName);
-            console.log(hotel.hotel[0].hotelBasicInfo.latitude);
-            console.log(hotel.hotel[0].hotelBasicInfo.longitude);
-            console.log("done");
+            var hotelPosition = {
+              lat:hotel.hotel[0].hotelBasicInfo.latitude,
+              lng:hotel.hotel[0].hotelBasicInfo.longitude
+            };
+            var marker = new google.maps.Marker({
+              position:hotelPosition,
+              map:map,
+              //アイコンの変更
+
+
+            });
+            markers.push(marker);
+            var infoWindow = new google.maps.InfoWindow({
+              content:hotel.hotel[0].hotelBasicInfo.hotelName,
+            });
+            infowindows.push(infoWindow);
+            marker.addListener('click',function(){
+              infowindows.forEach(i => i.close());
+              infoWindow.open(map,marker);
+            });
           });
         }
       });
-
     });
 
 
@@ -127,10 +145,6 @@ var getMap = (function() {
       });
     });
 
-    map.addListener('center_changed', function() {
-      console.log(map);
-      console.log(marker);
-    });
 
     function getClickLatLng(lat_lng, map) {
 
@@ -312,4 +326,4 @@ function WikipediaAPI() {
 		}
 	});
 }
-getMap.getAddress();
+initMap.getAddress();
