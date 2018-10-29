@@ -13,7 +13,7 @@ $(function() {
       'dataType': 'json',
     }).done(data => {
       // エラーがなかったらここに画面遷移とか
-      $('.register').fadeOut('fast', () => $('.main').fadeIn());
+      transition($('.main'));
     }).fail(data => {
       if (data.responseJSON.error !== undefined) {
         $('.alert#name_alert').text(data.responseJSON.error.name || '');
@@ -25,9 +25,4 @@ $(function() {
 
     return false;
   });
-
-  $('[data-dismiss="register"]').on('click', e => {
-    $('.register').fadeOut('fast', () => $('.main').fadeIn());
-  });
-
 });
