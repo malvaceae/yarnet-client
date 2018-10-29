@@ -13,8 +13,8 @@ body {
   background-color: #f5f5f5;
 }
 
-section.register { display : block; }
-section.main     { display :  none; }
+section.register { display :  none; }
+section.main     { display : block; }
 
 .register_text {
   position: relative;

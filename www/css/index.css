@@ -9,18 +9,6 @@ a {
 }
 
 body {
-  background-color:#E4E4E4;
-  background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-  background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-  background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-  background-image:-webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    color-stop(0, #A7A7A7),
-    color-stop(0.51, #E4E4E4)
-    );
-    background-attachment:fixed;
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-size:12px;
     height:100%;
@@ -270,7 +258,7 @@ header {
   border-radius: 3px;
   background: #555;
   display: block;
-  content: '';
+  content: 'f002';
   cursor: pointer;
 }
 #nav-open span:before {
@@ -321,7 +309,7 @@ header {
 }
 
 /*　↓ナビゲーションドロワー↓　RIGHT　*/
-.right-btn {
+/*.right-btn {
   background: url(../img/com.jpeg)no-repeat;
   display: block;
   width:35px;
@@ -332,6 +320,7 @@ header {
   cursor: pointer;
   z-index: 200;
 }
+*/
 .peke {
   background-position: -35px 0;
 }
@@ -346,7 +335,16 @@ header {
   z-index: 100;
 }
 
-
+#menu-circle {
+  display: block;
+  width:35px;
+  height: 35px;
+  position: absolute;
+  top:20px;
+  right:20px;
+  cursor: pointer;
+  z-index: 200;
+}
 
 
 
@@ -390,7 +388,6 @@ body > header{
 }
 
 #video-alert{
-  width: 200px
 }
 
 
@@ -501,4 +498,10 @@ body > header{
 .photos_4 .photos_img_wrapper_3 {
   width  : 30%;
   height : 100px;
+}
+
+footer{
+    height:140px;
+     position:absolute;
+     bottom:0;
 }
