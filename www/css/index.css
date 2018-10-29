@@ -380,7 +380,7 @@ header {
   display:block;
 }
 
-body > header{
+section > header{
   position: absolute;
   top: 0;
   z-index: 1000;
