@@ -74,7 +74,7 @@ var initMap = (function() {
     map.addListener('click', function(e){
       var x= e.latLng.lat();
       var y= e.latLng.lng();
-      var hotelspot_url = 'https://app.rakuten.co.jp/services/api/Travel/SimpleHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + x + '&longitude='+y;
+      var hotelspot_url='https://app.rakuten.co.jp/services/api/Travel/VacantHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + x + '&longitude='+y;
       console.log(hotelspot_url);
       markers.forEach(m => m.setMap(null));
       markers.splice(0, markers.length);
@@ -94,6 +94,7 @@ var initMap = (function() {
           var endTime = new Date();
           console.log(endTime.getTime() - startTime.getTime()+"/1000秒 楽天トラベルのurlリクエストに掛かった時間");
           data.hotels.forEach(hotel => {
+            var hotelInfo_url = ""
             var hotelPosition = {
               lat:hotel.hotel[0].hotelBasicInfo.latitude,
               lng:hotel.hotel[0].hotelBasicInfo.longitude
@@ -107,7 +108,10 @@ var initMap = (function() {
             markers.push(marker);
             var infoWindow = new google.maps.InfoWindow({
               content:hotel.hotel[0].hotelBasicInfo.hotelName +"<br>"+
-              "<a href=" + hotel.hotel[0].hotelBasicInfo.hotelInformationUrl + " target='_blank'>楽天トラベルページ</>",
+              "<a href=" + hotel.hotel[0].hotelBasicInfo.hotelInformationUrl + " target='_blank'>楽天トラベルページ</a><br>"+
+              hotel.hotel[0].hotelBasicInfo.telephoneNo+"<br>一泊の値段:"+
+              hotel.hotel[0].dailyCharge.rakutenCharge,
+              //chargeFlagが0なら一泊,1なら一室
             });
             infowindows.push(infoWindow);
             marker.addListener('click',function(){
@@ -120,6 +124,9 @@ var initMap = (function() {
 
             $(".HotelImages").on('click',function(){
               window.open(hotel.hotel[0].hotelBasicInfo.hotelInformationUrl,'_blank');
+            });
+            ('mouseover',function(){
+              console.log("test");
             });
           });
         }
