@@ -78,11 +78,11 @@ var getMap = (function() {
       var address = e.placeId;
       room = peer.joinRoom(address);
 
-      chatlog('<i>' + address + '</i>に入室しました');
+      chatlog('<i>' + address + '</i>に入室しました', 'system');
 
       // チャットを受信
       room.on('data', function(data){
-        chatlog('ID: ' + data.src + '> ' + data.data); // data.src = 送信者のpeerid, data.data = 送信されたメッセージ
+        chatlog('ID: ' + data.src + '> ' + data.data, 'otherchat'); // data.src = 送信者のpeerid, data.data = 送信されたメッセージ
       });
 
       var service = new google.maps.places.PlacesService(map);
