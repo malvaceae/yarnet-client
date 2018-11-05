@@ -74,15 +74,16 @@ var initMap = (function() {
     map.addListener('click', function(e){
       var x= e.latLng.lat();
       var y= e.latLng.lng();
-      var url = 'https://app.rakuten.co.jp/services/api/Travel/SimpleHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + x + '&longitude='+y;
-      console.log(url);
+      var hotelspot_url = 'https://app.rakuten.co.jp/services/api/Travel/SimpleHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + x + '&longitude='+y;
+      console.log(hotelspot_url);
       markers.forEach(m => m.setMap(null));
       markers.splice(0, markers.length);
       infowindows.splice(0,infowindows.length);
       //開始時刻
       var startTime = new Date();
+      //ホテルの位置
       $.ajax({
-        url:url,
+        url:hotelspot_url,
         type:'GET',
         dataType:'json',
         error:function(){
@@ -101,17 +102,24 @@ var initMap = (function() {
               position:hotelPosition,
               map:map,
               //アイコンの変更
-
-
+              icon: './img/hotel-marker.png'
             });
             markers.push(marker);
             var infoWindow = new google.maps.InfoWindow({
-              content:hotel.hotel[0].hotelBasicInfo.hotelName,
+              content:hotel.hotel[0].hotelBasicInfo.hotelName +"<br>"+
+              "<a href=" + hotel.hotel[0].hotelBasicInfo.hotelInformationUrl + " target='_blank'>楽天トラベルページ</>",
             });
             infowindows.push(infoWindow);
             marker.addListener('click',function(){
               infowindows.forEach(i => i.close());
               infoWindow.open(map,marker);
+            });
+
+            //contactタブにホテル検索結果を表示
+            $("#hotelImages").append("<img src =" + hotel.hotel[0].hotelBasicInfo.hotelImageUrl +" class='HotelImages'>");
+
+            $(".HotelImages").on('click',function(){
+              window.open(hotel.hotel[0].hotelBasicInfo.hotelInformationUrl,'_blank');
             });
           });
         }
