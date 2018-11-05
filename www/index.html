@@ -5,13 +5,58 @@
   <meta name="msapplication-tap-highlight" content="no">
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
   <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/login.css">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/all.min.css" rel="stylesheet">
+  <link href="css/register.css" rel="stylesheet">
 
   <title>YarNet</title>
 </head>
 
 <body>
+  <section id="register" class="register">
+    <button class="close" type="button" data-target="#main"><i class="fas fa-times"></i></button>
+    <form class="form-register">
+      <img class="mb-4" src="/img/logo.png" alt width="128" height="128">
+      <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
+
+      <div class="register_text">
+        <label for="inputName" class="sr-only">Name</label>
+        <input type="text" id="inputName" class="form-control" placeholder="Name" requied autofocus>
+        <div class="alert" id="name_alert"></div>
+      </div>
+
+      <div class="register_text">
+        <label for="inputEmail" class="sr-only">Email Address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" requied>
+        <div class="alert" id="mail_alert"></div>
+      </div>
+
+      <div class="register_text">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" requied>
+        <div class="alert" id="pass_alert"></div>
+      </div>
+
+      <div class="register_text">
+        <label for="inputRepassword" class="sr-only">Confirm Password</label>
+        <input type="password" id="inputRePassword" class="form-control" placeholder="Confirm Password" requied>
+        <div class="alert" id="re_alert"></div>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+    </form>
+  </section>
+  <section id="login" class="login">
+    <button class="close" type="button" data-target="#main"><i class="fas fa-times"></i></button>
+    <img class="mb-4" src="img/logo.png" width="128" height="128">
+    <h1 class="h3 mb-3 font-weight-normal">ログイン</h1>
+    <form id="login-form" action="#" method="post">
+      <input class="form-control" type="text" name="mail" placeholder="メールアドレス">
+      <input class="form-control" type="password" name="pass" placeholder="パスワード">
+      <button class="btn btn-lg btn-primary btn-block" type="submit">ログイン</button>
+    </form>
+  </section>
+  <section id="main" class="main">
   <header>
     <!--左上部ドロワー-->
     <div id ="nav-drawer">
@@ -73,27 +118,27 @@
 
     <ul id = menu-circle>
       <li><i class="fas fa-plus-circle fa-2x"></i></li>
-      <li>
+      <li class="circleMenu-item">
         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
           <i class="fas fa-phone"></i>
         </button>
       </li>
-      <li>
+      <li class="circleMenu-item">
         <button type="button" class="btn btn-primary btn-lg" id="right-btn">
           <i class="fas fa-comments"></i>
         </button>
       </li>
-      <li>
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
+      <li class="circleMenu-item">
+        <button type="button" class="btn btn-primary btn-lg" data-target="#login">
           <i class="fas fa-user"></i>
         </button>
       </li>
-      <li>
+      <li class="circleMenu-item">
         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
           <i class="fas fa-search"></i>
         </button>
       </li>
-      <li><a href="#">5</a></li>
+      <li class="circleMenu-item"><a href="#">5</a></li>
     </ul>
 
 
@@ -193,27 +238,21 @@
 
 
 
+  </section>
 
 
-
-
-
-
-
-</div>
-
-
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="cordova.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/zikes-circlemenu@0.1.1/jQuery.circleMenu.min.js"></script>
-<script src="js/index.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0ZnNFaybm9baTvzoAU4tDeDS1eeh5TIw&libraries=places&callback=initMap" async defer></script>
-<script src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
-<script src="js/video.js"></script>
-<script src="js/chat.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="cordova.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/zikes-circlemenu@0.1.1/jQuery.circleMenu.min.js"></script>
+  <script src="js/transition.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/login.js"></script>
+  <script src="js/register.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0ZnNFaybm9baTvzoAU4tDeDS1eeh5TIw&libraries=places&callback=initMap" async defer></script>
+  <script src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
+  <script src="js/video.js"></script>
+  <script src="js/chat.js"></script>
 
 </body>
 </html>

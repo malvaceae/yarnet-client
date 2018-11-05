@@ -20,12 +20,14 @@ var app = {
 
 app.initialize();
 
+
 function initMap() {
   var map = new google.maps.Map(document.getElementById('maps'), {
     center: {lat: 34.985, lng: 135.752},
     zoom: 15
   });
 }
+
 
 var getMap = (function() {
   function codeAddress(address) {
@@ -69,6 +71,37 @@ var getMap = (function() {
       }
 
     });
+
+    //マップクリック時に半径3km内のホテルを検索
+    map.addListener('click', function(e){
+      console.log(e.latLng.lat());
+      console.log(e.latLng.lng());
+      var x= e.latLng.lat();
+      var y= e.latLng.lng();
+      var url = 'https://app.rakuten.co.jp/services/api/Travel/SimpleHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + x + '&longitude='+y;
+      console.log(url);
+
+      $.ajax({
+        url:url,
+        type:'GET',
+        dataType:'json',
+        error:function(){
+          console.log("miss");
+        },
+        success:function(data){
+          data.hotels.forEach(hotel => {
+            console.log(hotel.hotel[0].hotelBasicInfo.hotelName);
+            console.log(hotel.hotel[0].hotelBasicInfo.latitude);
+            console.log(hotel.hotel[0].hotelBasicInfo.longitude);
+            console.log("done");
+          });
+        }
+      });
+
+    });
+
+
+
 
     // マップをクリックで位置変更
     map.addListener('click', function(e) {
