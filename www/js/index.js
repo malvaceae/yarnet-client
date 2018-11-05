@@ -1,315 +1,68 @@
-var app = {
-  // Application Constructor
-  initialize: function() {
-    document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-  },
+var YarNet = {};
 
-  // deviceready Event Handler
-  //
-  // Bind any cordova events here. Common events are:
-  // 'pause', 'resume', etc.
-  onDeviceReady: function() {
-    this.receivedEvent('deviceready');
-  },
+$(function() {
 
-  // Update DOM on a Received Event
-  receivedEvent: function(id) {
-  }
-
-};
-
-app.initialize();
-
-
-function initMap() {
-  var map = new google.maps.Map(document.getElementById('maps'), {
-    center: {lat: 34.985, lng: 135.752},
-    zoom: 15
+  YarNet.map = new google.maps.Map($('#map')[0], {
+    center : {
+      lat :  34.98584900000000, // 京都駅の緯度
+      lng : 135.75876670000002, // 京都駅の経度
+    },
+    fullscreenControl : false,
+    mapTypeControl    : false,
+    streetViewControl : false,
+    zoom              : 15,
   });
-}
 
-
-var getMap = (function() {
-  function codeAddress(address) {
-    // google.maps.Geocoder()コンストラクタのインスタンスを生成
-    var geocoder = new google.maps.Geocoder();
-
-    // 地図表示に関するオプション
-    var mapOptions = {
-      zoom: 16,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    // 地図を表示させるインスタンスを生成
-    var map = new google.maps.Map(document.getElementById("maps"), mapOptions);
-
-    //マーカー変数用意
-    var marker;
-
-    // geocoder.geocode()メソッドを実行
-    geocoder.geocode( { 'address': address}, function(results, status) {
-
-      // ジオコーディングが成功した場合
-      if (status == google.maps.GeocoderStatus.OK) {
-
-        // 変換した緯度・経度情報を地図の中心に表示
-        map.setCenter(results[0].geometry.location);
-
-        //☆表示している地図上の緯度経度
-        //document.getElementById('lat').value=results[0].geometry.location.lat();
-        //document.getElementById('lng').value=results[0].geometry.location.lng();
-
-        // マーカー設定
-        marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
-        });
-
-        // ジオコーディングが成功しなかった場合
-      } else {
-        console.log('Geocode was not successful for the following reason: ' + status);
-      }
-
-    });
-
-    //マップクリック時に半径3km内のホテルを検索
-    map.addListener('click', function(e){
-      console.log(e.latLng.lat());
-      console.log(e.latLng.lng());
-      var x= e.latLng.lat();
-      var y= e.latLng.lng();
-      var url = 'https://app.rakuten.co.jp/services/api/Travel/SimpleHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + x + '&longitude='+y;
-      console.log(url);
-
-      $.ajax({
-        url:url,
-        type:'GET',
-        dataType:'json',
-        error:function(){
-          console.log("miss");
-        },
-        success:function(data){
-          data.hotels.forEach(hotel => {
-            console.log(hotel.hotel[0].hotelBasicInfo.hotelName);
-            console.log(hotel.hotel[0].hotelBasicInfo.latitude);
-            console.log(hotel.hotel[0].hotelBasicInfo.longitude);
-            console.log("done");
-          });
-        }
-      });
-
-    });
-
-
-
-
-    // マップをクリックで位置変更
-    map.addListener('click', function(e) {
-      getClickLatLng(e.latLng, map);
-
-      // 住所を取得
-      var address = e.placeId;
-      room = peer.joinRoom(address);
-
-      chatlog('<i>' + address + '</i>に入室しました');
-
-      // チャットを受信
-      room.on('data', function(data){
-        chatlog('ID: ' + data.src + '> ' + data.data); // data.src = 送信者のpeerid, data.data = 送信されたメッセージ
-      });
-
-      var service = new google.maps.places.PlacesService(map);
-      service.getDetails({placeId: address}, function(results, status) {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          $("#address").val(results.name);
-          $('#search_form').submit();
-        }
-      });
-    });
-
-    map.addListener('center_changed', function() {
-      console.log(map);
-      console.log(marker);
-    });
-
-    function getClickLatLng(lat_lng, map) {
-
-      //☆表示している地図上の緯度経度
-      //document.getElementById('lat').value=lat_lng.lat();
-      //document.getElementById('lng').value=lat_lng.lng();
-
-      // マーカーを設置
-      marker.setMap(null);
-      marker = new google.maps.Marker({
-        position: lat_lng,
-        map: map
-      });
-
-      // 座標の中心をずらす
-      map.panTo(lat_lng);
-    }
-
+  if (!Array.isArray(history.state)) {
+    history.replaceState([], false);
   }
 
-  //inputのvalueで検索して地図を表示
-  return {
-    getAddress: function() {
-      // ボタンに指定したid要素を取得
-      var button = $("#map_button");
+  var state = history.state.slice(0);
+  state.push('top-content');
+  history.replaceState(state, false);
 
-      // ボタンが押された時の処理
-      button.on('click', function() {
-        // フォームに入力された住所情報を取得
-        var address = $("#address").val();
-        // 取得した住所を引数に指定してcodeAddress()関数を実行
-        codeAddress(address);
-      });
+  /**
+   * 画面遷移を行うメソッドです。
+   *
+   * @param {string} hideMethod   - 前画面のアニメーションメソッド
+   * @param {string} showMethod   - 次画面のアニメーションメソッド
+   * @param {number} hideDuration - 前画面のアニメーション時間 (default: 200ms)
+   * @param {number} showDuration - 次画面のアニメーション時間 (default: 400ms)
+   */
+  $.fn.transition = function(hideMethod, showMethod, hideDuration, showDuration) {
+    if (!$.prototype[hideMethod]) throw new ReferenceError(hideMethod + ' は定義されていません。');
+    if (!$.prototype[showMethod]) throw new ReferenceError(showMethod + ' は定義されていません。');
 
-      //読み込まれたときに地図を表示
-      $(window).on('load', function(){
-        // フォームに入力された住所情報を取得
-        var address = $("#address").val();
-        // 取得した住所を引数に指定してcodeAddress()関数を実行
-        codeAddress(address);
-      });
-    }
+    hideDuration = (hideDuration || 200); // default: 200ms
+    showDuration = (showDuration || 400); // default: 400ms
 
+    var hide = function($content) { $content.trigger('hide.start')[hideMethod](hideDuration, function() { $(this).trigger('hide.end'); }); };
+    var show = function($content) { $content.trigger('show.start')[showMethod](showDuration, function() { $(this).trigger('show.end'); }); };
+
+    // 現在開いているセクションを閉じたあと新しいセクションを開きます。
+    hide($('.content:visible').one('hide.end', show.bind(null, this)));
   };
 
-})();
-
-$(function($) {
-  WindowHeight = $(window).height();
-  $('.drawr').css('height', WindowHeight); //メニューをwindowの高さいっぱいにする
-
-  $(document).ready(function() {
-    $('#search_form').on('submit', function(){ //クリックしたら
-
-      if ($('#nav-twitter-tab').hasClass('active')) {
-        $.getJSON('https://api.yarnet.ml/tweets', {'q': $("#address").val()}).done(function(tweets) {
-          $('article').remove();
-          console.log(tweets);
-          tweets.forEach(tweet => {
-            console.log(tweet);
-
-            $article = $('<article class "Tweet_List">');
-            $header = $('<header>');
-            $header.append($('<img class ="profile_img">').attr('src', tweet.user_profile_img));//prof img
-            $header.append($('<div class ="user_name">').text(tweet.user_name));//userid
-            $header.append($('<div class ="screen_name">').text(tweet.user_screem_name));
-            $header.append($('<div class ="date">').text(tweet.date));//投稿時刻
-            $header.append($('<div class ="body">').text(tweet.body));
-
-            $photos = $('<div class="photos_' + tweet.photos.length + '">');
-
-            for (var i = 0; i < tweet.photos.length; i++) {
-              $wrapper = $('<div class="photos_img_wrapper_' + i + '">');
-              $wrapper.append($('<img src="' + tweet.photos[i] + '">'));
-
-              $photos.append($wrapper);
-            }
-
-            $header.append($photos);
-            $article.append($header);
-
-            $('#nav-content').append($article);
-          });
-        });
-      }
-
-      if ($('#nav-wikipedia-tab').hasClass('active')) {
-        WikipediaAPI();
-      }
-
-
-      if($('.drawr').is(":animated")){
-        return false;
-      }else{
-        $('.drawr').animate({width:'toggle'}); //animateで表示・非表示
-        $(this).toggleClass('peke'); //toggleでクラス追加・削除
-        return false;
-      }
-    });
+  $(document).on('click', '[data-toggle="transition"]', function(e) {
+    $($(this).attr('data-target')).transition('fadeOut', 'fadeIn');
   });
 
-  //別領域をクリックでメニューを閉じる
-  $(document).click(function(event) {
-    if (!$(event.target).closest('.drawr').length) {
-      $('.search_button').removeClass('peke');
-      $('.drawr').hide();
-    }
+  $(document).on('click', '[data-toggle="goBackward"]', function(e) {
+    var state = history.state.slice(0);
+    state.pop();
+    history.replaceState(state, false);
+
+    $('#' + history.state.slice(-1)[0])
+      .transition('fadeOut', 'fadeIn');
   });
 
-  //右ドロワー
-  $(function($) {
-    WindowHeight = $(window).height();
-    $('.right-nav-drawer').css('height', WindowHeight); //メニューをwindowの高さいっぱいにする
+  $('.content').on('show.start', function(e) {
+    var lastState = history.state.slice(-1);
+    if (lastState[0] == e.target.id) return;
 
-    $(document).ready(function() {
-      $('#right-btn').click(function(){ //クリックしたら
-        if($('.right-nav-drawer').is(":animated")){
-          return false;
-        }else{
-          $('.right-nav-drawer').animate({width:'toggle'}); //animateで表示・非表示
-          $(this).toggleClass('peke'); //toggleでクラス追加・削除
-          return false;
-        }
-      });
-    });
-
-    //別領域をクリックでメニューを閉じる
-    $(document).click(function(event) {
-      if (!$(event.target).closest('.right-nav-drawer').length) {
-        $('#right-btn').removeClass('peke');
-        $('.right-nav-drawer').hide();
-      }
-    });
+    var state = history.state.slice(0);
+    state.push(e.target.id);
+    history.replaceState(state, false);
   });
-});
 
-//Circle Menu
-$('#menu-circle').circleMenu({
-    item_diameter: 40,
-    circle_radius: 100,
-    direction: 'bottom-left'
 });
-
-$('#nav-tab .nav-link').on('click', function() {
-  $('#search_form').submit();
-});
-
-//wiki
-function WikipediaAPI() {
-	//検索語
-	var query = $('#address').val();
-	//API呼び出し
-	$.ajax({
-		url: 'http://wikipedia.simpleapi.net/api',
-		data: {
-			output: 'json',
-			keyword: query
-		},
-		type: 'GET',
-		dataType: 'jsonp',			//Access-Control-Allow-Origin対策
-		timeout: 1000,
-		success: function(json) {
-			if (json != null && json.length > 0) {
-				$('#word').html('');
-				//結果表示
-				for (i = 0; i < json.length; i++) {
-					$('#word').append(
-						'<dt>' + (i + 1) + '：<a href="' +
-						json[i].url + '">' +
-						json[i].title + '</a>' +
-					 	'&nbsp;(' + json[i].datetime +
-					 	' 更新)</dt>' +
-				 		'<dd>' + json[i].body + '</dd>'
-				 	);
-				}
-			} else {
-				$('#word').html('検索結果なし');
-			}
-		}
-	});
-}
-getMap.getAddress();
