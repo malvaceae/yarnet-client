@@ -64,31 +64,67 @@ $(function() {
   });
 
   //マップクリック時に半径3km内のホテルを検索
+  var markers = [];
+  var infowindows = [];
   YarNet.map.addListener('click', function(e){
-    console.log(e.latLng.lat());
-    console.log(e.latLng.lng());
     var x= e.latLng.lat();
     var y= e.latLng.lng();
-    var url = 'https://app.rakuten.co.jp/services/api/Travel/SimpleHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + x + '&longitude='+y;
-    console.log(url);
-
+    var hotelspot_url='https://app.rakuten.co.jp/services/api/Travel/VacantHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + x + '&longitude='+y;
+    console.log(hotelspot_url);
+    markers.forEach(m => m.setMap(null));
+    markers.splice(0, markers.length);
+    infowindows.splice(0,infowindows.length);
+    //開始時刻
+    var startTime = new Date();
+    //ホテルの位置
     $.ajax({
-      url:url,
+      url:hotelspot_url,
       type:'GET',
       dataType:'json',
       error:function(){
         console.log("miss");
       },
       success:function(data){
+        //終了時刻
+        var endTime = new Date();
+        console.log(endTime.getTime() - startTime.getTime()+"/1000秒 楽天トラベルのurlリクエストに掛かった時間");
         data.hotels.forEach(hotel => {
-          console.log(hotel.hotel[0].hotelBasicInfo.hotelName);
-          console.log(hotel.hotel[0].hotelBasicInfo.latitude);
-          console.log(hotel.hotel[0].hotelBasicInfo.longitude);
-          console.log("done");
+          var hotelInfo_url = "";
+          var hotelPosition = {
+            lat:hotel.hotel[0].hotelBasicInfo.latitude,
+            lng:hotel.hotel[0].hotelBasicInfo.longitude
+          };
+          var marker = new google.maps.Marker({
+            position:hotelPosition,
+            map:YarNet.map,
+            //アイコンの変更
+            icon: './img/hotel-marker.png'
+          });
+          markers.push(marker);
+          var infoWindow = new google.maps.InfoWindow({
+            content:hotel.hotel[0].hotelBasicInfo.hotelName +"<br>"+
+            "<a href=" + hotel.hotel[0].hotelBasicInfo.hotelInformationUrl + " target='_blank'>楽天トラベルページ</a><br>"
+            // +hotel.hotel[0].hotelBasicInfo.telephoneNo+"<br>一泊の値段:"
+            // +hotel.hotel[0].dailyCharge.rakutenCharge,
+            //chargeFlagが0なら一泊,1なら一室
+          });
+          infowindows.push(infoWindow);
+          marker.addListener('click',function(){
+            infowindows.forEach(i => i.close());
+            infoWindow.open(YarNet.map,marker);
+          });
+
+          //contactタブにホテル検索結果を表示
+          $("#hotelImages").append("<img src =" + hotel.hotel[0].hotelBasicInfo.hotelImageUrl +" class='HotelImages'>");
+          $(".HotelImages").on('click',function(){
+            window.open(hotel.hotel[0].hotelBasicInfo.hotelInformationUrl,'_blank');
+          });
+          ('mouseover',function(){
+            console.log("test");
+          });
         });
       }
     });
-
   });
 
 
@@ -118,10 +154,6 @@ $(function() {
     });
   });
 
-  YarNet.map.addListener('center_changed', function() {
-    console.log(YarNet.map);
-    console.log(marker);
-  });
 
   // ドロワーメニューを開くと同時に検索
   $('#nav-input').on('change', function(e) {
