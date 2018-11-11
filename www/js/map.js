@@ -293,7 +293,7 @@ $(function() {
     //document.getElementById('lng').value=lat_lng.lng();
 
     // マーカーを設置
-    marker.setMap(null);
+    if (marker) marker.setMap(null);
     marker = new google.maps.Marker({
       position: lat_lng,
       map: map
