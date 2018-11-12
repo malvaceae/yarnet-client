@@ -23,25 +23,25 @@
       <div class="register_text">
         <label for="inputName" class="sr-only">Name</label>
         <input type="text" id="inputName" class="form-control" placeholder="Name" requied autofocus>
-        <div class="alert" id="name_alert"></div>
+        <div class="alert register-alert" id="name_alert"></div>
       </div>
 
       <div class="register_text">
         <label for="inputEmail" class="sr-only">Email Address</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" requied>
-        <div class="alert" id="mail_alert"></div>
+        <div class="alert register-alert" id="mail_alert"></div>
       </div>
 
       <div class="register_text">
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" requied>
-        <div class="alert" id="pass_alert"></div>
+        <div class="alert register-alert" id="pass_alert"></div>
       </div>
 
       <div class="register_text">
         <label for="inputRepassword" class="sr-only">Confirm Password</label>
         <input type="password" id="inputRePassword" class="form-control" placeholder="Confirm Password" requied>
-        <div class="alert" id="re_alert"></div>
+        <div class="alert register-alert" id="re_alert"></div>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
     </form>
@@ -56,181 +56,166 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">ログイン</button>
     </form>
   </section>
+  <section id= "call" class="call">
+    <div id = "video" class = "open">
+      <video id="their-video" class = "theirv-show" width="500" height="500" autoplay playsinline></video>
+    </div>
+    <video id="my-video" class = "myvideo-show" width="300" height="300" muted="true" autoplay playsinline></video>
+    <form id="end-call">
+      <p>Currently in call with <span id="their-id">...</span></p>
+      <button type="submit" class="btn btn-danger btn-lg" id="end-call">
+        <i class="fas fa-phone-slash"></i>
+      </button>
+    </form>
+  </section>
+
   <section id="main" class="main">
-  <header>
-    <!--左上部ドロワー-->
-    <div id ="nav-drawer">
-      <input id = "nav-input" type = "checkbox" class = "nav-unshown">
-      <label id = "nav-open" for = "nav-input"><i class="fas fa-search fa-2x"></i></label>
-      <label class="nav-unshown" id="nav-close" for="nav-input"></label>
-      <!--フォーム-->
+    <header>
+      <!--左上部ドロワー-->
+      <div id ="nav-drawer">
+        <input id = "nav-input" type = "checkbox" class = "nav-unshown">
+        <label id = "nav-open" for = "nav-input"><i class="fas fa-search fa-2x"></i></label>
+        <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+        <!--フォーム-->
 
-      <div id = "nav-content">
-        <header class="head">
-          <form id = "search_form">
-            <input type="text" value="京都駅" id="address">
-            <button type="submit" value="検索" id="map_button">
-              <svg class="submit-button">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-              </svg>
-            </button>
-          </form>
-        </header>
-
-
-        <nav id="nav-tab">
-          <div class="nav nav-tabs" role="tablist">
-            <a class="nav-item nav-link active" id="nav-twitter-tab" data-toggle="tab" href="#nav-twitter"><i class="fab fa-twitter"></i></a>
-            <a class="nav-item nav-link" id="nav-wikipedia-tab" data-toggle="tab" href="#nav-wikipedia"><i class="fab fa-wikipedia-w"></i></a>
-            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact">Contact</a>
-          </div>
-        </nav>
-
-        <div class="tab-content" id="nav-tabContent">
-          <div class="tab-pane fade show active" id="nav-twitter" role="tabpanel" aria-labelledby="nav-twitter-tab">
-
-            <!--Twitter表示-->
+        <div id = "nav-content">
+          <header class="head">
+            <form id = "search_form">
+              <input type="text" value="京都駅" id="address">
+              <button type="submit" value="検索" id="map_button">
+                <svg class="submit-button">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+                </svg>
+              </button>
+            </form>
+          </header>
 
 
-          </div>
-          <!--wikipedia表示-->
-          <div class="tab-pane fade" id="nav-wikipedia" role="tabpanel" aria-labelledby="nav-wikipedia-tab">
-
-            <div class="wiki">
-            <div id="refere"></div>
+          <nav id="nav-tab">
+            <div class="nav nav-tabs" role="tablist">
+              <a class="nav-item nav-link active" id="nav-twitter-tab" data-toggle="tab" href="#nav-twitter"><i class="fab fa-twitter"></i></a>
+              <a class="nav-item nav-link" id="nav-wikipedia-tab" data-toggle="tab" href="#nav-wikipedia"><i class="fab fa-wikipedia-w"></i></a>
+              <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact">Contact</a>
             </div>
-            <div id="word"></div>
+          </nav>
+
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-twitter" role="tabpanel" aria-labelledby="nav-twitter-tab">
+
+              <!--Twitter表示-->
+
+
+            </div>
+            <!--wikipedia表示-->
+            <div class="tab-pane fade" id="nav-wikipedia" role="tabpanel" aria-labelledby="nav-wikipedia-tab">
+
+              <div class="wiki">
+                <div id="refere"></div>
+              </div>
+              <div id="word"></div>
 
 
 
+            </div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
           </div>
-          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <ul id = menu-circle>
+        <li><i class="fas fa-plus-circle fa-2x"></i></li>
+        <li class="circleMenu-item">
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
+            <i class="fas fa-phone"></i>
+          </button>
+        </li>
+        <li class="circleMenu-item">
+          <button type="button" class="btn btn-primary btn-lg" id="right-btn">
+            <i class="fas fa-comments"></i>
+          </button>
+        </li>
+        <li class="circleMenu-item">
+          <button type="button" class="btn btn-primary btn-lg" data-target="#login">
+            <i class="fas fa-user"></i>
+          </button>
+        </li>
+        <li class="circleMenu-item">
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
+            <i class="fas fa-search"></i>
+          </button>
+        </li>
+        <li class="circleMenu-item"><a href="#">5</a></li>
+      </ul>
+
+
+
+
+      <!--右上部ドロワー-->
+      <!--<a class="right-btn"></a>-->
+      <!--テキストチャット-->
+      <div id="chat-drawer" class="right-nav-drawer">
+        <div id="chat-control">
+          room: <input type="text" id="roomName"> <button id="join">入室</button>
+          <button id="leave">退室</button>
+        </div>
+        <div id="chatLog">
+        </div>
+        <div id="chat-form">
+          <input type="text" id="msg" placeholder="チャットを入力">
+          <button type="button" id ="send" class="btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;"><i class="fab fa-telegram-plane"></i></button>
         </div>
 
+      </div>
+    </header>
+
+    <div id="maps">
+
+
+    </div>
 
 
 
 
-
-
+    <!-- モーダル・ダイアログ -->
+    <div class="modal fade" id="sampleModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-body">
+            <!--ビデオチャット-->
+            <p>Your id: <span id="my-id">...</span></p>
+            <h3>Make a call</h3>
+            <form id="make-call">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Call user id..." id="callto-id" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button type="submit"  class="btn btn-success" date-target="#call">
+                    <i class="fas fa-phone-volume fa-lg"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
 
-    <ul id = menu-circle>
-      <li><i class="fas fa-plus-circle fa-2x"></i></li>
-      <li class="circleMenu-item">
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
+    <footer>
+      <div id="video-alert" class="alert alert-info alert-dismissible fade" role="alert">
+        <button type="submit" class="btn btn-success" value="応答" id="answer-call">
           <i class="fas fa-phone"></i>
         </button>
-      </li>
-      <li class="circleMenu-item">
-        <button type="button" class="btn btn-primary btn-lg" id="right-btn">
-          <i class="fas fa-comments"></i>
+        <button type="submit" class="btn btn-danger" value="拒否" id="no-call">
+          <i class="fas fa-phone-slash"></i>
         </button>
-      </li>
-      <li class="circleMenu-item">
-        <button type="button" class="btn btn-primary btn-lg" data-target="#login">
-          <i class="fas fa-user"></i>
-        </button>
-      </li>
-      <li class="circleMenu-item">
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
-          <i class="fas fa-search"></i>
-        </button>
-      </li>
-      <li class="circleMenu-item"><a href="#">5</a></li>
-    </ul>
-
-
-
-
-    <!--右上部ドロワー-->
-    <!--<a class="right-btn"></a>-->
-    <!--テキストチャット-->
-    <div id="chat-drawer" class="right-nav-drawer">
-      <div id="chat-control">
-        room: <input type="text" id="roomName"> <button id="join">入室</button>
-        <button id="leave">退室</button>
       </div>
-      <div id="chatLog">
-      </div>
-      <div id="chat-form">
-        <input type="text" id="msg" placeholder="チャットを入力">
-        <button type="button" id ="send" class="btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;"><i class="fab fa-telegram-plane"></i></button>
-      </div>
-
-    </div>
-  </header>
-
-  <div id="maps">
-
-
-  </div>
-
-
-
-
-  <!-- モーダル・ダイアログ -->
-  <div class="modal fade" id="sampleModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-        </div>
-        <div class="modal-body">
-          <!--ビデオチャット-->
-
-
-          <p>Your id: <span id="my-id">...</span></p>
-          <h3>Make a call</h3>
-          <form id="make-call">
-            <input type="text" placeholder="Call user id..." id="callto-id">
-            <button href="#" type="submit">Call</button>
-          </form>
-
-
-        </div>
-        <div class="modal-footer">
-
-
-
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-  <div class="modal fade" id="call-modal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-body">
-
-          <div id = "video" class = "open">
-            <video id="their-video" class = "theirv-show" width="500" height="500" autoplay playsinline></video>
-          </div>
-          <video id="my-video" class = "myvideo-show" width="300" height="300" muted="true" autoplay playsinline></video>
-
-        </div>
-        <div class="modal-footer">
-          <form id="end-call">
-            <p>Currently in call with <span id="their-id">...</span></p>
-            <button href="#" type="submit">End Call</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-  <footer>
-    <div id="video-alert" class="alert alert-info alert-dismissible fade" role="alert">
-      <button type="submit" class="btn btn-success" value="応答" id="answer-call">応答</button>
-      <button type="submit" class="btn btn-danger" value="拒否" id="no-call">拒否</button>
-    </div>
-  </footer>
+    </footer>
 
 
 

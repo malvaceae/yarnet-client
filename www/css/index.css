@@ -422,6 +422,9 @@ section > header{
 }
 
 #video-alert{
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
 }
 
 
@@ -534,11 +537,6 @@ section > header{
   height : 100px;
 }
 
-footer{
-    height:140px;
-     position:absolute;
-     bottom:0;
-}
 
 /*#nav-tab{
     position: absolute;
@@ -556,3 +554,6 @@ footer{
 #menu-circle.circleMenu-open .circleMenu-item {
   opacity : 1;
 }
+
+section.call { display :  none; }
+section.main { display : block; }
