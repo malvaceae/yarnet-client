@@ -6,7 +6,7 @@ function transition($target) {
 }
 
 $('section').each((i, section) => {
-  $(`[data-target="#${section.id}"]`).on('click', () => {
+  $(document).on('click', `[data-target="#${section.id}"]`, () => {
     transition($(`#${section.id}`));
     return false;
   });

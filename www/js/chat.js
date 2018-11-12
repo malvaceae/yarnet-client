@@ -9,17 +9,18 @@ $('#join').click(function(){
 $('#send').click(function(){
     var msg = $('#msg').val();
     room.send(msg);
-    chatlog('自分> ' + msg);
+    chatlog('自分> ' + msg, 'mychat');
 });
 
 // 退室
 $('#leave').click(function(){
     room.close();
-    chatlog('<i>' + $('#roomName').val() + '</i>から退室しました');
+    chatlog('<i>' + $('#roomName').val() + '</i>から退室しました', 'system');
 })
 
 
 // チャットログに記録するための関数
-function chatlog(msg){
-    $('#chatLog').append('<p>' + msg + '</p>');
+function chatlog(msg, type){
+    $('#chatLog').append('<div class="' + type + '">' + '<p>' + msg + '</p>' + '</div>');
+
 }

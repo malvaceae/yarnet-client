@@ -5,7 +5,7 @@ section.main     { display : block; }
   position: relative;
 }
 
-.alert{
+.register-alert{
   color: red;
   position: absolute;
   top: 0;
