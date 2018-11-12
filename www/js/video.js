@@ -39,11 +39,11 @@ $('#make-call').submit(function(e){
   setupCallEventHandlers(call);
 
   $('#sampleModal').modal('hide');
-  transition($('#call'));
+  $('#video-content').transition('fadeOut', 'fadeIn');
 });
 
 $('#end-call').on('submit', function(){
-  $('#call-modal').modal('hide');
+  $('#video-content [data-toggle="goBackward"]').click();
   if (existingCall) {
     existingCall.close();
   }
@@ -56,7 +56,7 @@ peer.on('call', function(call){
   $('#video-alert').addClass('show');
   //応答
   $('#answer-call').one('click',function(){
-    transition($('#call'));
+    $('#video-content').transition('fadeOut', 'fadeIn');
     call.answer(localStream);
     setupCallEventHandlers(call);
     $('#video-alert').removeClass('show');
@@ -78,14 +78,14 @@ function setupCallEventHandlers(call){
   existingCall = call;
 
   call.on('stream', function(stream){
-    $('#call-modal').modal();
+    $('#video-content').transition('fadeOut', 'fadeIn');
     addVideo(call,stream);
     setupEndCallUI();
     $('#their-id').text(call.remoteId);
   });
   call.on('close', function(){
     setupMakeCallUI();
-    transition($('#main'));
+    $('#video-content [data-toggle="goBackward"]').click();
     $('#video').removeClass('open');
   });
 }
