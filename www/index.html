@@ -1,108 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
+  <meta charset="UTF-8">
+  <title>YarNet</title>
+
   <meta name="format-detection" content="telephone=no">
   <meta name="msapplication-tap-highlight" content="no">
-  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+  <meta name="description" content="YarNetは、観光地の情報を手早く収集できるアプリケーションです。">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightbox2@2.10.0/dist/css/lightbox.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
   <link rel="stylesheet" href="css/index.css">
-  <link rel="stylesheet" href="css/login.css">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/all.min.css" rel="stylesheet">
-  <link href="css/register.css" rel="stylesheet">
-
-  <title>YarNet</title>
+  <link rel="stylesheet" href="css/top.css">
+  <link rel="stylesheet" href="css/map.css">
+  <link rel="stylesheet" href="css/signup.css">
+  <link rel="stylesheet" href="css/signin.css">
 </head>
-
 <body>
-  <section id="register" class="register">
-    <button class="close" type="button" data-target="#main"><i class="fas fa-times"></i></button>
-    <form class="form-register">
-      <img class="mb-4" src="/img/logo.png" alt width="128" height="128">
-      <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
+  <header>
+  </header>
 
-      <div class="register_text">
-        <label for="inputName" class="sr-only">Name</label>
-        <input type="text" id="inputName" class="form-control" placeholder="Name" requied autofocus>
-        <div class="alert register-alert" id="name_alert"></div>
-      </div>
-
-      <div class="register_text">
-        <label for="inputEmail" class="sr-only">Email Address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" requied>
-        <div class="alert register-alert" id="mail_alert"></div>
-      </div>
-
-      <div class="register_text">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" requied>
-        <div class="alert register-alert" id="pass_alert"></div>
-      </div>
-
-      <div class="register_text">
-        <label for="inputRepassword" class="sr-only">Confirm Password</label>
-        <input type="password" id="inputRePassword" class="form-control" placeholder="Confirm Password" requied>
-        <div class="alert register-alert" id="re_alert"></div>
-      </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
-    </form>
-  </section>
-  <section id="login" class="login">
-    <button class="close" type="button" data-target="#main"><i class="fas fa-times"></i></button>
-    <img class="mb-4" src="img/logo.png" width="128" height="128">
-    <h1 class="h3 mb-3 font-weight-normal">ログイン</h1>
-    <form id="login-form" action="#" method="post">
-      <input class="form-control" type="text" name="mail" placeholder="メールアドレス">
-      <input class="form-control" type="password" name="pass" placeholder="パスワード">
-      <button class="btn btn-lg btn-primary btn-block" type="submit">ログイン</button>
-    </form>
-  </section>
-  <section id= "call" class="call">
-    <div id = "video" class = "open">
-      <video id="their-video" class = "theirv-show" width="500" height="500" autoplay playsinline></video>
-    </div>
-    <video id="my-video" class = "myvideo-show" width="300" height="300" muted="true" autoplay playsinline></video>
-    <form id="end-call">
-      <p>Currently in call with <span id="their-id">...</span></p>
-      <button type="submit" class="btn btn-danger btn-lg" id="end-call">
-        <i class="fas fa-phone-slash"></i>
-      </button>
-    </form>
-  </section>
-
-  <section id="main" class="main">
-    <header>
-      <!--左上部ドロワー-->
-      <div id ="nav-drawer">
-        <input id = "nav-input" type = "checkbox" class = "nav-unshown">
-        <label id = "nav-open" for = "nav-input"><i class="fas fa-search fa-2x"></i></label>
-        <label class="nav-unshown" id="nav-close" for="nav-input"></label>
-        <!--フォーム-->
-
-        <div id = "nav-content">
-          <header class="head">
-            <form id = "search_form">
-              <input type="text" value="京都駅" id="address">
-              <button type="submit" value="検索" id="map_button">
-                <svg class="submit-button">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-                </svg>
-              </button>
-            </form>
-          </header>
-
-
-          <nav id="nav-tab">
-            <div class="nav nav-tabs" role="tablist">
-              <a class="nav-item nav-link active" id="nav-twitter-tab" data-toggle="tab" href="#nav-twitter"><i class="fab fa-twitter"></i></a>
-              <a class="nav-item nav-link" id="nav-wikipedia-tab" data-toggle="tab" href="#nav-wikipedia"><i class="fab fa-wikipedia-w"></i></a>
-              <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact">Contact</a>
-            </div>
+  <main>
+    <section class="content" id="top-content">
+      <header class="mb-auto w-100">
+        <div class="d-flex flex-wrap">
+          <h3>YarNet</h3>
+          <nav class="ml-auto">
+            <button class="btn btn-link" type="button" data-toggle="transition" data-target="#signin-content">ログイン</button>
+            <button class="btn btn-link" type="button" data-toggle="transition" data-target="#signup-content">新規登録</button>
           </nav>
+        </div>
+      </header>
 
-          <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-twitter" role="tabpanel" aria-labelledby="nav-twitter-tab">
+      <h1>YarNet</h1>
 
-              <!--Twitter表示-->
+      <p class="lead mt-2 mb-4">
+        YarNetは、観光地の情報を手早く収集できるアプリケーションです。
+      </p>
+
+      <button class="btn btn-secondary btn-lg" type="button" data-toggle="transition" data-target="#map-content">利用を開始する</button>
+
+      <footer class="mt-auto">
+        <p>
+          <small>&copy; 2018 www.yarnet.ml</small>
+        </p>
+      </footer>
+    </section>
+
+    <section class="content" id="map-content">
+      <header>
+        <!--左上部ドロワー-->
+        <div id ="nav-drawer">
+          <input id = "nav-input" type = "checkbox" class = "nav-unshown">
+          <label id = "nav-open" for = "nav-input"><i class="fas fa-search fa-2x"></i></label>
+          <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+          <!--フォーム-->
+
+          <div id = "nav-content">
+            <header class="head">
+              <form id = "search_form">
+                <input type="text" value="京都駅" id="address">
+                <button type="submit" value="検索" id="map_button">
+                  <i class="fas fa-search"></i>
+                </button>
+              </form>
+            </header>
+
+
+            <nav id="nav-tab">
+              <div class="nav nav-tabs" role="tablist">
+                <a class="nav-item nav-link active" id="nav-twitter-tab" data-toggle="tab" href="#nav-twitter"><i class="fab fa-twitter"></i></a>
+                <a class="nav-item nav-link" id="nav-wikipedia-tab" data-toggle="tab" href="#nav-wikipedia"><i class="fab fa-wikipedia-w"></i></a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact">Contact</a>
+              </div>
+            </nav>
+
+            <div class="tab-content" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-twitter" role="tabpanel" aria-labelledby="nav-twitter-tab">
+
+                <!--Twitter表示-->
+
+
+              </div>
+              <!--wikipedia表示-->
+              <div class="tab-pane fade" id="nav-wikipedia" role="tabpanel" aria-labelledby="nav-wikipedia-tab">
+
+                <div class="wiki">
+                  <div id="refere"></div>
+                </div>
+                <div id="word"></div>
+
+
+
+              </div>
+              <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                <div class="contact">
+                  <div id="hotelImages"></div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+          </div>
+        </div>
+
+        <ul id="menu-circle">
+          <li><i class="fas fa-plus-circle fa-2x"></i></li>
+          <li class="circleMenu-item">
+            <button type="button" class="btn btn-primary" title="ビデオチャット" data-toggle="modal" data-target="#sampleModal">
+              <i class="fas fa-phone"></i>
+            </button>
+          </li>
+          <li class="circleMenu-item">
+            <button type="button" class="btn btn-primary" id="right-btn" title="テキストチャット">
+              <i class="fas fa-comments"></i>
+            </button>
+          </li>
+          <li class="circleMenu-item">
+            <button type="button" class="btn btn-primary" title="検索" data-toggle="modal" data-target="#sampleModal">
+              <i class="fas fa-search"></i>
+            </button>
+          </li>
+        </ul>
 
 
             </div>
@@ -114,130 +141,162 @@
               </div>
               <div id="word"></div>
 
+        <!--右上部ドロワー-->
+        <!--<a class="right-btn"></a>-->
+        <!--テキストチャット-->
+        <div class="right-nav-drawer">
+          room: <input type="text" id="roomName"> <button id="join">入室</button>
+          <br><button id="leave">退室</button>
+          <hr>
+
+
+          <div id="chatLog">
+          </div>
+          <hr>
+          <input type="text" id="msg" placeholder="チャットを入力">
+          <button type="button" id ="send" class="btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;"><i class="fab fa-telegram-plane"></i></button>
+
+
+        </div>
+      </header>
+
+      <div id="map"></div>
+
+      <!-- モーダル・ダイアログ -->
+      <div class="modal fade" id="sampleModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+              <!--ビデオチャット-->
+
+
+              <p>Your id: <span id="my-id">...</span></p>
+              <h3>Make a call</h3>
+              <form id="make-call">
+                <input type="text" placeholder="Call user id..." id="callto-id">
+                <button href="#" type="submit">Call</button>
+              </form>
 
 
             </div>
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+            <div class="modal-footer">
+
+
+
+
+            </div>
           </div>
-
-
-
-
-
-
-
         </div>
       </div>
 
-      <ul id = menu-circle>
-        <li><i class="fas fa-plus-circle fa-2x"></i></li>
-        <li class="circleMenu-item">
-          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
-            <i class="fas fa-phone"></i>
-          </button>
-        </li>
-        <li class="circleMenu-item">
-          <button type="button" class="btn btn-primary btn-lg" id="right-btn">
-            <i class="fas fa-comments"></i>
-          </button>
-        </li>
-        <li class="circleMenu-item">
-          <button type="button" class="btn btn-primary btn-lg" data-target="#login">
-            <i class="fas fa-user"></i>
-          </button>
-        </li>
-        <li class="circleMenu-item">
-          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
-            <i class="fas fa-search"></i>
-          </button>
-        </li>
-        <li class="circleMenu-item"><a href="#">5</a></li>
-      </ul>
-
-
-
-
-      <!--右上部ドロワー-->
-      <!--<a class="right-btn"></a>-->
-      <!--テキストチャット-->
-      <div id="chat-drawer" class="right-nav-drawer">
-        <div id="chat-control">
-          room: <input type="text" id="roomName"> <button id="join">入室</button>
-          <button id="leave">退室</button>
-        </div>
-        <div id="chatLog">
-        </div>
-        <div id="chat-form">
-          <input type="text" id="msg" placeholder="チャットを入力">
-          <button type="button" id ="send" class="btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;"><i class="fab fa-telegram-plane"></i></button>
-        </div>
 
       </div>
     </header>
 
-    <div id="maps">
+      <div class="modal fade" id="call-modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-body">
 
-
-    </div>
-
-
-
-
-    <!-- モーダル・ダイアログ -->
-    <div class="modal fade" id="sampleModal" tabindex="-1">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-body">
-            <!--ビデオチャット-->
-            <p>Your id: <span id="my-id">...</span></p>
-            <h3>Make a call</h3>
-            <form id="make-call">
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Call user id..." id="callto-id" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <div class="input-group-append">
-                  <button type="submit"  class="btn btn-success" date-target="#call">
-                    <i class="fas fa-phone-volume fa-lg"></i>
-                  </button>
-                </div>
+              <div id = "video" class = "open">
+                <video id="their-video" class = "theirv-show" width="500" height="500" autoplay playsinline></video>
               </div>
-            </form>
+              <video id="my-video" class = "myvideo-show" width="300" height="300" muted="true" autoplay playsinline></video>
+
+            </div>
+            <div class="modal-footer">
+              <form id="end-call">
+                <p>Currently in call with <span id="their-id">...</span></p>
+                <button href="#" type="submit">End Call</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <footer>
-      <div id="video-alert" class="alert alert-info alert-dismissible fade" role="alert">
-        <button type="submit" class="btn btn-success" value="応答" id="answer-call">
-          <i class="fas fa-phone"></i>
+      <footer>
+        <div id="video-alert" class="alert alert-info alert-dismissible fade" role="alert">
+          <button type="submit" class="btn btn-success" value="応答" id="answer-call">応答</button>
+          <button type="submit" class="btn btn-danger" value="拒否" id="no-call">拒否</button>
+        </div>
+      </footer>
+    </section>
+
+    <section class="content" id="signup-content">
+      <header>
+        <button class="close" type="button" data-toggle="goBackward">
+          <i class="fas fa-times"></i>
         </button>
-        <button type="submit" class="btn btn-danger" value="拒否" id="no-call">
-          <i class="fas fa-phone-slash"></i>
-        </button>
+      </header>
+
+      <div class="content-body">
+        <img src="img/logo.png" alt="#" width="128" height="128">
+        <h1 class="h3 mt-4 mb-3 font-weight-normal">新規登録</h1>
+
+        <form class="w-100" action="#" method="post">
+          <input class="form-control" type="text" name="name" placeholder="ユーザー名">
+          <input class="form-control" type="text" name="email" placeholder="メールアドレス">
+          <input class="form-control" type="password" name="password" placeholder="パスワード">
+          <input class="form-control" type="password" name="password_confirmation" placeholder="パスワードの確認">
+
+          <button class="btn btn-primary btn-lg btn-block" type="submit">
+            新規登録
+          </button>
+        </form>
+
+        <p class="mt-5 mb-3">
+          <small>&copy; 2018 www.yarnet.ml</small>
+        </p>
       </div>
-    </footer>
+    </section>
 
+    <section class="content" id="signin-content">
+      <header>
+        <button class="close" type="button" data-toggle="goBackward">
+          <i class="fas fa-times"></i>
+        </button>
+      </header>
 
+      <div class="content-body">
+        <img src="img/logo.png" alt="#" width="128" height="128">
+        <h1 class="h3 mt-4 mb-3 font-weight-normal">ログイン</h1>
 
+        <form class="w-100" action="#" method="post">
+          <input class="form-control" type="text" name="email" placeholder="メールアドレス">
+          <input class="form-control" type="password" name="password" placeholder="パスワード">
 
+          <button class="btn btn-primary btn-lg btn-block" type="submit">
+            ログイン
+          </button>
+        </form>
 
+        <p class="mt-5 mb-3">
+          <small>&copy; 2018 www.yarnet.ml</small>
+        </p>
+      </div>
+    </section>
+  </main>
 
+  <footer>
+  </footer>
 
-  </section>
-
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="cordova.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/zikes-circlemenu@0.1.1/jQuery.circleMenu.min.js"></script>
-  <script src="js/transition.js"></script>
-  <script src="js/index.js"></script>
-  <script src="js/login.js"></script>
-  <script src="js/register.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0ZnNFaybm9baTvzoAU4tDeDS1eeh5TIw&libraries=places&callback=initMap" async defer></script>
   <script src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.10.0/dist/js/lightbox.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/zikes/circle-menu@master/jQuery.circleMenu.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0ZnNFaybm9baTvzoAU4tDeDS1eeh5TIw&libraries=places"></script>
+
+  <script src="cordova.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/top.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/signup.js"></script>
+  <script src="js/signin.js"></script>
   <script src="js/video.js"></script>
   <script src="js/chat.js"></script>
-
 </body>
 </html>
