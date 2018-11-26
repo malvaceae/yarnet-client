@@ -1,25 +1,28 @@
 {
-    "name": "ml.yarnet.client",
-    "displayName": "YarNet",
-    "version": "1.0.0",
-    "description": "A sample Apache Cordova application that responds to the deviceready event.",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "ml.yarnet.client",
+  "displayName": "YarNet",
+  "version": "1.0.0",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "cordova-android": "^7.0.0",
+    "cordova-browser": "^5.0.3",
+    "cordova-ios": "^4.5.4",
+    "cordova-plugin-geolocation": "^4.0.1"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-geolocation": {}
     },
-    "author": "Apache Cordova Team",
-    "license": "Apache-2.0",
-    "dependencies": {
-        "cordova-android": "^7.0.0",
-        "cordova-browser": "^5.0.3",
-        "cordova-ios": "^4.5.4"
-    },
-    "cordova": {
-        "plugins": {},
-        "platforms": [
-            "android",
-            "browser",
-            "ios"
-        ]
-    }
+    "platforms": [
+      "android",
+      "browser",
+      "ios"
+    ]
+  }
 }

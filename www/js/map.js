@@ -2,6 +2,7 @@ $(function() {
 
   //マーカー変数用意
   var marker;
+  var marker_gps;
 
   // ボタンに指定したid要素を取得
   var button = $("#map_button");
@@ -71,14 +72,20 @@ $(function() {
     var y= e.latLng.lng();
     var hotelspot_url='https://app.rakuten.co.jp/services/api/Travel/VacantHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + x + '&longitude='+y;
     console.log(hotelspot_url);
+    getHotel(hotelspot_url);
+  });
+
+  // ホテルの位置
+  function getHotel(url) {
     markers.forEach(m => m.setMap(null));
     markers.splice(0, markers.length);
     infowindows.splice(0,infowindows.length);
+
     //開始時刻
     var startTime = new Date();
-    //ホテルの位置
+
     $.ajax({
-      url:hotelspot_url,
+      url:url,
       type:'GET',
       dataType:'json',
       error:function(){
@@ -125,9 +132,7 @@ $(function() {
         });
       }
     });
-  });
-
-
+  }
 
 
   // マップをクリックで位置変更
@@ -286,6 +291,8 @@ $(function() {
 
   }
 
+
+
   function getClickLatLng(lat_lng, map) {
 
     //☆表示している地図上の緯度経度
@@ -337,5 +344,58 @@ $(function() {
       }
     });
   }
+
+
+  var onSuccess = function(position) {
+    alert('Latitude: '          + position.coords.latitude          + '\n' +
+          'Longitude: '         + position.coords.longitude         + '\n' +
+          'Altitude: '          + position.coords.altitude          + '\n' +
+          'Accuracy: '          + position.coords.accuracy          + '\n' +
+          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+          'Heading: '           + position.coords.heading           + '\n' +
+          'Speed: '             + position.coords.speed             + '\n' +
+          'Timestamp: '         + position.timestamp                + '\n');
+
+    YarNet.map.setCenter({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    });
+
+    // マーカーを設置
+    if (marker) marker.setMap(null);
+    marker = new google.maps.Marker({
+      position: {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      },
+      map: YarNet.map
+    });
+
+    // 座標の中心をずらす
+    YarNet.map.panTo({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    });
+
+    var hotelspot_url = 'https://app.rakuten.co.jp/services/api/Travel/VacantHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + position.coords.latitude + '&longitude=' + position.coords.longitude;
+    getHotel(hotelspot_url);
+  };
+
+
+
+
+
+
+
+  //エラーのコールバック
+  var onError = function(error) {
+    alert('code: '    + error.code    + '\n' +
+          'message: ' + error.message + '\n');
+  }
+
+  $("#eventButton").on("click", function() {
+    console.log('TEST');
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
+  });
 
 });

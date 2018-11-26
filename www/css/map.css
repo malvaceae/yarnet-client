@@ -454,3 +454,9 @@ z-index: 10000;
 #menu-circle.circleMenu-open .circleMenu-item {
   opacity : 1;
 }
+
+#eventButton{
+  right: 200px;
+  position: absolute;
+  z-index: 1500;
+}
