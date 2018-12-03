@@ -90,7 +90,7 @@ $(function() {
         console.log(endTime.getTime() - startTime.getTime()+"/1000秒 楽天トラベルのurlリクエストに掛かった時間");
 
         //contactタブのホテル画像をクリア
-        $("#hotelImages").empty();
+        $('#hotel_info').empty();
 
         data.hotels.forEach(hotel => {
           var hotelInfo_url = "";
