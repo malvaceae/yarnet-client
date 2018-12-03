@@ -88,6 +88,10 @@ $(function() {
         //終了時刻
         var endTime = new Date();
         console.log(endTime.getTime() - startTime.getTime()+"/1000秒 楽天トラベルのurlリクエストに掛かった時間");
+
+        //contactタブのホテル画像をクリア
+        $("#hotelImages").empty();
+
         data.hotels.forEach(hotel => {
           var hotelInfo_url = "";
           var hotelPosition = {
@@ -102,11 +106,11 @@ $(function() {
           });
           markers.push(marker);
           var infoWindow = new google.maps.InfoWindow({
-            content:hotel.hotel[0].hotelBasicInfo.hotelName +"<br>"+
-            "<a href=" + hotel.hotel[0].hotelBasicInfo.hotelInformationUrl + " target='_blank'>楽天トラベルページ</a><br>"
-            // +hotel.hotel[0].hotelBasicInfo.telephoneNo+"<br>一泊の値段:"
-            // +hotel.hotel[0].dailyCharge.rakutenCharge,
-            //chargeFlagが0なら一泊,1なら一室
+            //ホテル名は12文字を超えたら..で省略する
+            content:'<div class="infowindow" title="'+hotel.hotel[0].hotelBasicInfo.hotelName+'">'+hotel.hotel[0].hotelBasicInfo.hotelName+'</div>'
+            + '電話番号:'+hotel.hotel[0].hotelBasicInfo.telephoneNo+'<br>'
+            + '<a href=' + hotel.hotel[0].hotelBasicInfo.hotelInformationUrl+' target="_blank">楽天トラベルページ</a><br>'
+            //+"一泊の値段:"+hotel.hotel[0].roomInfo[0].dailyCharge.rakutenCharge+"(円/人)",
           });
           infowindows.push(infoWindow);
           marker.addListener('click',function(){
@@ -114,14 +118,20 @@ $(function() {
             infoWindow.open(YarNet.map,marker);
           });
 
+
           //contactタブにホテル検索結果を表示
-          $("#hotelImages").append("<img src =" + hotel.hotel[0].hotelBasicInfo.hotelImageUrl +" class='HotelImages'>");
-          $(".HotelImages").on('click',function(){
-            window.open(hotel.hotel[0].hotelBasicInfo.hotelInformationUrl,'_blank');
-          });
-          ('mouseover',function(){
-            console.log("test");
-          });
+          var $media = $('<div class="media" style="border-width:1px 0px solid #333333">'+
+            '<img src="' + hotel.hotel[0].hotelBasicInfo.hotelImageUrl + '" class="HotelImages" style="text-align:center">'+
+              '<div class="media-body">'+
+                '<h6 class="mt-0" title="'+hotel.hotel[0].hotelBasicInfo.hotelName+'">'+hotel.hotel[0].hotelBasicInfo.hotelName+'</h6>'+
+                hotel.hotel[0].hotelBasicInfo.address1+hotel.hotel[0].hotelBasicInfo.address2+'<br>'+hotel.hotel[0].hotelBasicInfo.telephoneNo+
+                '</div>'+
+            '</div>'
+            ).appendTo($("#hotel_info"));
+
+            $('img', $media).on('click',function(){
+              window.open(hotel.hotel[0].hotelBasicInfo.hotelInformationUrl,'_blank');
+            });
         });
       }
     });
@@ -149,7 +159,7 @@ $(function() {
     service.getDetails({placeId: address}, function(results, status) {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         $("#address").val(results.name);
-        $('#search_form').submit();
+          $('#search_form').submit();
       }
     });
   });
