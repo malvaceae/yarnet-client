@@ -106,9 +106,10 @@ $(function() {
           });
           markers.push(marker);
           var infoWindow = new google.maps.InfoWindow({
-            content:hotel.hotel[0].hotelBasicInfo.hotelName+"<br>"
-            + "電話番号:"+hotel.hotel[0].hotelBasicInfo.telephoneNo+"<br>"
-            + "<a href=" + hotel.hotel[0].hotelBasicInfo.hotelInformationUrl+" target='_blank'>楽天トラベルページ</a><br>"
+            //ホテル名は12文字を超えたら..で省略する
+            content:'<div class="infowindow" title="'+hotel.hotel[0].hotelBasicInfo.hotelName+'">'+hotel.hotel[0].hotelBasicInfo.hotelName+'</div>'
+            + '電話番号:'+hotel.hotel[0].hotelBasicInfo.telephoneNo+'<br>'
+            + '<a href=' + hotel.hotel[0].hotelBasicInfo.hotelInformationUrl+' target="_blank">楽天トラベルページ</a><br>'
             //+"一泊の値段:"+hotel.hotel[0].roomInfo[0].dailyCharge.rakutenCharge+"(円/人)",
           });
           infowindows.push(infoWindow);

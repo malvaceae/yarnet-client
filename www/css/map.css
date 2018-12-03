@@ -9,6 +9,14 @@
 #hotel_info{
   padding:10px;
 }
+
+.infowindow{
+  text-overflow: ellipsis;
+  overflow:hidden;
+  white-space: nowrap;
+  width:175px;
+}
+
 .media-body{
   font-size:12px;
   margin-left: 10px;
