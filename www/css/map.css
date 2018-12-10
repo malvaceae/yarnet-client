@@ -75,7 +75,7 @@
   max-width              : 85%;
   background-color       : #fff;
   transition             : left 300ms ease-out;
-  z-index                : 110;
+  z-index                : 600;
 }
 .left-drawer.show {
   left : 0;
@@ -103,7 +103,7 @@
   right    : 0;
   bottom   : 0;
   left     : 0;
-  z-index  : 300;
+  z-index  : 550;
 }
 
 #search_form {
