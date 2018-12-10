@@ -158,6 +158,7 @@
 #nav-drawer {
   position: relative;
   width: 500px;
+  max-width: 100%;
 
 }
 
