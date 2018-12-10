@@ -82,7 +82,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#nav-contact">
-                Contact
+                <i class="fas fa-hotel"></i>
               </a>
             </li>
           </ul>
@@ -115,11 +115,6 @@
               <i class="fas fa-comments"></i>
             </button>
           </li>
-          <li class="circleMenu-item">
-            <button type="button" class="btn btn-primary" title="検索" data-toggle="modal" data-target="#sampleModal">
-              <i class="fas fa-search"></i>
-            </button>
-          </li>
         </ul>
 
         <!--右上部ドロワー-->
@@ -127,8 +122,9 @@
         <!--テキストチャット-->
         <div class="right-nav-drawer">
           <div id="chat-control">
-            room: <input type="text" id="roomName"> <button id="join">入室</button>
-            <button id="leave">退室</button>
+            <button id="leave">
+              <i class="fas fa-sign-out-alt"></i>
+            </button>
           </div>
 
           <div id="chatLog">
@@ -141,7 +137,9 @@
         </div>
       </header>
 
-      <button id="eventButton">GPS</button>
+      <button id="eventButton">
+        <i class="fas fa-crosshairs"></i>
+      </button>
 
       <div id="map"></div>
 

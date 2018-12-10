@@ -20,10 +20,17 @@
 .media-body{
   font-size:12px;
   margin-left: 10px;
+  max-width:80%;
 }
 .media-body h6{
   text-overflow: ellipsis;
-  width: 339px;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.hotel-address{
+  text-overflow: ellipsis;
+  max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -65,9 +72,10 @@
           flex-direction : column;
   width                  : 450px;
   height                 : 100%;
-  max-width              : 100%;
+  max-width              : 85%;
   background-color       : #fff;
   transition             : left 300ms ease-out;
+  z-index                : 110;
 }
 .left-drawer.show {
   left : 0;
@@ -80,7 +88,13 @@
 
 .left-drawer .tab-content {
   height     : 100%;
+  max-width: : 80%;
   overflow-y : auto;
+}
+
+.left-drawer .nav-link {
+  padding-bottom : 3px;
+  margin-bottom  : 5px;
 }
 
 .drawer-backdrop {
@@ -404,9 +418,10 @@
   position: absolute;
   top: 0px;
   right:0;
-  width:470px;
+  width:450px;
+  max-width: 85%;
   padding:60px 0 20px 20px;
-  z-index: 100;
+  z-index: 110;
 }
 
 #menu-circle {
@@ -453,6 +468,7 @@ z-index: 10000;
   left: 20px;
   height: 40px;
   overflow: hidden;
+  max-width: 100%;
 }
 #chatLog {
   position: absolute;
@@ -497,5 +513,5 @@ z-index: 10000;
 #eventButton{
   right: 200px;
   position: absolute;
-  z-index: 1500;
+  z-index: 100;
 }
