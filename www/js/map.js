@@ -147,7 +147,9 @@ $(function() {
 var select_location;
   // マップをクリックで位置変更
   YarNet.map.addListener('click', function(e) {
+if(your_location!=null || select_location!=null){
     calcDistance(e);
+  }
     // 住所を取得
     var address = e.placeId;
     room = peer.joinRoom(address);
