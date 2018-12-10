@@ -144,11 +144,10 @@ $(function() {
     });
   }
 
-
+var select_location;
   // マップをクリックで位置変更
   YarNet.map.addListener('click', function(e) {
-    getClickLatLng(e.latLng, YarNet.map);
-
+    calcDistance(e);
     // 住所を取得
     var address = e.placeId;
     room = peer.joinRoom(address);
@@ -306,6 +305,27 @@ $(function() {
     map.panTo(lat_lng);
   }
 
+  //距離測定
+  function calcDistance(e){
+    getClickLatLng(e.latLng, YarNet.map);
+    select_location=[e.latLng.lat(),e.latLng.lng()];
+    //現在地と検索地両方あれば距離を測定
+    if(your_location!=null || select_location!=null){
+      var pos =[
+        new google.maps.LatLng(your_location[0],your_location[1]),
+        new google.maps.LatLng(select_location[0],select_location[1])
+      ];
+      var distance = google.maps.geometry.spherical.computeLength(pos);
+      //1kmより長い場合
+      if(distance>=1000){
+        console.log((distance/1000).toFixed(1)+"km");
+      }else{
+        console.log(distance.toFixed(1)+"m");
+      }
+    }
+  }
+
+
   //wiki
   function WikipediaAPI() {
     //検索語
@@ -341,7 +361,10 @@ $(function() {
     });
   }
 
+  var your_location;
   var onSuccess = function(position) {
+
+    your_location=[position.coords.latitude,position.coords.longitude];
     alert('Latitude: '          + position.coords.latitude          + '\n' +
           'Longitude: '         + position.coords.longitude         + '\n' +
           'Altitude: '          + position.coords.altitude          + '\n' +
@@ -389,7 +412,6 @@ $(function() {
   }
 
   $("#eventButton").on("click", function() {
-    console.log('TEST');
     navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
   });
 
