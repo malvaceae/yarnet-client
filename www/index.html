@@ -55,63 +55,51 @@
 
 
       <header>
-        <!--左上部ドロワー-->
-        <div id ="nav-drawer">
-          <input id = "nav-input" type = "checkbox" class = "nav-unshown">
-          <label id = "nav-open" for = "nav-input"><i class="fas fa-search fa-2x"></i></label>
-          <label class="nav-unshown" id="nav-close" for="nav-input"></label>
-          <!--フォーム-->
+        <div class="left-drawer-toggle">
+          <i class="fas fa-search fa-2x"></i>
+        </div>
 
-          <div id = "nav-content">
-            <header class="head">
-              <form id = "search_form">
-                <input type="text" value="京都駅" id="address">
-                <button type="submit" value="検索" id="map_button">
-                  <i class="fas fa-search"></i>
-                </button>
-              </form>
-            </header>
-
-
-            <nav id="nav-tab">
-              <div class="nav nav-tabs" role="tablist">
-                <a class="nav-item nav-link active" id="nav-twitter-tab" data-toggle="tab" href="#nav-twitter"><i class="fab fa-twitter"></i></a>
-                <a class="nav-item nav-link" id="nav-wikipedia-tab" data-toggle="tab" href="#nav-wikipedia"><i class="fab fa-wikipedia-w"></i></a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact">Contact</a>
+        <!-- 左上部ドロワー -->
+        <div class="left-drawer">
+          <header>
+            <form id="search_form" action="#" method="post">
+              <button id="map_button" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+              <input id="address" type="text" value="京都駅" placeholder="検索キーワード">
+            </form>
+          </header>
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" id="nav-twitter-tab" data-toggle="tab" href="#nav-twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="nav-wikipedia-tab" data-toggle="tab" href="#nav-wikipedia">
+                <i class="fab fa-wikipedia-w"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#nav-contact">
+                <i class="fas fa-hotel"></i>
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="nav-twitter">
+            </div>
+            <div class="tab-pane fade" id="nav-wikipedia">
+              <div class="wiki">
+                <div id="refere"></div>
               </div>
-            </nav>
-
-            <div class="tab-content" id="nav-tabContent">
-              <div class="tab-pane fade show active" id="nav-twitter" role="tabpanel" aria-labelledby="nav-twitter-tab">
-
-                <!--Twitter表示-->
-
-
-              </div>
-              <!--wikipedia表示-->
-              <div class="tab-pane fade" id="nav-wikipedia" role="tabpanel" aria-labelledby="nav-wikipedia-tab">
-
-                <div class="wiki">
-                  <div id="refere"></div>
-                </div>
-                <div id="word"></div>
-
-
-
-              </div>
-              <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                <div class="contact">
-                  <div id="hotelImages"></div>
-                </div>
+              <div id="word"></div>
+            </div>
+            <div class="tab-pane fade" id="nav-contact">
+              <div class="contact">
+                <div id="hotel_info"></div>
               </div>
             </div>
-
-
-
-
-
-
-
           </div>
         </div>
 
@@ -127,11 +115,6 @@
               <i class="fas fa-comments"></i>
             </button>
           </li>
-          <li class="circleMenu-item">
-            <button type="button" class="btn btn-primary" title="検索" data-toggle="modal" data-target="#sampleModal">
-              <i class="fas fa-search"></i>
-            </button>
-          </li>
         </ul>
 
         <!--右上部ドロワー-->
@@ -139,8 +122,9 @@
         <!--テキストチャット-->
         <div class="right-nav-drawer">
           <div id="chat-control">
-            room: <input type="text" id="roomName"> <button id="join">入室</button>
-            <button id="leave">退室</button>
+            <button id="leave">
+              <i class="fas fa-sign-out-alt"></i>
+            </button>
           </div>
 
           <div id="chatLog">
@@ -148,12 +132,14 @@
 
           <div id="chat-form">
             <input type="text" id="msg" placeholder="チャットを入力">
-            <button type="button" id ="send" class="btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;"><i class="fab fa-telegram-plane"></i></button>
+            <button type="button" id="send" class="btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;"><i class="fab fa-telegram-plane"></i></button>
           </div>
         </div>
       </header>
 
-      <button id="eventButton">GPS</button>
+      <button id="eventButton">
+        <i class="fas fa-crosshairs"></i>
+      </button>
 
       <div id="map"></div>
 
@@ -189,6 +175,17 @@
         </div>
       </div>
 
+      <article class="tweet-template">
+        <div class="tweet-head">
+          <img class="profile-img" src="" alt="">
+          <div class="user-name"></div>
+          <div class="screen-name"></div>
+          <div class="date"></div>
+          <div class="body"></div>
+        </div>
+        <div class="tweet-body">
+        </div>
+      </article>
 
 
       <footer>
@@ -264,10 +261,10 @@
       </header>
 
       <div class="content-body">
-        <div class="open" id="video">
-          <video class="theirv-show" id="their-video" width="500" autoplay playsinline></video>
+        <div class="videos">
+          <video class="t-video"              autoplay playsinline></video>
+          <video class="m-video" muted="true" autoplay playsinline></video>
         </div>
-        <video class="myvideo-show" id="my-video" width="300" muted="true" autoplay playsinline></video>
       </div>
     </section>
   </main>
