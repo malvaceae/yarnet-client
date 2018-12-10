@@ -14,7 +14,10 @@ install:
   - npm install -g cordova
 
 script:
-  - yes n | cordova prepare browser
+  - git checkout abccfd9a6f2d3ce1af5f5a298770e24f1ba79d97 config.xml
+  - git checkout abccfd9a6f2d3ce1af5f5a298770e24f1ba79d97 package.json
+  - git checkout abccfd9a6f2d3ce1af5f5a298770e24f1ba79d97 package-lock.json
+  - cordova prepare browser
 
 after_success:
   - cd platforms/browser/www

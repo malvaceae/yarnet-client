@@ -1,5 +1,37 @@
 @charset "UTF-8";
 
+/* ホテルのサムネイル表示 */
+.HotelImages{
+  width:64px;
+  height:64px;
+  cursor:pointer;
+}
+#hotel_info{
+  padding:10px;
+}
+
+.infowindow{
+  text-overflow: ellipsis;
+  overflow:hidden;
+  white-space: nowrap;
+  width:175px;
+}
+
+.media-body{
+  font-size:12px;
+  margin-left: 10px;
+}
+.media-body h6{
+  text-overflow: ellipsis;
+  width: 339px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#hotel_info .media{
+  border-bottom:1px solid #ccc;
+  padding: 10px;
+}
+
 #map-content {
   font-family : sans-serif;
   text-align  : left;
@@ -10,8 +42,57 @@
   height : 100%;
 }
 
-/*　↓検索フォーム↓　*/
-#search_form{
+
+/* 検索フォーム */
+
+.left-drawer-toggle {
+  position : absolute;
+  top      : 10px;
+  left     : 10px;
+  z-index  : 500;
+  cursor   : pointer;
+}
+
+.left-drawer {
+  position               : fixed;
+  top                    : 0;
+  bottom                 : 0;
+  left                   : -450px;
+  z-index                : 500;
+  display                : -webkit-flex;
+  display                :         flex;
+  -webkit-flex-direction : column;
+          flex-direction : column;
+  width                  : 450px;
+  height                 : 100%;
+  max-width              : 100%;
+  background-color       : #fff;
+  transition             : left 300ms ease-out;
+}
+.left-drawer.show {
+  left : 0;
+}
+
+.left-drawer > header {
+  padding: 10px;
+  background-color: #EEEEEE;
+}
+
+.left-drawer .tab-content {
+  height     : 100%;
+  overflow-y : auto;
+}
+
+.drawer-backdrop {
+  position : fixed;
+  top      : 0;
+  right    : 0;
+  bottom   : 0;
+  left     : 0;
+  z-index  : 300;
+}
+
+#search_form {
   position: relative;
   height: 50px;
   border-radius: 40px;
@@ -20,11 +101,11 @@
   transition: all 0.3s ease;
 }
 
-#search_form.focus{
+#search_form.focus {
   box-shadow: : 0 3px 4px rgba(0, 0, 0, 0.15);
 }
 
-#address{
+#address {
   position: absolute;
   left: 50px;
   font-size: 20px;
@@ -42,11 +123,7 @@
   appearance: none;
 }
 
-.head{
-  background-color: #EEEEEE;
-}
-
-#map_button{
+#map_button {
   position: absolute;
   left: 15px;
   width: 20px;
@@ -60,10 +137,115 @@
   cursor: pointer;
 }
 
-#map_button svg {
-  width: 30px;
-  height: 30px;
-  fill: #5a6674;
+
+/* ツイート */
+
+.tweet-template {
+  display : none;
+}
+
+.tweet {
+  margin : 10px;
+}
+
+.tweet-head {
+  position : relative;
+}
+
+.profile-img {
+  position      : absolute;
+  width         : 40px;
+  height        : 40px;
+  border-radius : 20px;
+}
+
+.user-name {
+  padding-left : 50px;
+  font-size    : 15px;
+  font-weight  : bold;
+}
+
+.date {
+  padding-left : 50px;
+}
+
+.body {
+  padding-left : 50px;
+}
+
+
+/* ツイートの画像分割 */
+
+.photos_1 img,
+.photos_2 img,
+.photos_3 img,
+.photos_4 img {
+  position          : absolute;
+  top               : 50%;
+  left              : 50%;
+  min-width         : 100%;
+  min-height        : 100%;
+  -webkit-transform : translate(-50%, -50%);
+  -ms-transform : translate(-50%, -50%);
+  transform : translate(-50%, -50%);
+}
+
+.photos_1,
+.photos_2,
+.photos_3,
+.photos_4 {
+  width  : 100%;
+  height : 300px;
+}
+
+.photos_img_wrapper_0,
+.photos_img_wrapper_1,
+.photos_img_wrapper_2,
+.photos_img_wrapper_3 {
+  position     : relative;
+  border-color : transparent;
+  border-style : solid;
+  border-width : 2px;
+  overflow     : hidden;
+  box-sizing   : border-box;
+}
+
+.photos_1 .photos_img_wrapper_0 {
+  width  : 100%;
+  height : 300px;
+}
+
+.photos_2 .photos_img_wrapper_0 {
+  float  : left;
+  width  : 70%;
+  height : 300px;
+}
+.photos_2 .photos_img_wrapper_1 {
+  width  : 30%;
+  height : 300px;
+}
+
+.photos_3 .photos_img_wrapper_0 {
+  float  : left;
+  width  : 70%;
+  height : 300px;
+}
+.photos_3 .photos_img_wrapper_1,
+.photos_3 .photos_img_wrapper_2 {
+  width  : 30%;
+  height : 150px;
+}
+
+.photos_4 .photos_img_wrapper_0 {
+  float  : left;
+  width  : 70%;
+  height : 300px;
+}
+.photos_4 .photos_img_wrapper_1,
+.photos_4 .photos_img_wrapper_2,
+.photos_4 .photos_img_wrapper_3 {
+  width  : 30%;
+  height : 100px;
 }
 
 .search-option {
@@ -145,27 +327,6 @@
   border-top-color: #e24040;
 }
 
-
-
-
-
-/*　↓ナビゲーションドロワー↓　*/
-#map-content header {
-  padding:10px;
-  background-color: : transparent;
-}
-
-#nav-drawer {
-  position: relative;
-  width: 500px;
-  max-width: 100%;
-
-}
-
-/*チェックボックス等は非表示に*/
-.nav-unshown {
-  display:none;
-}
 
 /*アイコンのスペース*/
 #nav-open {
@@ -267,129 +428,6 @@
   display:block;
 }
 
-#map-content > header{
-  position: absolute;
-  top: 0;
-  z-index: 1000;
-  width: 100vw;
-  height: 50px;
-  background-color:transparent;
-}
-
-#video-alert{
-}
-
-
-
-
-
-/*ツイート*/
-.profile_img{
-  border-radius: 20px;
-  height: 40px;
-  width: 40px;
-  position: absolute;
-}
-
-.user_name{
-  position: relative;
-  bottom: 10px;
-  left: 50px;
-  float: left;
-  margin-right: 5px;
-  font-weight: bold;
-  font-size: 15px;
-}
-
-.date{
-  position: relative;
-  bottom: 8px;
-  left: 50px;
-  width: calc(100% - 50px);
-}
-
-.body{
-  position: relative;
-  bottom: 10px;
-  left: 50px;
-  clear: both;
-  width: calc(100% - 50px);
-}
-
-
-/* ツイートの画像分割 */
-
-.photos_1 img,
-.photos_2 img,
-.photos_3 img,
-.photos_4 img {
-  position          : absolute;
-  top               : 50%;
-  left              : 50%;
-  min-width         : 100%;
-  min-height        : 100%;
-  -webkit-transform : translate(-50%, -50%);
-  -ms-transform : translate(-50%, -50%);
-  transform : translate(-50%, -50%);
-}
-
-.photos_1,
-.photos_2,
-.photos_3,
-.photos_4 {
-  width  : 100%;
-  height : 300px;
-}
-
-.photos_img_wrapper_0,
-.photos_img_wrapper_1,
-.photos_img_wrapper_2,
-.photos_img_wrapper_3 {
-  position     : relative;
-  border-color : transparent;
-  border-style : solid;
-  border-width : 2px;
-  overflow     : hidden;
-  box-sizing   : border-box;
-}
-
-.photos_1 .photos_img_wrapper_0 {
-  width  : 100%;
-  height : 300px;
-}
-
-.photos_2 .photos_img_wrapper_0 {
-  float  : left;
-  width  : 70%;
-  height : 300px;
-}
-.photos_2 .photos_img_wrapper_1 {
-  width  : 30%;
-  height : 300px;
-}
-
-.photos_3 .photos_img_wrapper_0 {
-  float  : left;
-  width  : 70%;
-  height : 300px;
-}
-.photos_3 .photos_img_wrapper_1,
-.photos_3 .photos_img_wrapper_2 {
-  width  : 30%;
-  height : 150px;
-}
-
-.photos_4 .photos_img_wrapper_0 {
-  float  : left;
-  width  : 70%;
-  height : 300px;
-}
-.photos_4 .photos_img_wrapper_1,
-.photos_4 .photos_img_wrapper_2,
-.photos_4 .photos_img_wrapper_3 {
-  width  : 30%;
-  height : 100px;
-}
 
 #map-content footer{
   height:140px;

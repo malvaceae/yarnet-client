@@ -95,6 +95,10 @@ $(function() {
         //終了時刻
         var endTime = new Date();
         console.log(endTime.getTime() - startTime.getTime()+"/1000秒 楽天トラベルのurlリクエストに掛かった時間");
+
+        //contactタブのホテル画像をクリア
+        $('#hotel_info').empty();
+
         data.hotels.forEach(hotel => {
           var hotelInfo_url = "";
           var hotelPosition = {
@@ -109,11 +113,11 @@ $(function() {
           });
           markers.push(marker);
           var infoWindow = new google.maps.InfoWindow({
-            content:hotel.hotel[0].hotelBasicInfo.hotelName +"<br>"+
-            "<a href=" + hotel.hotel[0].hotelBasicInfo.hotelInformationUrl + " target='_blank'>楽天トラベルページ</a><br>"
-            // +hotel.hotel[0].hotelBasicInfo.telephoneNo+"<br>一泊の値段:"
-            // +hotel.hotel[0].dailyCharge.rakutenCharge,
-            //chargeFlagが0なら一泊,1なら一室
+            //ホテル名は12文字を超えたら..で省略する
+            content:'<div class="infowindow" title="'+hotel.hotel[0].hotelBasicInfo.hotelName+'">'+hotel.hotel[0].hotelBasicInfo.hotelName+'</div>'
+            + '電話番号:'+hotel.hotel[0].hotelBasicInfo.telephoneNo+'<br>'
+            + '<a href=' + hotel.hotel[0].hotelBasicInfo.hotelInformationUrl+' target="_blank">楽天トラベルページ</a><br>'
+            //+"一泊の値段:"+hotel.hotel[0].roomInfo[0].dailyCharge.rakutenCharge+"(円/人)",
           });
           infowindows.push(infoWindow);
           marker.addListener('click',function(){
@@ -121,14 +125,20 @@ $(function() {
             infoWindow.open(YarNet.map,marker);
           });
 
+
           //contactタブにホテル検索結果を表示
-          $("#hotelImages").append("<img src =" + hotel.hotel[0].hotelBasicInfo.hotelImageUrl +" class='HotelImages'>");
-          $(".HotelImages").on('click',function(){
-            window.open(hotel.hotel[0].hotelBasicInfo.hotelInformationUrl,'_blank');
-          });
-          ('mouseover',function(){
-            console.log("test");
-          });
+          var $media = $('<div class="media" style="border-width:1px 0px solid #333333">'+
+            '<img src="' + hotel.hotel[0].hotelBasicInfo.hotelImageUrl + '" class="HotelImages" style="text-align:center">'+
+              '<div class="media-body">'+
+                '<h6 class="mt-0" title="'+hotel.hotel[0].hotelBasicInfo.hotelName+'">'+hotel.hotel[0].hotelBasicInfo.hotelName+'</h6>'+
+                hotel.hotel[0].hotelBasicInfo.address1+hotel.hotel[0].hotelBasicInfo.address2+'<br>'+hotel.hotel[0].hotelBasicInfo.telephoneNo+
+                '</div>'+
+            '</div>'
+            ).appendTo($("#hotel_info"));
+
+            $('img', $media).on('click',function(){
+              window.open(hotel.hotel[0].hotelBasicInfo.hotelInformationUrl,'_blank');
+            });
         });
       }
     });
@@ -154,22 +164,14 @@ $(function() {
     service.getDetails({placeId: address}, function(results, status) {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         $("#address").val(results.name);
-        $('#search_form').submit();
+          $('#search_form').submit();
       }
     });
   });
 
 
-  // ドロワーメニューを開くと同時に検索
-  $('#nav-input').on('change', function(e) {
-    if (this.checked) $('#search_form').submit();
-  });
-
-  WindowHeight = $(window).height();
-  $('.drawr').css('height', WindowHeight); //メニューをwindowの高さいっぱいにする
-
   $('#search_form').on('submit', function(){ //クリックしたら
-    $('#nav-content .Tweet_List').remove();
+    $('#nav-twitter .tweet').remove();
 
     if ($('#nav-twitter-tab').hasClass('active')) {
       $.getJSON('https://api.yarnet.ml/tweets', {'q': $("#address").val()}).done(function(tweets) {
@@ -179,27 +181,36 @@ $(function() {
         tweets.forEach(tweet => {
           console.log(tweet);
 
-          $article = $('<article class="Tweet_List">');
-          $header = $('<header>');
-          $header.append($('<img class ="profile_img">').attr('src', tweet.user_profile_img));//prof img
-          $header.append($('<div class ="user_name">').text(tweet.user_name));//userid
-          $header.append($('<div class ="screen_name">').text(tweet.user_screem_name));
-          $header.append($('<div class ="date">').text(tweet.date));//投稿時刻
-          $header.append($('<div class ="body">').text(tweet.body));
+          var $article = $('.tweet-template')
+            .clone(true)
+            .removeClass('tweet-template')
+            .addClass('tweet');
 
-          $photos = $('<div class="photos_' + tweet.photos.length + '">');
+          $('.profile-img', $article).attr('src', tweet.user_profile_img);
+          $('.user-name', $article).text(tweet.user_name);
+          $('.screen-name', $article).text(tweet.user_screem_name);
+          $('.date', $article).text(tweet.date);
+          $('.body', $article).text(tweet.body);
+
+          var $photos = $('.tweet-body', $article).addClass('photos_' + tweet.photos.length);
 
           for (var i = 0; i < tweet.photos.length; i++) {
-            $wrapper = $('<div class="photos_img_wrapper_' + i + '">');
-            $wrapper.append($('<a href="' + tweet.photos[i] + '" data-lightbox="image-' + tweet.id + '" data-title=""><img src="' + tweet.photos[i] + '"></a>'));
+            var $wrapper = $('<div>').addClass('photos_img_wrapper_' + i);
+            $wrapper.append(
+              $('<a>')
+                .attr('href', tweet.photos[i])
+                .attr('data-lightbox', 'image-' + tweet.id)
+                .attr('data-title', '')
+                .append(
+                  $('<img>')
+                    .attr('src', tweet.photos[i])
+                )
+            );
 
             $photos.append($wrapper);
           }
 
-          $header.append($photos);
-          $article.append($header);
-
-          $('#nav-content').append($article);
+          $('#nav-twitter').append($article);
         });
       });
     }
@@ -208,22 +219,7 @@ $(function() {
       WikipediaAPI();
     }
 
-
-    if($('.drawr').is(":animated")){
-      return false;
-    }else{
-      $('.drawr').animate({width:'toggle'}); //animateで表示・非表示
-      $(this).toggleClass('peke'); //toggleでクラス追加・削除
-      return false;
-    }
-  });
-
-  //別領域をクリックでメニューを閉じる
-  $(document).click(function(event) {
-    if (!$(event.target).closest('.drawr').length) {
-      $('.search_button').removeClass('peke');
-      $('.drawr').hide();
-    }
+    return false;
   });
 
   //右ドロワー
@@ -255,7 +251,7 @@ $(function() {
     direction: 'bottom-left'
   });
 
-  $('#nav-tab .nav-link').on('shown.bs.tab', function() {
+  $('.left-drawer .nav-link').on('shown.bs.tab', function() {
     $('#search_form').submit();
   });
 
@@ -345,7 +341,6 @@ $(function() {
     });
   }
 
-
   var onSuccess = function(position) {
     alert('Latitude: '          + position.coords.latitude          + '\n' +
           'Longitude: '         + position.coords.longitude         + '\n' +
@@ -396,6 +391,20 @@ $(function() {
   $("#eventButton").on("click", function() {
     console.log('TEST');
     navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
+  });
+
+  $('.left-drawer-toggle').on('click', function() {
+    $('<div>').addClass('drawer-backdrop')
+      .appendTo('#map-content');
+    $('.left-drawer').toggleClass('show');
+
+    // 開くと同時に検索する。
+    $('#search_form').submit();
+  });
+
+  $(document).on('click', '.drawer-backdrop', function() {
+    $('.left-drawer').removeClass('show');
+    $(this).remove();
   });
 
 });
