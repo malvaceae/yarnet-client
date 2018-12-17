@@ -9,7 +9,7 @@ peer.on('open', function(id) {
 });
 
 peer.on('error', function(err) {
-  alert(err.message);
+  // alert(err.message);
 });
 
 peer.on('close', function() {
