@@ -54,8 +54,8 @@
 
 .left-drawer-toggle {
   position : absolute;
-  top      : 10px;
-  left     : 10px;
+  top      : 20px;
+  right    : -40px;
   z-index  : 500;
   cursor   : pointer;
 }
@@ -487,6 +487,7 @@ z-index: 10000;
   bottom: 20px;
   left: 20px;
   height: 30px;
+  max-height: 20%;;
   background-color: rgb(255,255,255);
   overflow: hidden;
 }
@@ -498,6 +499,7 @@ z-index: 10000;
   border-radius:10px;
   box-shadow: none;
   padding: 2px 8px;
+  max-width: 80%;
 }
 #send{
 }
@@ -515,3 +517,41 @@ z-index: 10000;
   position: absolute;
   z-index: 100;
 }
+    .wrapper{
+      width: 100%;
+      margin: 30px auto;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .text_wrapper{
+      position: relative;
+      margin-bottom: 45px;
+    }
+    .text{
+      height: 90px;
+      overflow: hidden;
+    }
+    .show_more{
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
+      height: 30px;
+      padding-top: 60px;
+      text-align: center;
+      line-height: 30px;
+      background: linear-gradient(180deg, rgb(255, 255, 255,0) 0%, rgb(255, 255, 255,1) 70%);
+      cursor: pointer;
+      transition: bottom 0.2s;
+    }
+    .active{
+      background: none;
+      bottom: -30px;
+    }
+    .wiki-title{
+      font-size: 20px;
+    }
+/* dl.wiki-dl {margin:0;padding:.5em;width:460px;background-color:#fff;font-size:1em;font-family:Georgia, "Times New Roman", Times, serif;}
+dt {margin:0;padding:.5em;font-weight:bold;background-color:#e0e0e0;}
+dd {margin:0;padding:0;padding-top:.5em;padding-bottom:.5em;}
+dd .wiki-content {padding-left:.5em;border-left:1px solid #333;font-size:.9em;clear:both;} */
