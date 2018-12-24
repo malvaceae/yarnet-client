@@ -158,14 +158,15 @@ $(function() {
 var select_location;
   // マップをクリックで位置変更
   YarNet.map.addListener('click', function(e) {
-if(your_location!=null || select_location!=null){
-    calcDistance(e);
-  }
+    // if(your_location!=null || select_location!=null){
+    //   calcDistance(e);
+    // }
+
+    getClickLatLng(e.latLng, YarNet.map);
+
     // 住所を取得
     var address = e.placeId;
     room = peer.joinRoom(address);
-
-    chatlog('<i>' + address + '</i>に入室しました');
 
     // チャットを受信
     room.on('data', function(data){
@@ -175,6 +176,8 @@ if(your_location!=null || select_location!=null){
     var service = new google.maps.places.PlacesService(YarNet.map);
     service.getDetails({placeId: address}, function(results, status) {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
+        chatlog('<i>' + results.name + '</i>に入室しました');
+
         $("#address").val(results.name);
           $('#search_form').submit();
       }
@@ -355,16 +358,22 @@ if(your_location!=null || select_location!=null){
       timeout: 1000,
       success: function(json) {
         if (json != null && json.length > 0) {
-          $('#word').html('');
+          $('#word').html('<div class = wrapper></div>');
           //結果表示
+
           for (i = 0; i < json.length; i++) {
-            $('#word').append(
-              '<dt>' + (i + 1) + '：<a href="' +
+            $('.wrapper').append(
+              '<div class = text_wrapper>' +
+              '<div class = wiki-title>' +
+              (i + 1) + '：<a href="' +
               json[i].url + '">' +
               json[i].title + '</a>' +
+              '</div>' +
               '&nbsp;(' + json[i].datetime +
-              ' 更新)</dt>' +
-              '<dd>' + json[i].body + '</dd>'
+              ' 更新)' +
+                '<p class="text hidden">'+ json[i].body + '</p>' +
+                '<div class= show_more > +続きを読む </div>'+
+              '</div>'
             );
           }
         } else {
@@ -428,18 +437,38 @@ if(your_location!=null || select_location!=null){
     navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
   });
 
+  //左ドロワー処理
+  //アイコンの切り替え
   $('.left-drawer-toggle').on('click', function() {
-    $('<div>').addClass('drawer-backdrop')
-      .appendTo('#map-content');
-    $('.left-drawer').toggleClass('show');
-
-    // 開くと同時に検索する。
-    $('#search_form').submit();
+    if ($(this).hasClass('show')) {
+      // $('<div>').addClass('drawer-backdrop')
+      //   .appendTo('#map-content');
+      $('.left-drawer').removeClass('show');
+      $('.left-drawer-toggle').removeClass('show')
+      $('.left-drawer-toggle').empty();
+      $('.left-drawer-toggle').append("<i class='fas fa-search fa-2x'></i>");
+    } else {
+      // $('<div>').addClass('drawer-backdrop')
+      //   .appendTo('#map-content');
+      $('.left-drawer').addClass('show');
+      $('.left-drawer-toggle').addClass('show')
+      $('.left-drawer-toggle').empty();
+      $('.left-drawer-toggle').append("<i class='fas fa-times fa-2x'></i>")
+      // 開くと同時に検索する。
+      $('#search_form').submit();
+    }
   });
 
-  $(document).on('click', '.drawer-backdrop', function() {
-    $('.left-drawer').removeClass('show');
-    $(this).remove();
+  //wiki内容、もっと読む
+  $(document).on('click', '.show_more', function() {
+          var show_text = $(this).parent('.text_wrapper').find('.text');
+          var small_height = 90 //This is initial height.
+          var original_height = show_text.css({height : 'auto'}).height();
+
+          show_text.height(small_height).animate({height:original_height},300, function(){
+            show_text.height('auto');
+          });
+          $(this).hide();
   });
 
 });
