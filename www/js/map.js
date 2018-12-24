@@ -108,8 +108,7 @@ $(function() {
           var marker = new google.maps.Marker({
             position:hotelPosition,
             map:YarNet.map,
-            //アイコンの変更
-            icon: './img/hotel-marker.png'
+            icon: './img/hotel-marker.png',
           });
           markers.push(marker);
           var infoWindow = new google.maps.InfoWindow({
@@ -126,19 +125,31 @@ $(function() {
           });
 
 
-          //contactタブにホテル検索結果を表示
-          var $media = $('<div class="media" style="border-width:1px 0px solid #333333">'+
+          //ホテル検索結果を表示
+          var $media = $(
+            '<div class="media" style="border-width:1px 0px solid #333333">'+
             '<img src="' + hotel.hotel[0].hotelBasicInfo.hotelImageUrl + '" class="HotelImages" style="text-align:center">'+
-              '<div class="media-body">'+
-                '<h6 class="mt-0" title="'+hotel.hotel[0].hotelBasicInfo.hotelName+'">'+hotel.hotel[0].hotelBasicInfo.hotelName+'</h6>'+
-                '<div class="hotel-address">'+hotel.hotel[0].hotelBasicInfo.address1+hotel.hotel[0].hotelBasicInfo.address2+'</div>'+hotel.hotel[0].hotelBasicInfo.telephoneNo+
-                '</div>'+
-            '</div>'
-            ).appendTo($("#hotel_info"));
+            '<div class="media-body">'+
+            '<h6 class="mt-0" title="'+hotel.hotel[0].hotelBasicInfo.hotelName+'">'+hotel.hotel[0].hotelBasicInfo.hotelName+'</h6>'+
+            '<div class="hotel-address">'+hotel.hotel[0].hotelBasicInfo.address1+hotel.hotel[0].hotelBasicInfo.address2+'</div>'+hotel.hotel[0].hotelBasicInfo.telephoneNo+
+            '</div></div>'
+          ).appendTo($("#hotel_info"));
 
-            $('img', $media).on('click',function(){
-              window.open(hotel.hotel[0].hotelBasicInfo.hotelInformationUrl,'_blank');
-            });
+          //ホテル名クリックでマップの中心移動、mouseEnterで跳ねる
+          $('img', $media).on('click',function(){
+            window.open(hotel.hotel[0].hotelBasicInfo.hotelInformationUrl,'_blank');
+          });
+
+          $('.media-body',$media).on('mouseenter', function() {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+          });
+          $('.media-body',$media).on('mouseleave', function() {
+            marker.setAnimation(null);
+          });
+          //クリックして中心を移動
+          $('.media-body',$media).on('click', function() {
+            YarNet.map.panTo(marker.position);
+          });
         });
       }
     });
