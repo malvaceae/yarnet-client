@@ -158,9 +158,7 @@ $(function() {
 var select_location;
   // マップをクリックで位置変更
   YarNet.map.addListener('click', function(e) {
-    // if(your_location!=null || select_location!=null){
-    //   calcDistance(e);
-    // }
+    getRoute(e);
 
     getClickLatLng(e.latLng, YarNet.map);
 
@@ -321,8 +319,34 @@ var select_location;
     map.panTo(lat_lng);
   }
 
-  //距離測定
-  function calcDistance(e){
+
+  //道のり表示
+  var directionsDisplay = new google.maps.DirectionsRenderer({
+    suppressMarkers: true,  //デフォルトのABマーカーを削除
+    preserveViewport: true, // ルートを表示するときに今までの倍率のままにする
+  });
+  function getRoute(e){
+    if(your_location != null){
+      var directionsService = new google.maps.DirectionsService();
+      directionsDisplay.setMap(YarNet.map);
+      var start =new google.maps.LatLng(your_location[0],your_location[1]);
+      var end =new google.maps.LatLng(e.latLng.lat(),e.latLng.lng());
+
+      var request = {
+        origin:start,
+        destination:end,
+        travelMode: 'WALKING',
+      };
+      directionsService.route(request, function(response, status) {
+        if (status == 'OK') {
+          directionsDisplay.setDirections(response);
+        }
+      });
+
+    }
+  }
+
+/*
     getClickLatLng(e.latLng, YarNet.map);
     select_location=[e.latLng.lat(),e.latLng.lng()];
     //現在地と検索地両方あれば距離を測定
@@ -339,7 +363,7 @@ var select_location;
         console.log(distance.toFixed(1)+"m");
       }
     }
-  }
+*/
 
 
   //wiki
