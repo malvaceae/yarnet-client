@@ -122,6 +122,7 @@ $(function() {
           marker.addListener('click',function(){
             infowindows.forEach(i => i.close());
             infoWindow.open(YarNet.map,marker);
+            //TODO ルート検索の呼び出し
           });
 
 
@@ -326,9 +327,12 @@ var select_location;
     preserveViewport: true, // ルートを表示するときに今までの倍率のままにする
   });
   function getRoute(e){
+    //後で変えるかも、現在地があればルート検索開始
     if(your_location != null){
       var directionsService = new google.maps.DirectionsService();
       directionsDisplay.setMap(YarNet.map);
+      //ルート用タブに表示
+      directionsDisplay.setPanel($("#route-panel").get(0));
       var start =new google.maps.LatLng(your_location[0],your_location[1]);
       var end =new google.maps.LatLng(e.latLng.lat(),e.latLng.lng());
 
