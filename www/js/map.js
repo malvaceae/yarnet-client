@@ -81,8 +81,6 @@ $(function() {
     markers.splice(0, markers.length);
     infowindows.splice(0,infowindows.length);
 
-    //開始時刻
-    var startTime = new Date();
 
     $.ajax({
       url:url,
@@ -92,10 +90,6 @@ $(function() {
         console.log("miss");
       },
       success:function(data){
-        //終了時刻
-        var endTime = new Date();
-        console.log(endTime.getTime() - startTime.getTime()+"/1000秒 楽天トラベルのurlリクエストに掛かった時間");
-
         //contactタブのホテル画像をクリア
         $('#hotel_info').empty();
 
@@ -119,10 +113,11 @@ $(function() {
             //+"一泊の値段:"+hotel.hotel[0].roomInfo[0].dailyCharge.rakutenCharge+"(円/人)",
           });
           infowindows.push(infoWindow);
-          marker.addListener('click',function(){
+          marker.addListener('click',function(e){
             infowindows.forEach(i => i.close());
             infoWindow.open(YarNet.map,marker);
             //TODO ルート検索の呼び出し
+            getRoute(e);
           });
 
 
@@ -346,29 +341,9 @@ var select_location;
           directionsDisplay.setDirections(response);
         }
       });
-
+      $('.route-massage').remove();
     }
   }
-
-/*
-    getClickLatLng(e.latLng, YarNet.map);
-    select_location=[e.latLng.lat(),e.latLng.lng()];
-    //現在地と検索地両方あれば距離を測定
-    if(your_location!=null || select_location!=null){
-      var pos =[
-        new google.maps.LatLng(your_location[0],your_location[1]),
-        new google.maps.LatLng(select_location[0],select_location[1])
-      ];
-      var distance = google.maps.geometry.spherical.computeLength(pos);
-      //1kmより長い場合
-      if(distance>=1000){
-        console.log((distance/1000).toFixed(1)+"km");
-      }else{
-        console.log(distance.toFixed(1)+"m");
-      }
-    }
-*/
-
 
   //wiki
   function WikipediaAPI() {
@@ -498,5 +473,4 @@ var select_location;
           });
           $(this).hide();
   });
-
 });
