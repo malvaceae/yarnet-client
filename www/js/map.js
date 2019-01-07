@@ -94,10 +94,12 @@ $(function() {
         $('#hotel_info').empty();
 
         data.hotels.forEach(hotel => {
+          var basicInfo = hotel['hotel'].shift();
+
           var hotelInfo_url = "";
           var hotelPosition = {
-            lat:hotel.hotel[0].hotelBasicInfo.latitude,
-            lng:hotel.hotel[0].hotelBasicInfo.longitude
+            lat:basicInfo.hotelBasicInfo.latitude,
+            lng:basicInfo.hotelBasicInfo.longitude
           };
           var marker = new google.maps.Marker({
             position:hotelPosition,
@@ -107,10 +109,10 @@ $(function() {
           markers.push(marker);
           var infoWindow = new google.maps.InfoWindow({
             //ホテル名は12文字を超えたら..で省略する
-            content:'<div class="infowindow" title="'+hotel.hotel[0].hotelBasicInfo.hotelName+'">'+hotel.hotel[0].hotelBasicInfo.hotelName+'</div>'
-            + '電話番号:'+hotel.hotel[0].hotelBasicInfo.telephoneNo+'<br>'
-            + '<a href=' + hotel.hotel[0].hotelBasicInfo.hotelInformationUrl+' target="_blank">楽天トラベルページ</a><br>'
-            //+"一泊の値段:"+hotel.hotel[0].roomInfo[0].dailyCharge.rakutenCharge+"(円/人)",
+            content:'<div class="infowindow" title="'+basicInfo.hotelBasicInfo.hotelName+'">'+basicInfo.hotelBasicInfo.hotelName+'</div>'
+            + '電話番号:'+basicInfo.hotelBasicInfo.telephoneNo+'<br>'
+            + '<a href=' + basicInfo.hotelBasicInfo.hotelInformationUrl+' target="_blank">楽天トラベルページ</a><br>'
+            //+"一泊の値段:"+basicInfo.roomInfo[0].dailyCharge.rakutenCharge+"(円/人)",
           });
           infowindows.push(infoWindow);
           marker.addListener('click',function(e){
@@ -124,16 +126,21 @@ $(function() {
           //ホテル検索結果を表示
           var $media = $(
             '<div class="media" style="border-width:1px 0px solid #333333">'+
-            '<img src="' + hotel.hotel[0].hotelBasicInfo.hotelImageUrl + '" class="HotelImages" style="text-align:center">'+
+            '<img src="' + basicInfo.hotelBasicInfo.hotelImageUrl + '" class="HotelImages" style="text-align:center">'+
             '<div class="media-body">'+
-            '<h6 class="mt-0" title="'+hotel.hotel[0].hotelBasicInfo.hotelName+'">'+hotel.hotel[0].hotelBasicInfo.hotelName+'</h6>'+
-            '<div class="hotel-address">'+hotel.hotel[0].hotelBasicInfo.address1+hotel.hotel[0].hotelBasicInfo.address2+'</div>'+hotel.hotel[0].hotelBasicInfo.telephoneNo+
+            '<h6 class="mt-0" title="'+basicInfo.hotelBasicInfo.hotelName+'">'+basicInfo.hotelBasicInfo.hotelName+'</h6>'+
+            '<div class="hotel-address">'+basicInfo.hotelBasicInfo.address1+basicInfo.hotelBasicInfo.address2+'</div>'+basicInfo.hotelBasicInfo.telephoneNo+
             '</div></div>'
           ).appendTo($("#hotel_info"));
 
+//TODO 微妙に位置変更する
+          if (hotel['hotel'].length !== 0) {
+            var $media = $('<div style="position: absolute; top: 0; right: 0; font-weight: bold; width: 20px; height: 20px; line-height: 20px; background: red; color: white; padding: 2px 5px; margin-right: -10px; border-radius: 50%; margin-top: -5px;">可</div>').appendTo($('.media-body', $media));
+          }
+
           //ホテル名クリックでマップの中心移動、mouseEnterで跳ねる
           $('img', $media).on('click',function(){
-            window.open(hotel.hotel[0].hotelBasicInfo.hotelInformationUrl,'_blank');
+            window.open(basicInfo.hotelBasicInfo.hotelInformationUrl,'_blank');
           });
 
           $('.media-body',$media).on('mouseenter', function() {
@@ -181,15 +188,11 @@ var select_location;
 
   $('#search_form').on('submit', function(){ //クリックしたら
     $('#nav-twitter .tweet').remove();
-
     if ($('#nav-twitter-tab').hasClass('active')) {
       $.getJSON('https://api.yarnet.ml/tweets', {'q': $("#address").val()}).done(function(tweets) {
         if (!$('#nav-twitter-tab').hasClass('active')) return;
 
-        console.log(tweets);
         tweets.forEach(tweet => {
-          console.log(tweet);
-
           var $article = $('.tweet-template')
             .clone(true)
             .removeClass('tweet-template')
@@ -276,7 +279,9 @@ var select_location;
 
         // 変換した緯度・経度情報を地図の中心に表示
         YarNet.map.setCenter(results[0].geometry.location);
-
+        //ホテル検索
+        var hotelspot_url = 'https://app.rakuten.co.jp/services/api/Travel/VacantHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + results[0].geometry.location.lat() + '&longitude=' + results[0].geometry.location.lng();
+        getHotel(hotelspot_url);
         //☆表示している地図上の緯度経度
         //document.getElementById('lat').value=results[0].geometry.location.lat();
         //document.getElementById('lng').value=results[0].geometry.location.lng();
