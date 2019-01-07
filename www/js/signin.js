@@ -17,7 +17,7 @@ $(function() {
       dataType    : 'json',
       processData : false,
       type        : 'POST',
-      url         : 'https://api.yarnet.ml/signin',
+      url         : YarNet.api + '/signin',
     })
       .done(function(data) {
         var state = history.state.slice(0);

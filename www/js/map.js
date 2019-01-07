@@ -178,7 +178,7 @@ var select_location;
     $('#nav-twitter .tweet').remove();
 
     if ($('#nav-twitter-tab').hasClass('active')) {
-      $.getJSON('https://api.yarnet.ml/tweets', {'q': $("#address").val()}).done(function(tweets) {
+      $.getJSON(YarNet.api + '/tweets', {'q': $("#address").val()}).done(function(tweets) {
         if (!$('#nav-twitter-tab').hasClass('active')) return;
 
         console.log(tweets);

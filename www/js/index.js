@@ -2,6 +2,8 @@ var YarNet = {};
 
 $(function() {
 
+  YarNet.api = 'https://api.yarnet.ml';
+
   YarNet.map = new google.maps.Map($('#map')[0], {
     center : {
       lat :  34.98584900000000, // 京都駅の緯度

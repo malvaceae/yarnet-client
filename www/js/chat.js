@@ -9,7 +9,7 @@ $.ajax({
   dataType    : 'json',
   processData : false,
   type        : 'GET',
-  url         : 'https://api.yarnet.ml/messages',
+  url         : YarNet.api + '/messages',
 })
   .done(function(data) {
     console.log(data);
@@ -35,7 +35,7 @@ $('#send').click(function(){
       cache       : false,
       dataType    : 'json',
       type        : 'POST',
-      url         : 'https://api.yarnet.ml/messages',
+      url         : YarNet.api + '/messages',
       data        : {'date':date,'name':name,'body':msg},
     })
       .done(function(data){
