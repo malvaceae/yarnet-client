@@ -29,6 +29,13 @@ $(function() {
     if (localStorage['auth']) {
       $('#menu-circle').append(
         $('<li class="circleMenu-item">').append(
+          $('<button type="button" class="btn btn-primary" title="お気に入り観光地" data-toggle="modal" data-target="#favorite-spots-modal">').append(
+            $('<i class="fas fa-star"></i>')
+          )
+        )
+      );
+      $('#menu-circle').append(
+        $('<li class="circleMenu-item">').append(
           $('<button type="button" class="btn btn-primary" title="ログアウト" data-toggle="logout">').append(
             $('<i class="fas fa-sign-out-alt"></i>')
           )
@@ -458,6 +465,10 @@ var select_location;
             show_text.height('auto');
           });
           $(this).hide();
+  });
+
+  $('.modal').on('show.bs.modal', function (e) {
+    YarNet.infowindow.close();
   });
 
 });

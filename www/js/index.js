@@ -15,6 +15,10 @@ $(function() {
     zoom              : 15,
   });
 
+  YarNet.infowindow = new google.maps.InfoWindow({
+    content : $('#infowindow-content')[0],
+  });
+
   if (!Array.isArray(history.state)) {
     history.replaceState([], false);
   }

@@ -25,7 +25,7 @@ $(function() {
         history.replaceState(state, false);
 
         console.log(data);
-        localStorage['auth'] = data;
+        localStorage['auth'] = data.id;
         alert('ログインに成功しました。');
         $('#map-content').transition('fadeOut', 'fadeIn');
       })
