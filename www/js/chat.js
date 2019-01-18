@@ -26,10 +26,15 @@ $('#join').click(function(){
 $('#send').click(function(){
     var msg = $('#msg').val();
     room.send(msg);
-    chatlog('自分> ' + msg, 'mychat');
 
-    date = "2018-11-19 10:00:00";
-    name = "hogehogekun";
+    //chatlog('自分> ' + msg, 'mychat');
+    $('#chatLog').append(
+      '<div class ="right message">' +
+      '<div class="body">' + msg + '</div>'+
+      '<div class="date">' + '00:00' + '</div>'+
+      '</div>'
+    );
+
     //送信したチャットをデータベースに格納
     $.ajax({
       cache       : false,
@@ -53,6 +58,9 @@ $('#leave').click(function(){
     chatlog('<i>' + $('#roomName').val() + '</i>から退室しました', 'system');
 })
 
+$('#chat-form').on("submit",function(){
+  return false;
+});
 
 // チャットログに記録するための関数
 function chatlog(msg, type){

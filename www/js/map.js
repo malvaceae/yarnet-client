@@ -146,6 +146,8 @@ $(function() {
 
 var select_location;
   // マップをクリックで位置変更
+
+
   YarNet.map.addListener('click', function(e) {
     // if(your_location!=null || select_location!=null){
     //   calcDistance(e);
@@ -157,18 +159,29 @@ var select_location;
     var address = e.placeId;
     room = peer.joinRoom(address);
 
+
     // チャットを受信
     room.on('data', function(data){
-      chatlog('ID: ' + data.src + '> ' + data.data); // data.src = 送信者のpeerid, data.data = 送信されたメッセージ
+      //chatlog('ID: ' + data.src + '> ' + data.data); // data.src = 送信者のpeerid, data.data = 送信されたメッセージ
+      $('#chatLog').append(
+        '<div class ="left message">' +
+        '<figure>'+
+        '  <figcaption>ゲスト１</figcaption>'+
+        '  <a href="#"><img src="/img/logo.png"></a>'+
+        '</figure>'+
+        '<div class="body">' + data.data + '</div>'+
+        '<div class="date">' + '00:00' + '</div>'+
+        '</div>'
+      );
     });
 
     var service = new google.maps.places.PlacesService(YarNet.map);
     service.getDetails({placeId: address}, function(results, status) {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        chatlog('<i>' + results.name + '</i>に入室しました');
-
+        //chatlog('<i>' + results.name + '</i>に入室しました');
+        $("#chat-roomname").text(results.name);
         $("#address").val(results.name);
-          $('#search_form').submit();
+        $('#search_form').submit();
       }
     });
   });
@@ -240,13 +253,16 @@ var select_location;
     }
   });
 
-  //別領域をクリックでメニューを閉じる
-  $(document).click(function(event) {
-    if (!$(event.target).closest('.right-nav-drawer').length) {
-      $('#right-btn').removeClass('peke');
-      $('.right-nav-drawer').hide();
+  $("#chat-back").click(function(event) {
+    if($('.right-nav-drawer').is(":animated")){
+      return false;
+    }else{
+      $('.right-nav-drawer').animate({width:'toggle'}); //animateで表示・非表示
+      $(this).toggleClass('peke'); //toggleでクラス追加・削除
+      return false;
     }
   });
+
 
   //Circle Menu
   $('#menu-circle').circleMenu({

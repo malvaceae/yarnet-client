@@ -166,24 +166,24 @@
   position : relative;
 }
 
-.profile-img {
+#nav-twitter .profile-img {
   position      : absolute;
   width         : 40px;
   height        : 40px;
   border-radius : 20px;
 }
 
-.user-name {
+#nav-twitter .user-name {
   padding-left : 50px;
   font-size    : 15px;
   font-weight  : bold;
 }
 
-.date {
+#nav-twitter .date {
   padding-left : 50px;
 }
 
-.body {
+#nav-twitter .body {
   padding-left : 50px;
 }
 
@@ -414,15 +414,52 @@
 }
 .right-nav-drawer {
   display: none;
-  background-color:rgb(255,255,255);
+  /* background-image: url("../img/kumo.jpg"); */
+  background-color: white;
   position: absolute;
   top: 0px;
   right:0;
   width:450px;
-  max-width: 85%;
-  padding:60px 0 20px 20px;
-  z-index: 110;
+  max-width: 100%;
+  max-height: 100%;
+
+  z-index: 200;
 }
+
+.right-nav-drawer > header {
+  padding: 10px;
+  background-color: #fafafa;
+  border-bottom:0.5px solid #ccc;
+}
+
+.right-nav-drawer > footer {
+  position: absolute;
+  bottom: 0px;
+  padding: 10px;
+  width: 100%;
+  background-color: #FFFFFF;
+  border-top:0.5px solid #ccc;
+}
+
+#chat-roomname{
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align:center;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.fas.fa-chevron-left{
+  color:dodgerblue;
+  font-size: 20px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+
 
 #menu-circle {
   display: block;
@@ -444,7 +481,7 @@
 }
 
 
-#map-content footer{
+#Incoming{
   height:140px;
   position:absolute;
   bottom:0;
@@ -462,12 +499,12 @@ z-index: 10000;
 
 
 #chat-control {
-  position: absolute;
+  /* position: absolute;
   top: 10px;
   right: 20px;
   left: 20px;
-  height: 40px;
-  overflow: hidden;
+  height: 90px;
+  overflow: hidden; */
   max-width: 100%;
 }
 #chatLog {
@@ -480,7 +517,7 @@ z-index: 10000;
   overflow-y: auto;
 }
 #chat-form{
-  position: absolute;
+  /* position: absolute;
   display: -webkit-flex;
   display:         flex;
   right: 20px;
@@ -489,7 +526,7 @@ z-index: 10000;
   height: 30px;
   max-height: 20%;;
   background-color: rgb(255,255,255);
-  overflow: hidden;
+  overflow: hidden; */
 }
 #msg{
   -webkit-flex-grow: 1;
@@ -500,6 +537,7 @@ z-index: 10000;
   box-shadow: none;
   padding: 2px 8px;
   max-width: 80%;
+  width: 80%;
 }
 #send{
 }
@@ -551,7 +589,153 @@ z-index: 10000;
     .wiki-title{
       font-size: 20px;
     }
+
+
 /* dl.wiki-dl {margin:0;padding:.5em;width:460px;background-color:#fff;font-size:1em;font-family:Georgia, "Times New Roman", Times, serif;}
 dt {margin:0;padding:.5em;font-weight:bold;background-color:#e0e0e0;}
 dd {margin:0;padding:0;padding-top:.5em;padding-bottom:.5em;}
 dd .wiki-content {padding-left:.5em;border-left:1px solid #333;font-size:.9em;clear:both;} */
+
+
+
+
+#chatLog {
+  overflow-x            : hidden;
+  overflow-y            : auto;
+  text-align            : justify;
+  word-break            : break-all;
+  background-attachment : fixed;
+  background-image      : url('/resources/img/talks/default.png');
+  background-position   : center;
+  background-repeat     : no-repeat;
+  background-size       : cover;
+}
+@media (min-width: 768px) {
+  #chatLog { background-image : none; }
+}
+
+#chatLog .message {
+  display       : -webkit-flex;
+  display       :         flex;
+  margin-top    : 16px;
+  margin-bottom : 16px;
+}
+#chatLog .message div.body {
+  position           : relative;
+  -webkit-align-self : flex-start;
+          align-self : flex-start;
+  min-height         : 32px;
+  padding            : 4px 10px;
+  border-radius      : 12px;
+  box-shadow         : 0 0 4px rgba(0,0,0,0.2);
+}
+#chatLog .message div.body::before {
+  position      : absolute;
+  top           : 0;
+  width         : 0;
+  height        : 0;
+  border-top    : 8px solid transparent;
+  border-bottom : 8px solid transparent;
+  content       : '';
+}
+#chatLog .message a.body {
+  position           : relative;
+  -webkit-align-self : flex-start;
+          align-self : flex-start;
+  min-height         : 32px;
+  padding-top        : 4px;
+}
+#chatLog .message a.body img { border-radius : 12px; }
+#chatLog .message .date {
+  -webkit-align-self : flex-end;
+          align-self : flex-end;
+  font-size          : 10px;
+  font-weight        : 500;
+  color              : #ffffff;
+  word-break         : keep-all;
+}
+@media (min-width: 768px) {
+  #chatLog .message .date { color : #333333; }
+}
+
+#chatLog .sys.message {
+  -webkit-justify-content : center;
+          justify-content : center;
+}
+#chatLog .sys.message div {
+  position         : relative;
+  padding          : 4px 10px;
+  font-size        : 12px;
+  font-weight      : 500;
+  line-height      : 1.5;
+  color            : #ffffff;
+  text-align       : center;
+  background-color : rgba(0,0,0,0.1);
+  border-radius    : 12px;
+}
+@media (min-width: 768px) {
+  #chatLog .sys.message div {
+    color            : #333333;
+    background-color : rgba(0,0,0,0.05);
+  }
+}
+
+#chatLog .left.message {
+  -webkit-flex-direction : row;
+          flex-direction : row;
+}
+#chatLog .left.message figure {
+  position : relative;
+  margin   : 0;
+}
+#chatLog .left.message figure img {
+  width         : 32px;
+  height        : 32px;
+  border-radius : 16px;
+}
+#chatLog .left.message figure figcaption {
+  position    : absolute;
+  top         : -2px;
+  left        : 40px;
+  font-size   : 12px;
+  line-height : 12px;
+  color       : #ffffff;
+  word-break  : keep-all;
+  white-space : pre;
+}
+@media (min-width: 768px) {
+  #chatLog .left.message figure figcaption { color : #333333; }
+}
+#chatLog .left.message div.body {
+  margin           : 12px 4px 0 12px;
+  background-color : #ffffff;
+}
+#chatLog .left.message div.body::before {
+  left          : -16px;
+  border-right  : 16px solid #ffffff;
+  border-left   : 8px solid transparent;
+  transform     : rotate(35deg);
+}
+#chatLog .left.message a.body { margin : 12px 4px 0 12px; }
+
+@media (min-width: 768px) {
+  #chatLog .left.message div.body         { background-color   : #eeeeee; }
+  #chatLog .left.message div.body::before { border-right-color : #eeeeee; }
+}
+
+#chatLog .right.message {
+  -webkit-flex-direction : row-reverse;
+          flex-direction : row-reverse;
+}
+#chatLog .right.message div.body {
+  margin           : 0 8px 0 4px;
+  background-color : #3399ff;
+  color: #FFFFFF;
+}
+#chatLog .right.message div.body::before {
+  right        : -16px;
+  border-right : 8px solid transparent;
+  border-left  : 16px solid #3399ff;
+  transform    : rotate(-35deg);
+}
+#chatLog .right.message a.body { margin : 0 8px 0 4px; }
