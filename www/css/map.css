@@ -64,7 +64,7 @@
   position               : fixed;
   top                    : 0;
   bottom                 : 0;
-  left                   : -450px;
+  left                   : -85%;
   z-index                : 500;
   display                : -webkit-flex;
   display                :         flex;
@@ -77,6 +77,12 @@
   transition             : left 300ms ease-out;
   z-index                : 600;
 }
+@media (min-width: calc(450px / 0.85)) {
+  .left-drawer {
+    left : -450px;
+  }
+}
+
 .left-drawer.show {
   left : 0;
 }
