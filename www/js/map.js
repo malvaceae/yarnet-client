@@ -24,9 +24,16 @@ $(function() {
   });
 
   $('#map-content').on('show.start', function() {
-    $('[data-toggle="transition"], [data-toggle="logout"]', '#menu-circle').parent().remove();
+    $('[data-toggle="transition"], [data-toggle="logout"], [title="お気に入り観光地"]', '#menu-circle').parent().remove();
 
     if (localStorage['auth']) {
+      $('#menu-circle').append(
+        $('<li class="circleMenu-item">').append(
+          $('<button type="button" class="btn btn-primary" title="お気に入り観光地" data-toggle="modal" data-target="#favorite-spots-modal">').append(
+            $('<i class="fas fa-star"></i>')
+          )
+        )
+      );
       $('#menu-circle').append(
         $('<li class="circleMenu-item">').append(
           $('<button type="button" class="btn btn-primary" title="ログアウト" data-toggle="logout">').append(
@@ -160,6 +167,8 @@ $(function() {
 
 var select_location;
   // マップをクリックで位置変更
+
+
   YarNet.map.addListener('click', function(e) {
     getRoute(e);
 
@@ -169,18 +178,29 @@ var select_location;
     var address = e.placeId;
     room = peer.joinRoom(address);
 
+
     // チャットを受信
     room.on('data', function(data){
-      chatlog('ID: ' + data.src + '> ' + data.data); // data.src = 送信者のpeerid, data.data = 送信されたメッセージ
+      //chatlog('ID: ' + data.src + '> ' + data.data); // data.src = 送信者のpeerid, data.data = 送信されたメッセージ
+      $('#chatLog').append(
+        '<div class ="left message">' +
+        '<figure>'+
+        '  <figcaption>ゲスト１</figcaption>'+
+        '  <a href="#"><img src="/img/logo.png"></a>'+
+        '</figure>'+
+        '<div class="body">' + data.data + '</div>'+
+        '<div class="date">' + '00:00' + '</div>'+
+        '</div>'
+      );
     });
 
     var service = new google.maps.places.PlacesService(YarNet.map);
     service.getDetails({placeId: address}, function(results, status) {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        chatlog('<i>' + results.name + '</i>に入室しました');
-
+        //chatlog('<i>' + results.name + '</i>に入室しました');
+        $("#chat-roomname").text(results.name);
         $("#address").val(results.name);
-          $('#search_form').submit();
+        $('#search_form').submit();
       }
     });
   });
@@ -189,7 +209,7 @@ var select_location;
   $('#search_form').on('submit', function(){ //クリックしたら
     $('#nav-twitter .tweet').remove();
     if ($('#nav-twitter-tab').hasClass('active')) {
-      $.getJSON('https://api.yarnet.ml/tweets', {'q': $("#address").val()}).done(function(tweets) {
+      $.getJSON(YarNet.api + '/tweets', {'q': $("#address").val()}).done(function(tweets) {
         if (!$('#nav-twitter-tab').hasClass('active')) return;
 
         tweets.forEach(tweet => {
@@ -248,13 +268,16 @@ var select_location;
     }
   });
 
-  //別領域をクリックでメニューを閉じる
-  $(document).click(function(event) {
-    if (!$(event.target).closest('.right-nav-drawer').length) {
-      $('#right-btn').removeClass('peke');
-      $('.right-nav-drawer').hide();
+  $("#chat-back").click(function(event) {
+    if($('.right-nav-drawer').is(":animated")){
+      return false;
+    }else{
+      $('.right-nav-drawer').animate({width:'toggle'}); //animateで表示・非表示
+      $(this).toggleClass('peke'); //toggleでクラス追加・削除
+      return false;
     }
   });
+
 
   //Circle Menu
   $('#menu-circle').circleMenu({
@@ -478,4 +501,9 @@ var select_location;
           });
           $(this).hide();
   });
+
+  $('.modal').on('show.bs.modal', function (e) {
+    YarNet.infowindow.close();
+  });
+
 });
