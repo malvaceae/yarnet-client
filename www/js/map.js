@@ -88,8 +88,6 @@ $(function() {
     markers.splice(0, markers.length);
     infowindows.splice(0,infowindows.length);
 
-    //開始時刻
-    var startTime = new Date();
 
     $.ajax({
       url:url,
@@ -99,53 +97,69 @@ $(function() {
         console.log("miss");
       },
       success:function(data){
-        //終了時刻
-        var endTime = new Date();
-        console.log(endTime.getTime() - startTime.getTime()+"/1000秒 楽天トラベルのurlリクエストに掛かった時間");
-
         //contactタブのホテル画像をクリア
         $('#hotel_info').empty();
 
         data.hotels.forEach(hotel => {
+          var basicInfo = hotel['hotel'].shift();
+
           var hotelInfo_url = "";
           var hotelPosition = {
-            lat:hotel.hotel[0].hotelBasicInfo.latitude,
-            lng:hotel.hotel[0].hotelBasicInfo.longitude
+            lat:basicInfo.hotelBasicInfo.latitude,
+            lng:basicInfo.hotelBasicInfo.longitude
           };
           var marker = new google.maps.Marker({
             position:hotelPosition,
             map:YarNet.map,
-            //アイコンの変更
-            icon: './img/hotel-marker.png'
+            icon: './img/hotel-marker.png',
           });
           markers.push(marker);
           var infoWindow = new google.maps.InfoWindow({
             //ホテル名は12文字を超えたら..で省略する
-            content:'<div class="infowindow" title="'+hotel.hotel[0].hotelBasicInfo.hotelName+'">'+hotel.hotel[0].hotelBasicInfo.hotelName+'</div>'
-            + '電話番号:'+hotel.hotel[0].hotelBasicInfo.telephoneNo+'<br>'
-            + '<a href=' + hotel.hotel[0].hotelBasicInfo.hotelInformationUrl+' target="_blank">楽天トラベルページ</a><br>'
-            //+"一泊の値段:"+hotel.hotel[0].roomInfo[0].dailyCharge.rakutenCharge+"(円/人)",
+            content:'<div class="infowindow" title="'+basicInfo.hotelBasicInfo.hotelName+'">'+basicInfo.hotelBasicInfo.hotelName+'</div>'
+            + '電話番号:'+basicInfo.hotelBasicInfo.telephoneNo+'<br>'
+            + '<a href=' + basicInfo.hotelBasicInfo.hotelInformationUrl+' target="_blank">楽天トラベルページ</a><br>'
+            //+"一泊の値段:"+basicInfo.roomInfo[0].dailyCharge.rakutenCharge+"(円/人)",
           });
           infowindows.push(infoWindow);
-          marker.addListener('click',function(){
+          marker.addListener('click',function(e){
             infowindows.forEach(i => i.close());
             infoWindow.open(YarNet.map,marker);
+            //TODO ルート検索の呼び出し
+            getRoute(e);
           });
 
 
-          //contactタブにホテル検索結果を表示
-          var $media = $('<div class="media" style="border-width:1px 0px solid #333333">'+
-            '<img src="' + hotel.hotel[0].hotelBasicInfo.hotelImageUrl + '" class="HotelImages" style="text-align:center">'+
-              '<div class="media-body">'+
-                '<h6 class="mt-0" title="'+hotel.hotel[0].hotelBasicInfo.hotelName+'">'+hotel.hotel[0].hotelBasicInfo.hotelName+'</h6>'+
-                '<div class="hotel-address">'+hotel.hotel[0].hotelBasicInfo.address1+hotel.hotel[0].hotelBasicInfo.address2+'</div>'+hotel.hotel[0].hotelBasicInfo.telephoneNo+
-                '</div>'+
-            '</div>'
-            ).appendTo($("#hotel_info"));
+          //ホテル検索結果を表示
+          var $media = $(
+            '<div class="media" style="border-width:1px 0px solid #333333">'+
+            '<img src="' + basicInfo.hotelBasicInfo.hotelImageUrl + '" class="HotelImages" style="text-align:center">'+
+            '<div class="media-body">'+
+            '<h6 class="mt-0" title="'+basicInfo.hotelBasicInfo.hotelName+'">'+basicInfo.hotelBasicInfo.hotelName+'</h6>'+
+            '<div class="hotel-address">'+basicInfo.hotelBasicInfo.address1+basicInfo.hotelBasicInfo.address2+'</div>'+basicInfo.hotelBasicInfo.telephoneNo+
+            '</div></div>'
+          ).appendTo($("#hotel_info"));
 
-            $('img', $media).on('click',function(){
-              window.open(hotel.hotel[0].hotelBasicInfo.hotelInformationUrl,'_blank');
-            });
+//TODO 微妙に位置変更する
+          if (hotel['hotel'].length !== 0) {
+            var $media = $('<div style="position: absolute; top: 0; right: 0; font-weight: bold; width: 20px; height: 20px; line-height: 20px; background: red; color: white; padding: 2px 5px; margin-right: -10px; border-radius: 50%; margin-top: -5px;">可</div>').appendTo($('.media-body', $media));
+          }
+
+          //ホテル名クリックでマップの中心移動、mouseEnterで跳ねる
+          $('img', $media).on('click',function(){
+            window.open(basicInfo.hotelBasicInfo.hotelInformationUrl,'_blank');
+          });
+
+          $('.media-body',$media).on('mouseenter', function() {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+          });
+          $('.media-body',$media).on('mouseleave', function() {
+            marker.setAnimation(null);
+          });
+          //クリックして中心を移動
+          $('.media-body',$media).on('click', function() {
+            YarNet.map.panTo(marker.position);
+          });
         });
       }
     });
@@ -156,9 +170,7 @@ var select_location;
 
 
   YarNet.map.addListener('click', function(e) {
-    // if(your_location!=null || select_location!=null){
-    //   calcDistance(e);
-    // }
+    getRoute(e);
 
     getClickLatLng(e.latLng, YarNet.map);
 
@@ -196,15 +208,11 @@ var select_location;
 
   $('#search_form').on('submit', function(){ //クリックしたら
     $('#nav-twitter .tweet').remove();
-
     if ($('#nav-twitter-tab').hasClass('active')) {
       $.getJSON(YarNet.api + '/tweets', {'q': $("#address").val()}).done(function(tweets) {
         if (!$('#nav-twitter-tab').hasClass('active')) return;
 
-        console.log(tweets);
         tweets.forEach(tweet => {
-          console.log(tweet);
-
           var $article = $('.tweet-template')
             .clone(true)
             .removeClass('tweet-template')
@@ -294,7 +302,9 @@ var select_location;
 
         // 変換した緯度・経度情報を地図の中心に表示
         YarNet.map.setCenter(results[0].geometry.location);
-
+        //ホテル検索
+        var hotelspot_url = 'https://app.rakuten.co.jp/services/api/Travel/VacantHotelSearch/20170426?applicationId=1094029776062152274&datumType=1&searchRadius=3.0&latitude=' + results[0].geometry.location.lat() + '&longitude=' + results[0].geometry.location.lng();
+        getHotel(hotelspot_url);
         //☆表示している地図上の緯度経度
         //document.getElementById('lat').value=results[0].geometry.location.lat();
         //document.getElementById('lng').value=results[0].geometry.location.lng();
@@ -333,26 +343,35 @@ var select_location;
     map.panTo(lat_lng);
   }
 
-  //距離測定
-  function calcDistance(e){
-    getClickLatLng(e.latLng, YarNet.map);
-    select_location=[e.latLng.lat(),e.latLng.lng()];
-    //現在地と検索地両方あれば距離を測定
-    if(your_location!=null || select_location!=null){
-      var pos =[
-        new google.maps.LatLng(your_location[0],your_location[1]),
-        new google.maps.LatLng(select_location[0],select_location[1])
-      ];
-      var distance = google.maps.geometry.spherical.computeLength(pos);
-      //1kmより長い場合
-      if(distance>=1000){
-        console.log((distance/1000).toFixed(1)+"km");
-      }else{
-        console.log(distance.toFixed(1)+"m");
-      }
+
+  //道のり表示
+  var directionsDisplay = new google.maps.DirectionsRenderer({
+    suppressMarkers: true,  //デフォルトのABマーカーを削除
+    preserveViewport: true, // ルートを表示するときに今までの倍率のままにする
+  });
+  function getRoute(e){
+    //後で変えるかも、現在地があればルート検索開始
+    if(your_location != null){
+      var directionsService = new google.maps.DirectionsService();
+      directionsDisplay.setMap(YarNet.map);
+      //ルート用タブに表示
+      directionsDisplay.setPanel($("#route-panel").get(0));
+      var start =new google.maps.LatLng(your_location[0],your_location[1]);
+      var end =new google.maps.LatLng(e.latLng.lat(),e.latLng.lng());
+
+      var request = {
+        origin:start,
+        destination:end,
+        travelMode: 'WALKING',
+      };
+      directionsService.route(request, function(response, status) {
+        if (status == 'OK') {
+          directionsDisplay.setDirections(response);
+        }
+      });
+      $('.route-massage').remove();
     }
   }
-
 
   //wiki
   function WikipediaAPI() {
