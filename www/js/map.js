@@ -1,8 +1,8 @@
-$(function() {
+//マーカー変数用意
+var marker;
+var marker_gps;
 
-  //マーカー変数用意
-  var marker;
-  var marker_gps;
+$(function() {
 
   // ボタンに指定したid要素を取得
   var button = $("#map_button");
@@ -324,26 +324,6 @@ var select_location;
 
   }
 
-
-
-  function getClickLatLng(lat_lng, map) {
-
-    //☆表示している地図上の緯度経度
-    //document.getElementById('lat').value=lat_lng.lat();
-    //document.getElementById('lng').value=lat_lng.lng();
-
-    // マーカーを設置
-    if (marker) marker.setMap(null);
-    marker = new google.maps.Marker({
-      position: lat_lng,
-      map: map
-    });
-
-    // 座標の中心をずらす
-    map.panTo(lat_lng);
-  }
-
-
   //道のり表示
   var directionsDisplay = new google.maps.DirectionsRenderer({
     suppressMarkers: true,  //デフォルトのABマーカーを削除
@@ -507,3 +487,19 @@ var select_location;
   });
 
 });
+
+function getClickLatLng(lat_lng, map) {
+  //☆表示している地図上の緯度経度
+  //document.getElementById('lat').value = lat_lng.lat();
+  //document.getElementById('lng').value = lat_lng.lng();
+
+  // マーカーを設置
+  if (marker) marker.setMap(null);
+  marker = new google.maps.Marker({
+    position: lat_lng,
+    map: map
+  });
+
+  // 座標の中心をずらす
+  map.panTo(lat_lng);
+}

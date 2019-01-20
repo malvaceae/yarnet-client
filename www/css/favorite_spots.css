@@ -7,7 +7,6 @@
 #map #infowindow-content {
   display     : -webkit-flex;
   display     :         flex;
-  min-height  : 103px;
   line-height : 20px;
 }
 
