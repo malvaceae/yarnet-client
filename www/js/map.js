@@ -24,9 +24,16 @@ $(function() {
   });
 
   $('#map-content').on('show.start', function() {
-    $('[data-toggle="transition"], [data-toggle="logout"]', '#menu-circle').parent().remove();
+    $('[data-toggle="transition"], [data-toggle="logout"], [title="お気に入り観光地"]', '#menu-circle').parent().remove();
 
     if (localStorage['auth']) {
+      $('#menu-circle').append(
+        $('<li class="circleMenu-item">').append(
+          $('<button type="button" class="btn btn-primary" title="お気に入り観光地" data-toggle="modal" data-target="#favorite-spots-modal">').append(
+            $('<i class="fas fa-star"></i>')
+          )
+        )
+      );
       $('#menu-circle').append(
         $('<li class="circleMenu-item">').append(
           $('<button type="button" class="btn btn-primary" title="ログアウト" data-toggle="logout">').append(
@@ -191,7 +198,7 @@ var select_location;
     $('#nav-twitter .tweet').remove();
 
     if ($('#nav-twitter-tab').hasClass('active')) {
-      $.getJSON('https://api.yarnet.ml/tweets', {'q': $("#address").val()}).done(function(tweets) {
+      $.getJSON(YarNet.api + '/tweets', {'q': $("#address").val()}).done(function(tweets) {
         if (!$('#nav-twitter-tab').hasClass('active')) return;
 
         console.log(tweets);
@@ -474,6 +481,10 @@ var select_location;
             show_text.height('auto');
           });
           $(this).hide();
+  });
+
+  $('.modal').on('show.bs.modal', function (e) {
+    YarNet.infowindow.close();
   });
 
 });

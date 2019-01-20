@@ -17,7 +17,7 @@ $(function() {
       dataType    : 'json',
       processData : false,
       type        : 'POST',
-      url         : 'https://api.yarnet.ml/signup',
+      url         : YarNet.api + '/signup',
     })
       .done(function(data) {
         var state = history.state.slice(0);
@@ -25,7 +25,7 @@ $(function() {
         history.replaceState(state, false);
 
         console.log(data);
-        localStorage['auth'] = data;
+        localStorage['auth'] = data.id;
         alert('新規登録に成功しました。');
         $('#map-content').transition('fadeOut', 'fadeIn');
       })
