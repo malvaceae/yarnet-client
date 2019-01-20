@@ -13,6 +13,10 @@ $(function() {
 
       var $content = $(YarNet.infowindow.content);
       $content.data('place-id', e.placeId);
+      $content.data('place-icon', place.icon);
+      $content.data('place-name', place.name);
+      $content.data('place-lat', place.geometry.location.lat());
+      $content.data('place-lng', place.geometry.location.lng());
 
       $content.removeClass('add');
       $content.removeClass('del');
@@ -61,7 +65,13 @@ $(function() {
 
     $.ajax({
       cache    : false,
-      data     : {place_id: placeId},
+      data     : {
+        place_id: placeId,
+        place_icon: $(YarNet.infowindow.content).data('place-icon'),
+        place_name: $(YarNet.infowindow.content).data('place-name'),
+        place_lat: $(YarNet.infowindow.content).data('place-lat'),
+        place_lng: $(YarNet.infowindow.content).data('place-lng'),
+      },
       dataType : 'json',
       type     : 'POST',
       url      : YarNet.api + '/users/' + localStorage['auth'] + '/favorite_spots',
@@ -126,31 +136,28 @@ $(function() {
           var service = new google.maps.places.PlacesService(YarNet.map);
 
           data.forEach(function (place) {
-            service.getDetails({placeId: place.place_id}, function (place, status) {
-              if (status !== google.maps.places.PlacesServiceStatus.OK) return;
+            var $place = $('<div class="place">');
+            $place.attr('id', place.place_id);
+            $place.data('place-id', place.place_id);
+            $place.data('place-lat', place.place_lat);
+            $place.data('place-lng', place.place_lng);
 
-              var $place = $('<div class="place">');
-              $place.attr('id', place.place_id);
-              $place.data('place-id', place.place_id);
-              $place.data('location', place.geometry.location);
+            $place.append(
+              $('<img class="place-icon" width="30" height="30">')
+                .attr('src', place.place_icon)
+            );
 
-              $place.append(
-                $('<img class="place-icon" width="30" height="30">')
-                  .attr('src', place.icon)
-              );
+            $place.append(
+              $('<div class="place-title">')
+                .text(place.place_name)
+            );
 
-              $place.append(
-                $('<div class="place-title">')
-                  .text(place.name)
-              );
+            $place.append(
+              $('<button class="btn btn-danger btn-sm del-favorite-spot" type="button">')
+                .text('お気に入り解除')
+            );
 
-              $place.append(
-                $('<button class="btn btn-danger btn-sm del-favorite-spot" type="button">')
-                  .text('お気に入り解除')
-              );
-
-              $('#favorite-spots-modal .modal-body').append($place);
-            });
+            $('#favorite-spots-modal .modal-body').append($place);
           });
         } else {
           $('#favorite-spots-modal .modal-body').html('<div class="mx-3 my-3">お気に入り観光地がありません。</div>');
@@ -159,6 +166,14 @@ $(function() {
       .fail(function(data) {
         console.log(data);
       });
+  });
+
+  $('#favorite-spots-modal').on('click', '.place', function (e) {
+    var lat = $(this).data('place-lat');
+    var lng = $(this).data('place-lng');
+
+    getClickLatLng(new google.maps.LatLng(lat, lng), YarNet.map);
+    $('#favorite-spots-modal').modal('hide');
   });
 
   $('#favorite-spots-modal .modal-body').sortable({containment : 'document'});
