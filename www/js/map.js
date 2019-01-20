@@ -24,7 +24,7 @@ $(function() {
   });
 
   $('#map-content').on('show.start', function() {
-    $('[data-toggle="transition"], [data-toggle="logout"]', '#menu-circle').parent().remove();
+    $('[data-toggle="transition"], [data-toggle="logout"], [title="お気に入り観光地"]', '#menu-circle').parent().remove();
 
     if (localStorage['auth']) {
       $('#menu-circle').append(

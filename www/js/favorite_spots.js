@@ -14,6 +14,9 @@ $(function() {
       var $content = $(YarNet.infowindow.content);
       $content.data('place-id', e.placeId);
 
+      $content.removeClass('add');
+      $content.removeClass('del');
+
       // 観光地アイコン
       $content.find('.place-icon')
         .attr('src', place.icon);
@@ -99,7 +102,7 @@ $(function() {
           $place.remove();
 
           if (!$('#favorite-spots-modal .place').length) {
-            $('#favorite-spots-modal .modal-body').html('<div>お気に入り観光地がありません。</div>');
+            $('#favorite-spots-modal .modal-body').html('<div class="mx-3 my-3">お気に入り観光地がありません。</div>');
           }
         } else {
           $(YarNet.infowindow.content).removeClass('del').addClass('add');
@@ -127,6 +130,7 @@ $(function() {
               if (status !== google.maps.places.PlacesServiceStatus.OK) return;
 
               var $place = $('<div class="place">');
+              $place.attr('id', place.place_id);
               $place.data('place-id', place.place_id);
               $place.data('location', place.geometry.location);
 
@@ -149,8 +153,25 @@ $(function() {
             });
           });
         } else {
-          $('#favorite-spots-modal .modal-body').html('<div>お気に入り観光地がありません。</div>');
+          $('#favorite-spots-modal .modal-body').html('<div class="mx-3 my-3">お気に入り観光地がありません。</div>');
         }
+      })
+      .fail(function(data) {
+        console.log(data);
+      });
+  });
+
+  $('#favorite-spots-modal .modal-body').sortable({containment : 'document'});
+  $('#favorite-spots-modal .modal-body').on('sortupdate', function (e) {
+    $.ajax({
+      cache    : false,
+      data     : $(this).sortable('serialize', {key : 'place_id[]', expression : '(.+)'}),
+      dataType : 'json',
+      type     : 'PUT',
+      url      : YarNet.api + '/users/' + localStorage['auth'] + '/favorite_spots/reorder',
+    })
+      .done(function(data) {
+        console.log(data);
       })
       .fail(function(data) {
         console.log(data);

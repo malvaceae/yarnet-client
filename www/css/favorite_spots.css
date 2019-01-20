@@ -30,21 +30,21 @@
   display : block;
 }
 
+#favorite-spots-modal .modal-body {
+  padding : 0;
+}
+
 #favorite-spots-modal .place {
   display                 : -webkit-flex;
   display                 :         flex;
   -webkit-justify-content : space-between;
           justify-content : space-between;
-  padding-top             : 15px;
-  padding-bottom          : 15px;
-  border-bottom           : 1px solid #eee;
+  padding                 : 15px;
+  background-color        : #fff;
+  border-top              : 1px solid #eee;
   cursor                  : pointer;
 }
 
 #favorite-spots-modal .place:first-child {
-  padding-top : 0;
-}
-#favorite-spots-modal .place:last-child {
-  padding-bottom : 0;
-  border-bottom  : 0;
+  border-top : 0;
 }
