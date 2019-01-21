@@ -67,7 +67,7 @@ $(function() {
     history.replaceState(state, false);
 
     localStorage.removeItem('auth');
-    localStorage.removeItem('name');
+    localStorage['name'] = ('ゲスト-' + (Math.floor(Math.random() * 90000) + 10000));
     alert('ログアウトしました。');
     $('#top-content').transition('fadeOut', 'fadeIn');
   });
@@ -205,7 +205,7 @@ var select_location;
               '<div class="date">' + data[i].date + '</div>'+
               '</div>'
             );
-          } else if (data[i].user_id != null && data[i].name != null) {
+          } else if (data[i].user_id != null) {
             $('#chatLog').append(
               '<div class ="left message">' +
               '<figure>'+
@@ -216,11 +216,18 @@ var select_location;
               '<div class="date">' + data[i].date + '</div>'+
               '</div>'
             );
+          } else if (data[i].name == localStorage['name']) {
+            $('#chatLog').append(
+              '<div class ="right message">' +
+              '<div class="body">' + data[i].body + '</div>'+
+              '<div class="date">' + data[i].date + '</div>'+
+              '</div>'
+            );
           } else {
             $('#chatLog').append(
               '<div class ="left message">' +
               '<figure>'+
-              '  <figcaption>ゲスト</figcaption>'+
+              '  <figcaption>' + data[i].name + '</figcaption>'+
               '  <a href="#"><img src="/img/logo.png"></a>'+
               '</figure>'+
               '<div class="body">' + data[i].body + '</div>'+
@@ -234,10 +241,7 @@ var select_location;
 
         }
 
-
-
-
-
+        $('#chatLog').scrollTop($('#chatLog').height());
 
       })
       .fail(function(data){
@@ -250,13 +254,14 @@ var select_location;
       $('#chatLog').append(
         '<div class ="left message">' +
         '<figure>'+
-        '  <figcaption>' + (data.data.name || 'ゲスト') + '</figcaption>'+
+        '  <figcaption>' + data.data.name + '</figcaption>'+
         '  <a href="#"><img src="/img/logo.png"></a>'+
         '</figure>'+
         '<div class="body">' + data.data.body + '</div>'+
         '<div class="date">' + data.data.date + '</div>'+
         '</div>'
       );
+      $('#chatLog').scrollTop($('#chatLog').height());
     });
 
     var service = new google.maps.places.PlacesService(YarNet.map);

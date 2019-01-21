@@ -19,6 +19,10 @@ $(function() {
     content : $('#infowindow-content')[0],
   });
 
+  if (!localStorage['auth']) {
+    localStorage['name'] = ('ゲスト-' + (Math.floor(Math.random() * 90000) + 10000));
+  }
+
   if (!Array.isArray(history.state)) {
     history.replaceState([], false);
   }

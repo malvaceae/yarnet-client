@@ -22,7 +22,7 @@ $('#send').click(function(){
       dataType    : 'json',
       type        : 'POST',
       url         : 'https://api.yarnet.ml/messages',
-      data        : {'user_id':localStorage['auth'] || null,'name':localStorage['name'] || null,'body':msg,'address':$("#chat-roomname").data('address')},
+      data        : {'user_id':localStorage['auth'] || null,'name':localStorage['name'],'body':msg,'address':$("#chat-roomname").data('address')},
     })
       .done(function(data){
         //データベースに送信
@@ -36,7 +36,7 @@ $('#send').click(function(){
           '</div>'
         );
         room.send({
-          'name': localStorage['name'] || null,
+          'name': localStorage['name'],
           'date': data.date,
           'body': data.body,
         });
