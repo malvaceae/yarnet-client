@@ -521,6 +521,7 @@ var select_location;
     if ($(this).hasClass('show')) {
       // $('<div>').addClass('drawer-backdrop')
       //   .appendTo('#map-content');
+      $('#menu-circle').show();
       $('.left-drawer').removeClass('show');
       $('.left-drawer-toggle').removeClass('show')
       $('.left-drawer-toggle').empty();
@@ -528,6 +529,9 @@ var select_location;
     } else {
       // $('<div>').addClass('drawer-backdrop')
       //   .appendTo('#map-content');
+      if ($(window).width() <= 576) {
+        $('#menu-circle').hide();
+      }
       $('.left-drawer').addClass('show');
       $('.left-drawer-toggle').addClass('show')
       $('.left-drawer-toggle').empty();
