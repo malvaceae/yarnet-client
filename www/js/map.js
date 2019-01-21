@@ -142,7 +142,7 @@ $(function() {
 
 //TODO 微妙に位置変更する
           if (hotel['hotel'].length !== 0) {
-            var $media = $('<div style="position: absolute; top: 0; right: 0; font-weight: bold; width: 20px; height: 20px; line-height: 20px; background: red; color: white; padding: 2px 5px; margin-right: -10px; border-radius: 50%; margin-top: -5px;">可</div>').appendTo($('.media-body', $media));
+            $('<div style="position: absolute; top: 0; right: 0; font-weight: bold; width: 20px; height: 20px; line-height: 20px; background: red; color: white; padding: 2px 5px; margin-right: -10px; border-radius: 50%; margin-top: -5px;">可</div>').appendTo($('.media-body', $media));
           }
 
           //ホテル名クリックでマップの中心移動、mouseEnterで跳ねる
@@ -359,9 +359,8 @@ var select_location;
     var query = $('#address').val();
     //API呼び出し
     $.ajax({
-      url: 'http://wikipedia.simpleapi.net/api',
+      url: YarNet.api + '/wikipedia',
       data: {
-        output: 'json',
         keyword: query
       },
       type: 'GET',
@@ -398,14 +397,14 @@ var select_location;
   var onSuccess = function(position) {
 
     your_location=[position.coords.latitude,position.coords.longitude];
-    alert('Latitude: '          + position.coords.latitude          + '\n' +
-          'Longitude: '         + position.coords.longitude         + '\n' +
-          'Altitude: '          + position.coords.altitude          + '\n' +
-          'Accuracy: '          + position.coords.accuracy          + '\n' +
-          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-          'Heading: '           + position.coords.heading           + '\n' +
-          'Speed: '             + position.coords.speed             + '\n' +
-          'Timestamp: '         + position.timestamp                + '\n');
+    // alert('Latitude: '          + position.coords.latitude          + '\n' +
+    //       'Longitude: '         + position.coords.longitude         + '\n' +
+    //       'Altitude: '          + position.coords.altitude          + '\n' +
+    //       'Accuracy: '          + position.coords.accuracy          + '\n' +
+    //       'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+    //       'Heading: '           + position.coords.heading           + '\n' +
+    //       'Speed: '             + position.coords.speed             + '\n' +
+    //       'Timestamp: '         + position.timestamp                + '\n');
 
     YarNet.map.setCenter({
       lat: position.coords.latitude,

@@ -169,6 +169,10 @@ $(function() {
   });
 
   $('#favorite-spots-modal').on('click', '.place', function (e) {
+    if ($(e.target).hasClass('del-favorite-spot')) {
+      return;
+    }
+
     var lat = $(this).data('place-lat');
     var lng = $(this).data('place-lng');
 
