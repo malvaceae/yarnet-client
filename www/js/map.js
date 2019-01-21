@@ -178,6 +178,45 @@ var select_location;
     var address = e.placeId;
     room = peer.joinRoom(address);
 
+    $("#chat-roomname").data('address', address);
+
+
+    //チャット履歴の取得
+    $.ajax({
+      cache       : false,
+      dataType    : 'json',
+      type        : 'GET',
+      url         : 'https://api.yarnet.ml/messages',
+      data        : {'address':address},
+    })
+      .done(function(data) {
+        console.log(data);
+        for (var i = 0; i < data.length; i++) {
+
+          $('#chatLog').append(
+            '<div class ="left message">' +
+            '<figure>'+
+            '  <figcaption>ゲスト１</figcaption>'+
+            '  <a href="#"><img src="/img/logo.png"></a>'+
+            '</figure>'+
+            '<div class="body">' + data[i].body + '</div>'+
+            '<div class="date">' + data[i].date + '</div>'+
+            '</div>'
+          );
+
+
+
+        }
+
+
+
+
+
+
+      })
+      .fail(function(data){
+        console.log("チャットの取得に失敗しました");
+      });
 
     // チャットを受信
     room.on('data', function(data){
@@ -188,8 +227,8 @@ var select_location;
         '  <figcaption>ゲスト１</figcaption>'+
         '  <a href="#"><img src="/img/logo.png"></a>'+
         '</figure>'+
-        '<div class="body">' + data.data + '</div>'+
-        '<div class="date">' + '00:00' + '</div>'+
+        '<div class="body">' + data.data.body + '</div>'+
+        '<div class="date">' + data.data.date + '</div>'+
         '</div>'
       );
     });
