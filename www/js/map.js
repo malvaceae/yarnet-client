@@ -188,16 +188,17 @@ var select_location;
     // チャットを受信
     room.on('data', function(data){
       //chatlog('ID: ' + data.src + '> ' + data.data); // data.src = 送信者のpeerid, data.data = 送信されたメッセージ
-      $('#chatLog').append(
+      var $message = $(
         '<div class ="left message">' +
         '<figure>'+
         '  <figcaption>' + data.data.name + '</figcaption>'+
         '  <a href="#"><img src="/img/logo.png"></a>'+
         '</figure>'+
-        '<div class="body">' + data.data.body + '</div>'+
+        '<div class="body"></div>'+
         '<div class="date">' + data.data.date + '</div>'+
         '</div>'
-      );
+      ).find('.body').text(data.data.body).end();
+      $('#chatLog').append($message);
       $('#chatLog').scrollTop($('#chatLog').height());
     });
 
@@ -290,41 +291,45 @@ var select_location;
           for (var i = 0; i < data.length; i++) {
 
             if ((localStorage['auth'] || -1) == data[i].user_id) {
-              $('#chatLog').append(
+              var $message = $(
                 '<div class ="right message">' +
-                '<div class="body">' + data[i].body + '</div>'+
+                '<div class="body"></div>'+
                 '<div class="date">' + data[i].date + '</div>'+
                 '</div>'
-              );
+              ).find('.body').text(data[i].body).end();
+              $('#chatLog').append($message);
             } else if (data[i].user_id != null) {
-              $('#chatLog').append(
+              var $message = $(
                 '<div class ="left message">' +
                 '<figure>'+
                 '  <figcaption>' + data[i].name + '</figcaption>'+
                 '  <a href="#"><img src="/img/logo.png"></a>'+
                 '</figure>'+
-                '<div class="body">' + data[i].body + '</div>'+
+                '<div class="body"></div>'+
                 '<div class="date">' + data[i].date + '</div>'+
                 '</div>'
-              );
+              ).find('.body').text(data[i].body).end();
+              $('#chatLog').append($message);
             } else if (data[i].name == localStorage['name']) {
-              $('#chatLog').append(
+              var $message = $(
                 '<div class ="right message">' +
-                '<div class="body">' + data[i].body + '</div>'+
+                '<div class="body"></div>'+
                 '<div class="date">' + data[i].date + '</div>'+
                 '</div>'
-              );
+              ).find('.body').text(data[i].body).end();
+              $('#chatLog').append($message);
             } else {
-              $('#chatLog').append(
+              var $message = $(
                 '<div class ="left message">' +
                 '<figure>'+
                 '  <figcaption>' + data[i].name + '</figcaption>'+
                 '  <a href="#"><img src="/img/logo.png"></a>'+
                 '</figure>'+
-                '<div class="body">' + data[i].body + '</div>'+
+                '<div class="body"></div>'+
                 '<div class="date">' + data[i].date + '</div>'+
                 '</div>'
-              );
+              ).find('.body').text(data[i].body).end();
+              $('#chatLog').append($message);
             }
           }
 

@@ -29,12 +29,13 @@ $('#send').click(function(){
         console.log(data);
 
         //chatlog('自分> ' + msg, 'mychat');
-        $('#chatLog').append(
+        var $message = $(
           '<div class ="right message">' +
-          '<div class="body">' + data.body + '</div>'+
+          '<div class="body"></div>'+
           '<div class="date">' + data.date + '</div>'+
           '</div>'
-        );
+        ).find('.body').text(data.body).end();
+        $('#chatLog').append($message);
         room.send({
           'name': localStorage['name'],
           'date': data.date,
