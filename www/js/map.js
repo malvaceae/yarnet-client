@@ -67,6 +67,7 @@ $(function() {
     history.replaceState(state, false);
 
     localStorage.removeItem('auth');
+    localStorage.removeItem('name');
     alert('ログアウトしました。');
     $('#top-content').transition('fadeOut', 'fadeIn');
   });
@@ -204,7 +205,7 @@ var select_location;
               '<div class="date">' + data[i].date + '</div>'+
               '</div>'
             );
-          } else if (data[i].user_id != null) {
+          } else if (data[i].user_id != null && data[i].name != null) {
             $('#chatLog').append(
               '<div class ="left message">' +
               '<figure>'+
@@ -249,7 +250,7 @@ var select_location;
       $('#chatLog').append(
         '<div class ="left message">' +
         '<figure>'+
-        '  <figcaption>ゲスト</figcaption>'+
+        '  <figcaption>' + (data.data.name || 'ゲスト') + '</figcaption>'+
         '  <a href="#"><img src="/img/logo.png"></a>'+
         '</figure>'+
         '<div class="body">' + data.data.body + '</div>'+

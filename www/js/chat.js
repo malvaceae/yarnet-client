@@ -36,6 +36,7 @@ $('#send').click(function(){
           '</div>'
         );
         room.send({
+          'name': localStorage['name'] || null,
           'date': data.date,
           'body': data.body,
         });
