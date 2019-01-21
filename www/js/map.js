@@ -434,7 +434,6 @@ var select_location;
       },
       type: 'GET',
       dataType: 'jsonp',			//Access-Control-Allow-Origin対策
-      timeout: 1000,
       success: function(json) {
         if (json != null && json.length > 0) {
           $('#word').html('<div class = wrapper></div>');
