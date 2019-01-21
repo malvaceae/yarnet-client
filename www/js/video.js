@@ -104,7 +104,7 @@ function setupEndCallUI() {
   // $('#end-call').show();
 }
 
-$('#video-content').on('click', 'video', function() {
-  $('.t-video').toggleClass('main-video');
-  $('.m-video').toggleClass('main-video');
-});
+// $('#video-content').on('click', 'video', function() {
+//   $('.t-video').toggleClass('main-video');
+//   $('.m-video').toggleClass('main-video');
+// });

@@ -53,6 +53,7 @@
 }
 
 #video-content video.m-video {
+  z-index: 50000;
   width  : 200px;
   height : auto;
 }
@@ -75,4 +76,11 @@
 #video-content video.m-video.main-video {
   width  : 80%;
   height : auto;
+}
+
+@media (max-width: 576px) {
+  #video-content video.m-video {
+    top  : -16px;
+    left : -16px;
+  }
 }

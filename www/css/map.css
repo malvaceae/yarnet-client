@@ -529,16 +529,8 @@ z-index: 10000;
   overflow-y: auto;
 }
 #chat-form{
-  /* position: absolute;
   display: -webkit-flex;
   display:         flex;
-  right: 20px;
-  bottom: 20px;
-  left: 20px;
-  height: 30px;
-  max-height: 20%;;
-  background-color: rgb(255,255,255);
-  overflow: hidden; */
 }
 #msg{
   -webkit-flex-grow: 1;
@@ -548,8 +540,6 @@ z-index: 10000;
   border-radius:10px;
   box-shadow: none;
   padding: 2px 8px;
-  max-width: 80%;
-  width: 80%;
 }
 #send{
 }
@@ -563,7 +553,7 @@ z-index: 10000;
 }
 
 #eventButton{
-  right: 14.5px;
+  right: 15px;
   bottom: 115px;
   position: absolute;
   z-index: 100;

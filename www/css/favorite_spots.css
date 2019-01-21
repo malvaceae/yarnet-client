@@ -30,7 +30,8 @@
 }
 
 #favorite-spots-modal .modal-body {
-  padding : 0;
+  padding    : 0;
+  overflow-y : auto;
 }
 
 #favorite-spots-modal .place {
