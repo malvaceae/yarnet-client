@@ -359,9 +359,8 @@ var select_location;
     var query = $('#address').val();
     //API呼び出し
     $.ajax({
-      url: 'http://wikipedia.simpleapi.net/api',
+      url: YarNet.api + '/wikipedia',
       data: {
-        output: 'json',
         keyword: query
       },
       type: 'GET',
@@ -398,14 +397,14 @@ var select_location;
   var onSuccess = function(position) {
 
     your_location=[position.coords.latitude,position.coords.longitude];
-    alert('Latitude: '          + position.coords.latitude          + '\n' +
-          'Longitude: '         + position.coords.longitude         + '\n' +
-          'Altitude: '          + position.coords.altitude          + '\n' +
-          'Accuracy: '          + position.coords.accuracy          + '\n' +
-          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-          'Heading: '           + position.coords.heading           + '\n' +
-          'Speed: '             + position.coords.speed             + '\n' +
-          'Timestamp: '         + position.timestamp                + '\n');
+    // alert('Latitude: '          + position.coords.latitude          + '\n' +
+    //       'Longitude: '         + position.coords.longitude         + '\n' +
+    //       'Altitude: '          + position.coords.altitude          + '\n' +
+    //       'Accuracy: '          + position.coords.accuracy          + '\n' +
+    //       'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+    //       'Heading: '           + position.coords.heading           + '\n' +
+    //       'Speed: '             + position.coords.speed             + '\n' +
+    //       'Timestamp: '         + position.timestamp                + '\n');
 
     YarNet.map.setCenter({
       lat: position.coords.latitude,
