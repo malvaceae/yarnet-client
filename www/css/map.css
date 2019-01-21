@@ -433,9 +433,9 @@
   right:0;
   width:450px;
   max-width: 100%;
+  height: 100%;
   max-height: 100%;
-
-  z-index: 200;
+  z-index: 1000;
 }
 
 .right-nav-drawer > header {
@@ -521,9 +521,9 @@ z-index: 10000;
 }
 #chatLog {
   position: absolute;
-  top: 60px;
+  top: 50px;
   right: 20px;
-  bottom: 60px;
+  bottom: 50px;
   left: 20px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -622,9 +622,7 @@ dd .wiki-content {padding-left:.5em;border-left:1px solid #333;font-size:.9em;cl
   background-repeat     : no-repeat;
   background-size       : cover;
 }
-@media (min-width: 768px) {
-  #chatLog { background-image : none; }
-}
+#chatLog { background-image : none; }
 
 #chatLog .message {
   display       : -webkit-flex;
@@ -666,9 +664,7 @@ dd .wiki-content {padding-left:.5em;border-left:1px solid #333;font-size:.9em;cl
   color              : #ffffff;
   word-break         : keep-all;
 }
-@media (min-width: 768px) {
-  #chatLog .message .date { color : #333333; }
-}
+#chatLog .message .date { color : #333333; }
 
 #chatLog .sys.message {
   -webkit-justify-content : center;
@@ -685,11 +681,9 @@ dd .wiki-content {padding-left:.5em;border-left:1px solid #333;font-size:.9em;cl
   background-color : rgba(0,0,0,0.1);
   border-radius    : 12px;
 }
-@media (min-width: 768px) {
-  #chatLog .sys.message div {
-    color            : #333333;
-    background-color : rgba(0,0,0,0.05);
-  }
+#chatLog .sys.message div {
+  color            : #333333;
+  background-color : rgba(0,0,0,0.05);
 }
 
 #chatLog .left.message {
@@ -715,9 +709,7 @@ dd .wiki-content {padding-left:.5em;border-left:1px solid #333;font-size:.9em;cl
   word-break  : keep-all;
   white-space : pre;
 }
-@media (min-width: 768px) {
-  #chatLog .left.message figure figcaption { color : #333333; }
-}
+#chatLog .left.message figure figcaption { color : #333333; }
 #chatLog .left.message div.body {
   margin           : 12px 4px 0 12px;
   background-color : #ffffff;
@@ -730,10 +722,8 @@ dd .wiki-content {padding-left:.5em;border-left:1px solid #333;font-size:.9em;cl
 }
 #chatLog .left.message a.body { margin : 12px 4px 0 12px; }
 
-@media (min-width: 768px) {
-  #chatLog .left.message div.body         { background-color   : #eeeeee; }
-  #chatLog .left.message div.body::before { border-right-color : #eeeeee; }
-}
+#chatLog .left.message div.body         { background-color   : #eeeeee; }
+#chatLog .left.message div.body::before { border-right-color : #eeeeee; }
 
 #chatLog .right.message {
   -webkit-flex-direction : row-reverse;

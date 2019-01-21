@@ -8,7 +8,11 @@ $('#join').click(function(){
 
 // チャットを送信
 $('#send').click(function(){
+  if($('#msg').val()==""){
+    return;
+  }
     var msg = $('#msg').val();
+    $('#msg').val("");
 
 
 
@@ -18,7 +22,7 @@ $('#send').click(function(){
       dataType    : 'json',
       type        : 'POST',
       url         : 'https://api.yarnet.ml/messages',
-      data        : {'name':name,'body':msg,'address':$("#chat-roomname").data('address')},
+      data        : {'user_id':localStorage['auth'] || null,'name':localStorage['name'] || null,'body':msg,'address':$("#chat-roomname").data('address')},
     })
       .done(function(data){
         //データベースに送信

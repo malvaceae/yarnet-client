@@ -26,6 +26,7 @@ $(function() {
 
         console.log(data);
         localStorage['auth'] = data.id;
+        localStorage['name'] = data.name;
         alert('新規登録に成功しました。');
         $('#map-content').transition('fadeOut', 'fadeIn');
       })

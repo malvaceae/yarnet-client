@@ -176,8 +176,12 @@ var select_location;
 
     // 住所を取得
     var address = e.placeId;
+    if (!address) {
+      return;
+    }
     room = peer.joinRoom(address);
 
+    $('.right-nav-drawer input, .right-nav-drawer button').removeAttr('disabled');
     $("#chat-roomname").data('address', address);
 
 
@@ -190,19 +194,40 @@ var select_location;
       data        : {'address':address},
     })
       .done(function(data) {
-        console.log(data);
+        $("#chatLog").html("");
         for (var i = 0; i < data.length; i++) {
 
-          $('#chatLog').append(
-            '<div class ="left message">' +
-            '<figure>'+
-            '  <figcaption>ゲスト１</figcaption>'+
-            '  <a href="#"><img src="/img/logo.png"></a>'+
-            '</figure>'+
-            '<div class="body">' + data[i].body + '</div>'+
-            '<div class="date">' + data[i].date + '</div>'+
-            '</div>'
-          );
+          if ((localStorage['auth'] || 0) == data[i].user_id) {
+            $('#chatLog').append(
+              '<div class ="right message">' +
+              '<div class="body">' + data[i].body + '</div>'+
+              '<div class="date">' + data[i].date + '</div>'+
+              '</div>'
+            );
+          } else if (data[i].user_id != null) {
+            $('#chatLog').append(
+              '<div class ="left message">' +
+              '<figure>'+
+              '  <figcaption>' + data[i].name + '</figcaption>'+
+              '  <a href="#"><img src="/img/logo.png"></a>'+
+              '</figure>'+
+              '<div class="body">' + data[i].body + '</div>'+
+              '<div class="date">' + data[i].date + '</div>'+
+              '</div>'
+            );
+          } else {
+            $('#chatLog').append(
+              '<div class ="left message">' +
+              '<figure>'+
+              '  <figcaption>ゲスト</figcaption>'+
+              '  <a href="#"><img src="/img/logo.png"></a>'+
+              '</figure>'+
+              '<div class="body">' + data[i].body + '</div>'+
+              '<div class="date">' + data[i].date + '</div>'+
+              '</div>'
+            );
+          }
+
 
 
 
@@ -224,7 +249,7 @@ var select_location;
       $('#chatLog').append(
         '<div class ="left message">' +
         '<figure>'+
-        '  <figcaption>ゲスト１</figcaption>'+
+        '  <figcaption>ゲスト</figcaption>'+
         '  <a href="#"><img src="/img/logo.png"></a>'+
         '</figure>'+
         '<div class="body">' + data.data.body + '</div>'+
@@ -301,6 +326,11 @@ var select_location;
     if($('.right-nav-drawer').is(":animated")){
       return false;
     }else{
+      if (room == null) {
+        $('.right-nav-drawer input, .right-nav-drawer button').attr('disabled', '');
+      } else {
+        $('.right-nav-drawer input, .right-nav-drawer button').removeAttr('disabled');
+      }
       $('.right-nav-drawer').animate({width:'toggle'}); //animateで表示・非表示
       $(this).toggleClass('peke'); //toggleでクラス追加・削除
       return false;
