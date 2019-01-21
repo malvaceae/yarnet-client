@@ -563,7 +563,8 @@ z-index: 10000;
 }
 
 #eventButton{
-  right: 200px;
+  right: 14.5px;
+  bottom: 115px;
   position: absolute;
   z-index: 100;
 }
@@ -609,7 +610,9 @@ dd {margin:0;padding:0;padding-top:.5em;padding-bottom:.5em;}
 dd .wiki-content {padding-left:.5em;border-left:1px solid #333;font-size:.9em;clear:both;} */
 
 
-
+.adp-warnbox {
+  display: none;
+}
 
 #chatLog {
   overflow-x            : hidden;
