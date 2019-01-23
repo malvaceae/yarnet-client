@@ -27,7 +27,7 @@
   position:relative;
   font-size:12px;
   margin-left: 10px;
-  max-width:80%;
+  max-width:calc(100% - 74px);
 }
 .media-body h6{
   text-overflow: ellipsis;

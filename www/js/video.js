@@ -21,8 +21,24 @@ peer.on('disconnected', function() {
 $('#make-call').submit(function(e) {
   e.preventDefault();
 
+  var callToId = $('#callto-id').val();
+  if (callToId == '') {
+    return;
+  }
+
   getLocalStream(function(stream) {
-    var call = peer.call($('#callto-id').val(), stream);
+    var call = peer.call(callToId, stream);
+
+    setTimeout(function() {
+      if (!call.open) {
+        if (existingCall) {
+          existingCall.close();
+        }
+
+        $('#video-content [data-toggle="goBackward"]').click();
+      }
+    }, 30000);
+
     setupCallEventHandlers(call);
   });
 
@@ -30,7 +46,7 @@ $('#make-call').submit(function(e) {
   $('#video-content').transition('fadeOut', 'fadeIn');
 });
 
-$('#end-call').on('submit', function() {
+$('#end-call').on('click', function() {
   $('#video-content [data-toggle="goBackward"]').click();
 
   if (existingCall) {

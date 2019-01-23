@@ -185,6 +185,69 @@ var select_location;
     $('.right-nav-drawer input, .right-nav-drawer button').removeAttr('disabled');
     $("#chat-roomname").data('address', address);
 
+    //チャット履歴の取得
+    $("#chatLog").html("");
+    var address = $("#chat-roomname").data('address');
+
+    $.ajax({
+      cache       : false,
+      dataType    : 'json',
+      type        : 'GET',
+      url         : 'https://api.yarnet.ml/messages',
+      data        : {'address':address},
+    })
+      .done(function(data) {
+        for (var i = 0; i < data.length; i++) {
+
+          if ((localStorage['auth'] || -1) == data[i].user_id) {
+            var $message = $(
+              '<div class ="right message">' +
+              '<div class="body"></div>'+
+              '<div class="date">' + data[i].date + '</div>'+
+              '</div>'
+            ).find('.body').text(data[i].body).end();
+            $('#chatLog').append($message);
+          } else if (data[i].user_id != null) {
+            var $message = $(
+              '<div class ="left message">' +
+              '<figure>'+
+              '  <figcaption>' + data[i].name + '</figcaption>'+
+              '  <a href="#"><img src="/img/logo.png"></a>'+
+              '</figure>'+
+              '<div class="body"></div>'+
+              '<div class="date">' + data[i].date + '</div>'+
+              '</div>'
+            ).find('.body').text(data[i].body).end();
+            $('#chatLog').append($message);
+          } else if (data[i].name == localStorage['name']) {
+            var $message = $(
+              '<div class ="right message">' +
+              '<div class="body"></div>'+
+              '<div class="date">' + data[i].date + '</div>'+
+              '</div>'
+            ).find('.body').text(data[i].body).end();
+            $('#chatLog').append($message);
+          } else {
+            var $message = $(
+              '<div class ="left message">' +
+              '<figure>'+
+              '  <figcaption>' + data[i].name + '</figcaption>'+
+              '  <a href="#"><img src="/img/logo.png"></a>'+
+              '</figure>'+
+              '<div class="body"></div>'+
+              '<div class="date">' + data[i].date + '</div>'+
+              '</div>'
+            ).find('.body').text(data[i].body).end();
+            $('#chatLog').append($message);
+          }
+        }
+
+        $('#chatLog').scrollTop($('#chatLog').height());
+      })
+      .fail(function(data){
+        console.log("チャットの取得に失敗しました");
+      });
+
     // チャットを受信
     room.on('data', function(data){
       //chatlog('ID: ' + data.src + '> ' + data.data); // data.src = 送信者のpeerid, data.data = 送信されたメッセージ
@@ -263,8 +326,8 @@ var select_location;
   });
 
   //右ドロワー
-  WindowHeight = $(window).height();
-  $('.right-nav-drawer').css('height', WindowHeight); //メニューをwindowの高さいっぱいにする
+  // WindowHeight = $(window).height();
+  // $('.right-nav-drawer').css('height', WindowHeight); //メニューをwindowの高さいっぱいにする
 
   $('#right-btn').click(function(){ //クリックしたら
     if($('.right-nav-drawer').is(":animated")){
