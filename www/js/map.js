@@ -44,7 +44,7 @@ $(function() {
       $('#menu-circle').append(
         $('<li class="circleMenu-item">').append(
           $('<button type="button" class="btn btn-primary" title="ログアウト" data-toggle="logout">').append(
-            $('<i class="fas fa-wrench"></i>')
+            $('<i class="fas fa-sign-out-alt"></i>')
           )
         )
       );
