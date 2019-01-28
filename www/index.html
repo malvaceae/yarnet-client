@@ -235,6 +235,65 @@
         </div>
       </div>
 
+      <div class="modal fade" id="user-setting-modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">ユーザー設定</h5>
+              <button type="button" class="close" data-dismiss="modal">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-3" id="setting-menu">
+                  <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#profile" data-toggle="tab">
+                        <i class="fa fa-user fa-fw"></i> <span>プロフィール</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#password" data-toggle="tab">
+                        <i class="fa fa-key fa-fw"></i> <span>パスワード</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-9" id="setting-body">
+                  <form class="tab-content" action="#" method="post">
+                    <div class="tab-pane fade show active" id="profile">
+                      <div class="form-group">
+                        <label for="user-setting-name">ユーザー名</label>
+                        <input class="form-control" id="user-setting-name" type="text" name="name">
+                      </div>
+                      <div class="form-group">
+                        <label for="user-setting-email">メールアドレス</label>
+                        <input class="form-control" id="user-setting-email" type="text" name="email">
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="password">
+                      <div class="form-group">
+                        <label for="user-setting-password">パスワード</label>
+                        <input class="form-control" id="user-setting-password" type="password" name="password">
+                      </div>
+                      <div class="form-group">
+                        <label for="user-setting-password-confirmation">パスワードの確認</label>
+                        <input class="form-control" id="user-setting-password-confirmation" type="password" name="password_confirmation">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+              <button type="button" class="btn btn-primary">保存する</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <article class="tweet-template">
         <div class="tweet-head">
           <img class="profile-img" src="" alt="">

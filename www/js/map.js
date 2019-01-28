@@ -550,8 +550,44 @@ var select_location;
           $(this).hide();
   });
 
-  $('.modal').on('show.bs.modal', function (e) {
+  $('.modal').on('show.bs.modal', function(e) {
     YarNet.infowindow.close();
+  });
+
+  $('#user-setting-modal').on('show.bs.modal', function(e) {
+    $.ajax({
+      cache    : false,
+      dataType : 'json',
+      url      : YarNet.api + '/users/' + localStorage['auth'],
+    })
+      .done(function(data) {
+        $('#user-setting-name').val(data.name);
+        $('#user-setting-email').val(data.mail);
+      })
+      .fail(function(data) {
+        console.log(data);
+      });
+
+    $('#user-setting-password').val('');
+    $('#user-setting-password-confirmation').val('');
+  });
+
+  $('#user-setting-modal').on('click', '.btn-primary', function(e) {
+    $.ajax({
+      cache       : false,
+      contentType : false,
+      data        : (new FormData($('#user-setting-modal form')[0])),
+      dataType    : 'json',
+      processData : false,
+      type        : 'POST',
+      url         : YarNet.api + '/users/' + localStorage['auth'],
+    })
+      .done(function(data) {
+        $('#user-setting-modal').modal('hide');
+      })
+      .fail(function(data) {
+        alert(Object.values(data.responseJSON.error).join("\n"));
+      });
   });
 
 });
