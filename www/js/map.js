@@ -24,13 +24,20 @@ $(function() {
   });
 
   $('#map-content').on('show.start', function() {
-    $('[data-toggle="transition"], [data-toggle="logout"], [title="お気に入り観光地"]', '#menu-circle').parent().remove();
+    $('[data-toggle="transition"], [data-toggle="logout"], [title="お気に入り観光地"], [title="設定"]', '#menu-circle').parent().remove();
 
     if (localStorage['auth']) {
       $('#menu-circle').append(
         $('<li class="circleMenu-item">').append(
           $('<button type="button" class="btn btn-primary" title="お気に入り観光地" data-toggle="modal" data-target="#favorite-spots-modal">').append(
             $('<i class="fas fa-star"></i>')
+          )
+        )
+      );
+      $('#menu-circle').append(
+        $('<li class="circleMenu-item">').append(
+          $('<button type="button" class="btn btn-primary" title="設定" data-toggle="modal" data-target="#user-setting-modal">').append(
+            $('<i class="fas fa-wrench"></i>')
           )
         )
       );
@@ -452,7 +459,7 @@ var select_location;
   //Circle Menu
   $('#menu-circle').circleMenu({
     item_diameter: 40,
-    circle_radius: 100,
+    circle_radius: 150,
     direction: 'bottom-left'
   });
 
@@ -654,8 +661,44 @@ var select_location;
           $(this).hide();
   });
 
-  $('.modal').on('show.bs.modal', function (e) {
+  $('.modal').on('show.bs.modal', function(e) {
     YarNet.infowindow.close();
+  });
+
+  $('#user-setting-modal').on('show.bs.modal', function(e) {
+    $.ajax({
+      cache    : false,
+      dataType : 'json',
+      url      : YarNet.api + '/users/' + localStorage['auth'],
+    })
+      .done(function(data) {
+        $('#user-setting-name').val(data.name);
+        $('#user-setting-email').val(data.mail);
+      })
+      .fail(function(data) {
+        console.log(data);
+      });
+
+    $('#user-setting-password').val('');
+    $('#user-setting-password-confirmation').val('');
+  });
+
+  $('#user-setting-modal').on('click', '.btn-primary', function(e) {
+    $.ajax({
+      cache       : false,
+      contentType : false,
+      data        : (new FormData($('#user-setting-modal form')[0])),
+      dataType    : 'json',
+      processData : false,
+      type        : 'POST',
+      url         : YarNet.api + '/users/' + localStorage['auth'],
+    })
+      .done(function(data) {
+        $('#user-setting-modal').modal('hide');
+      })
+      .fail(function(data) {
+        alert(Object.values(data.responseJSON.error).join("\n"));
+      });
   });
 
 });
