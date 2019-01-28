@@ -1,23 +1,53 @@
 let peer         = null;
 let existingCall = null;
 
+function createPeer() {
+  if (peer != null) {
+    peer.disconnect();
+  }
+
+  var peer = new Peer((localStorage['auth'] ? btoa(btoa(btoa(localStorage['auth']))).slice(0, -1) : null), {key: '987f8d84-8021-40f2-9bf9-aac9a6722c10', debug: 0});
+
+  peer.on('open', function(id) {
+    $('#my-id').text(peer.id);
+  });
+
+  peer.on('error', function(err) {
+    // alert(err.message);
+  });
+
+  peer.on('close', function() {
+  });
+
+  peer.on('disconnected', function() {
+  });
+
+  peer.on('call', function(call) {
+    $('#video-alert').addClass('show');
+
+    // 応答
+    $('#answer-call').one('click',function() {
+      getLocalStream(function(stream) {
+        call.answer(stream);
+        setupCallEventHandlers(call);
+      });
+
+      $('#video-alert').removeClass('show');
+      $('#video-content').transition('fadeOut', 'fadeIn');
+    });
+
+    // 拒否
+    $('#no-call').one('click',function() {
+      call.close();
+      setupMakeCallUI();
+      $('#video-alert').removeClass('show');
+    });
+  });
+
+  return peer;
+}
+
 // SkyWayのシグナリングサーバと接続する。
-peer = new Peer((localStorage['auth'] ? btoa(btoa(btoa(localStorage['auth']))).slice(0, -1) : null), {key: '987f8d84-8021-40f2-9bf9-aac9a6722c10', debug: 0});
-
-peer.on('open', function(id) {
-  $('#my-id').text(peer.id);
-});
-
-peer.on('error', function(err) {
-  // alert(err.message);
-});
-
-peer.on('close', function() {
-});
-
-peer.on('disconnected', function() {
-});
-
 $('#make-call').submit(function(e) {
   e.preventDefault();
 
@@ -54,28 +84,6 @@ $('#end-call').on('click', function() {
   }
 
   return false;
-});
-
-peer.on('call', function(call) {
-  $('#video-alert').addClass('show');
-
-  // 応答
-  $('#answer-call').one('click',function() {
-    getLocalStream(function(stream) {
-      call.answer(stream);
-      setupCallEventHandlers(call);
-    });
-
-    $('#video-alert').removeClass('show');
-    $('#video-content').transition('fadeOut', 'fadeIn');
-  });
-
-  // 拒否
-  $('#no-call').one('click',function() {
-    call.close();
-    setupMakeCallUI();
-    $('#video-alert').removeClass('show');
-  });
 });
 
 function setupCallEventHandlers(call) {

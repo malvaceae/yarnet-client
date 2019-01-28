@@ -59,23 +59,28 @@ $(function() {
     }
 
     $('#menu-circle').circleMenu('init');
+    peer = createPeer();
+  });
+
+  $('#sampleModal').on('show.bs.modal', function() {
+    $('#video-friends').empty();
 
     if (localStorage['auth']) {
       for (var i = 0; i < 10; i++) {
         $('#video-friends').append(
           $('<div class="media py-1 my-2">')
-          .append(
-            $('<img class="mr-3" src="/img/logo.png" alt="" width="40" height="40">')
-          )
-          .append(
-            $('<div class="media-body">')
             .append(
-              $('<h5 class="my-0">').text(localStorage['name'])
+              $('<img class="mr-3" src="/img/logo.png" alt="" width="40" height="40">')
             )
             .append(
-              $('<span class="friends-id">').text(btoa(btoa(btoa('aite'))))
+              $('<div class="media-body">')
+              .append(
+                $('<h5 class="my-0">').text(localStorage['name'])
+              )
+              .append(
+                $('<span class="friends-id">').text(btoa(btoa(btoa('aite'))))
+              )
             )
-          )
         );
       }
     }
