@@ -24,13 +24,20 @@ $(function() {
   });
 
   $('#map-content').on('show.start', function() {
-    $('[data-toggle="transition"], [data-toggle="logout"], [title="お気に入り観光地"]', '#menu-circle').parent().remove();
+    $('[data-toggle="transition"], [data-toggle="logout"], [title="お気に入り観光地"], [title="設定"]', '#menu-circle').parent().remove();
 
     if (localStorage['auth']) {
       $('#menu-circle').append(
         $('<li class="circleMenu-item">').append(
           $('<button type="button" class="btn btn-primary" title="お気に入り観光地" data-toggle="modal" data-target="#favorite-spots-modal">').append(
             $('<i class="fas fa-star"></i>')
+          )
+        )
+      );
+      $('#menu-circle').append(
+        $('<li class="circleMenu-item">').append(
+          $('<button type="button" class="btn btn-primary" title="設定" data-toggle="modal" data-target="#user-setting-modal">').append(
+            $('<i class="fas fa-wrench"></i>')
           )
         )
       );
@@ -351,7 +358,7 @@ var select_location;
   //Circle Menu
   $('#menu-circle').circleMenu({
     item_diameter: 40,
-    circle_radius: 100,
+    circle_radius: 150,
     direction: 'bottom-left'
   });
 
