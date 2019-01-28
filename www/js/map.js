@@ -37,7 +37,7 @@ $(function() {
       $('#menu-circle').append(
         $('<li class="circleMenu-item">').append(
           $('<button type="button" class="btn btn-primary" title="ログアウト" data-toggle="logout">').append(
-            $('<i class="fas fa-sign-out-alt"></i>')
+            $('<i class="fas fa-wrench"></i>')
           )
         )
       );
@@ -59,6 +59,31 @@ $(function() {
     }
 
     $('#menu-circle').circleMenu('init');
+
+    if (localStorage['auth']) {
+      for (var i = 0; i < 10; i++) {
+        $('#video-friends').append(
+          $('<div class="media py-1 my-2">')
+          .append(
+            $('<img class="mr-3" src="/img/logo.png" alt="" width="40" height="40">')
+          )
+          .append(
+            $('<div class="media-body">')
+            .append(
+              $('<h5 class="my-0">').text(localStorage['name'])
+            )
+            .append(
+              $('<span class="friends-id">').text(btoa(btoa(btoa('aite'))))
+            )
+          )
+        );
+      }
+    }
+  });
+
+  $('#video-friends').on('click', '.media', function(){
+    $('#callto-id').val($(".friends-id", this).text());
+
   });
 
   $(document).on('click', '[data-toggle="logout"]', function() {

@@ -499,6 +499,35 @@
   bottom:0;
 }
 
+@media (max-width: 576px) {
+  .gmnoprint {
+    display:none;
+  }
+  #eventButton {
+    bottom: 20px !important;
+  }
+  #video-friends{
+    overflow: auto;
+    max-height: calc(100% - 54px) !important;
+  }
+  #sampleModal .modal-body {
+    height: calc(100% - 57px);
+  }
+  #make-call {
+    height: calc(100% - 42px);
+  }
+}
+
+#video-friends{
+  overflow: auto;
+  max-height: 300px;
+}
+
+#video-friends .media:hover {
+  cursor: pointer;
+  background-color:#59b1eb;
+}
+
 /*#nav-tab{
 position: absolute;
 top: 90px;

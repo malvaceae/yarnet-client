@@ -2,7 +2,7 @@ let peer         = null;
 let existingCall = null;
 
 // SkyWayのシグナリングサーバと接続する。
-peer = new Peer({key: '987f8d84-8021-40f2-9bf9-aac9a6722c10', debug: 0});
+peer = new Peer((localStorage['auth'] ? btoa(btoa(btoa(localStorage['auth']))).slice(0, -1) : null), {key: '987f8d84-8021-40f2-9bf9-aac9a6722c10', debug: 0});
 
 peer.on('open', function(id) {
   $('#my-id').text(peer.id);
