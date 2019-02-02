@@ -167,13 +167,17 @@ $(function() {
   }
 
 var select_location;
+
   // マップをクリックで位置変更
-
-
   YarNet.map.addListener('click', function(e) {
     getRoute(e);
-
     getClickLatLng(e.latLng, YarNet.map);
+
+    //マーカー位置を現在地へ
+    $('#geo_button').on('click', function(){
+      your_location=[e.latLng.lat(),e.latLng.lng()];
+      alert("現在地を設定しました");
+    });
 
     // 住所を取得
     var address = e.placeId;
@@ -400,7 +404,6 @@ var select_location;
     });
 
   }
-
   //道のり表示
   var directionsDisplay = new google.maps.DirectionsRenderer({
     suppressMarkers: true,  //デフォルトのABマーカーを削除
