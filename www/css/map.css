@@ -119,7 +119,7 @@
   z-index  : 550;
 }
 
-#search_form {
+.left-drawer > header > form {
   display: -webkit-flex;
   display:         flex;
   height: 50px;
@@ -131,11 +131,11 @@
   transition: all 0.3s ease;
 }
 
-#search_form.focus {
+.left-drawer > header > form.focus {
   box-shadow: : 0 3px 4px rgba(0, 0, 0, 0.15);
 }
 
-#address {
+.left-drawer > header > form input {
   font-size: 20px;
   background: none;
   color: #5a6674;
@@ -147,11 +147,11 @@
   outline: none;
 }
 
-#address::-webkit-search-cancel-button {
+.left-drawer > header > form input::-webkit-search-cancel-button {
   appearance: none;
 }
 
-#map_button {
+.left-drawer > header > form button {
   width: 20px;
   height: 50px;
   padding: 0;
@@ -161,6 +161,49 @@
   background: none;
   outline: none !important;
   cursor: pointer;
+}
+
+
+/* ユーザー検索 */
+
+.user-search-template {
+  display: none;
+}
+
+#nav-search-users .media {
+  padding: 16px;
+  cursor: pointer;
+}
+
+#nav-search-users .media:hover {
+  background-color:#59b1eb;
+}
+
+#nav-search-users .media-body {
+  display: -webkit-flex;
+  display:         flex;
+  -webkit-align-items: center;
+          align-items: center;
+}
+
+#nav-search-users .media-body span {
+  -webkit-flex-grow: 1;
+          flex-grow: 1;
+  margin-top: 0;
+  line-height: 40px;
+  font-size: 16px;
+}
+
+#nav-search-users .media .add-favorite-user,
+#nav-search-users .media .del-favorite-user {
+  display: none;
+}
+
+#nav-search-users .media.add .add-favorite-user {
+  display: block;
+}
+#nav-search-users .media.del .del-favorite-user {
+  display: block;
 }
 
 
