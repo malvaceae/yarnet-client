@@ -362,6 +362,66 @@ var select_location;
     return false;
   });
 
+  $('#search-user-form').on('submit', function() {
+    // TODO: ユーザー検索
+    $('#nav-search-users').empty();
+
+    $.ajax({
+      cache    : false,
+      data     : {q: $('#search-user-form input').val(), user_id: localStorage['auth'] || ''},
+      dataType : 'json',
+      url      : YarNet.api + '/users',
+    })
+      .done(function(data) {
+        console.log(data);
+        if (data.length === 0) {
+          return;
+        }
+
+        data.forEach(function(user) {
+          var $media = $('.user-search-template .media').clone();
+          $media.data('user-id', user.id);
+          $('img', $media).attr('src', '/img/logo.png');
+          $('span', $media).text(user.name);
+
+          if (localStorage['auth']) {
+            if (user.your_id) {
+              $media.addClass('del');
+            } else {
+              $media.addClass('add');
+            }
+          }
+
+          $('#nav-search-users').append($media);
+        });
+      })
+      .fail(function(data) {
+        console.log(data);
+      });
+
+    return false;
+  });
+
+  $(document).on('click', '.add-favorite-user', function (e) {
+    var user_id = $(this).closest('.media').data('user-id');
+
+    $.ajax({
+      cache    : false,
+      data     : {
+        user_id: user_id,
+      },
+      dataType : 'json',
+      type     : 'POST',
+      url      : YarNet.api + '/users/' + localStorage['auth'] + '/favorite_users',
+    })
+      .done(function(data) {
+        alert('お気に入りに追加しました。');
+      })
+      .fail(function(data) {
+        console.log(data);
+      });
+  });
+
   //右ドロワー
   // WindowHeight = $(window).height();
   // $('.right-nav-drawer').css('height', WindowHeight); //メニューをwindowの高さいっぱいにする
@@ -464,7 +524,15 @@ var select_location;
   });
 
   $('.left-drawer .nav-link').on('shown.bs.tab', function() {
-    $('#search_form').submit();
+    if ($(this).attr('href') == '#nav-search-users') {
+      $('#search_form').hide();
+      $('#search-user-form').show();
+      $('#search-user-form').submit();
+    } else {
+      $('#search-user-form').hide();
+      $('#search_form').show();
+      $('#search_form').submit();
+    }
   });
 
   function codeAddress(address) {

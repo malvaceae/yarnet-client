@@ -65,6 +65,12 @@
               </button>
               <input id="address" type="text" value="京都駅" placeholder="検索キーワード">
             </form>
+            <form id="search-user-form" action="#" method="post" style="display: none;">
+              <button type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+              <input type="text" value="" placeholder="ユーザー検索">
+            </form>
             <div class="left-drawer-toggle">
               <i class="fas fa-search fa-2x"></i>
             </div>
@@ -91,6 +97,12 @@
                 <i class="fas fa-walking"></i>
               </a>
             </li>
+            <li class="flex-grow-1"></li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#nav-search-users">
+                <i class="fas fa-user"></i>
+              </a>
+            </li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane fade show active" id="nav-twitter">
@@ -115,6 +127,8 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="tab-pane fade" id="nav-search-users">
             </div>
           </div>
         </div>
@@ -308,6 +322,20 @@
         </div>
       </article>
 
+      <div class="user-search-template">
+        <div class="media">
+          <img class="mr-3" src="#" alt="" width="40" height="40">
+          <div class="media-body">
+            <span></span>
+            <button class="btn btn-success btn-sm add-favorite-user" type="button">
+              お気に入りに追加する
+            </button>
+            <button class="btn btn-danger btn-sm del-favorite-user" type="button">
+              お気に入りを解除する
+            </button>
+          </div>
+        </div>
+      </div>
 
       <footer id=Incoming>
         <div id="video-alert" class="alert alert-info alert-dismissible fade" role="alert">
