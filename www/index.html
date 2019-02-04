@@ -240,12 +240,29 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">お気に入り観光地</h5>
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" id="nav-spot-tab" data-toggle="tab" href="#nav-spot">
+                    <h5 class="modal-title">お気に入り観光地</h5>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="nav-users-tab" data-toggle="tab" href="#nav-users">
+                    <h5 class="modal-title">お気に入りユーザー</h5>
+                  </a>
+                </li>
+              <ul>
               <button type="button" class="close" data-dismiss="modal">
                 <i class="fas fa-times"></i>
               </button>
             </div>
             <div class="modal-body">
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="nav-spot">
+                </div>
+                <div class="tab-pane fade" id="nav-users">
+                </div>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
@@ -442,5 +459,6 @@
   <script src="js/video.js"></script>
   <script src="js/chat.js"></script>
   <script src="js/favorite_spots.js"></script>
+  <script src="js/favorite_users.js"></script>
 </body>
 </html>
