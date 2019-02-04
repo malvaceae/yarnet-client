@@ -143,7 +143,7 @@ $(function() {
 
 //TODO 微妙に位置変更する
           if (hotel['hotel'].length !== 0) {
-            $('<div style="position: absolute; top: 0; right: 0; font-weight: bold; width: 20px; height: 20px; line-height: 20px; background: red; color: white; padding: 2px 5px; margin-right: -10px; border-radius: 50%; margin-top: -5px;">可</div>').appendTo($('.media-body', $media));
+            $('<div style="position: absolute; top: 0; right: 0; font-weight: bold; width: 20px; height: 20px; line-height: 20px; background: red; color: white; padding: 2px 5px 2px 4px; margin-right: -10px; border-radius: 50%; margin-top: -5px;">可</div>').appendTo($('.media-body', $media));
           }
 
           //ホテル名クリックでマップの中心移動、mouseEnterで跳ねる
