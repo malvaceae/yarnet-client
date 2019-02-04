@@ -166,19 +166,33 @@ $(function() {
     });
   }
 
-var select_location;
+  var clickLat;
+  var clickLng;
 
+  //マーカー位置を現在地へ
+  $('#geo_button').on('click', function(){
+    if (clickLat == null) {
+      return;
+    }
+    if (clickLng == null) {
+      return;
+    }
+    your_location = [clickLat, clickLng];
+    //$('#geoButtonMessage').append("現在位置を設定しました");
+  });
+
+  var select_location;
+  var buttonInvisibleControl=true;
   // マップをクリックで位置変更
   YarNet.map.addListener('click', function(e) {
     getRoute(e);
     getClickLatLng(e.latLng, YarNet.map);
-
-    //マーカー位置を現在地へ
-    $('#geo_button').on('click', function(){
-      your_location=[e.latLng.lat(),e.latLng.lng()];
-      alert("現在地を設定しました");
-    });
-
+    clickLat = e.latLng.lat();
+    clickLng = e.latLng.lng();
+    if(buttonInvisibleControl){
+    $('#geo_button').removeClass('invisible');
+      buttonInvisibleControl=false;
+    }
     // 住所を取得
     var address = e.placeId;
     if (!address) {
@@ -390,7 +404,9 @@ var select_location;
         //document.getElementById('lat').value=results[0].geometry.location.lat();
         //document.getElementById('lng').value=results[0].geometry.location.lng();
 
+
         // マーカー設定
+        if (marker) marker.setMap(null);
         marker = new google.maps.Marker({
           map: YarNet.map,
           position: results[0].geometry.location
