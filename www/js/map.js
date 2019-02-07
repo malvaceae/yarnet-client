@@ -44,7 +44,7 @@ $(function() {
       $('#menu-circle').append(
         $('<li class="circleMenu-item">').append(
           $('<button type="button" class="btn btn-primary" title="ログアウト" data-toggle="logout">').append(
-            $('<i class="fas fa-wrench"></i>')
+            $('<i class="fas fa-sign-out-alt"></i>')
           )
         )
       );
@@ -221,7 +221,7 @@ $(function() {
 
 //TODO 微妙に位置変更する
           if (hotel['hotel'].length !== 0) {
-            $('<div style="position: absolute; top: 0; right: 0; font-weight: bold; width: 20px; height: 20px; line-height: 20px; background: red; color: white; padding: 2px 5px; margin-right: -10px; border-radius: 50%; margin-top: -5px;">可</div>').appendTo($('.media-body', $media));
+            $('<div style="position: absolute; top: 0; right: 0; font-weight: bold; width: 20px; height: 20px; line-height: 20px; background: red; color: white; padding: 2px 5px 2px 4px; margin-right: -10px; border-radius: 50%; margin-top: -5px;">可</div>').appendTo($('.media-body', $media));
           }
 
           //ホテル名クリックでマップの中心移動、mouseEnterで跳ねる
@@ -244,15 +244,33 @@ $(function() {
     });
   }
 
-var select_location;
+  var clickLat;
+  var clickLng;
+
+  //マーカー位置を現在地へ
+  $('#geo_button').on('click', function(){
+    if (clickLat == null) {
+      return;
+    }
+    if (clickLng == null) {
+      return;
+    }
+    your_location = [clickLat, clickLng];
+    //$('#geoButtonMessage').append("現在位置を設定しました");
+  });
+
+  var select_location;
+  var buttonInvisibleControl=true;
   // マップをクリックで位置変更
-
-
   YarNet.map.addListener('click', function(e) {
     getRoute(e);
-
     getClickLatLng(e.latLng, YarNet.map);
-
+    clickLat = e.latLng.lat();
+    clickLng = e.latLng.lng();
+    if(buttonInvisibleControl){
+    $('#geo_button').removeClass('invisible');
+      buttonInvisibleControl=false;
+    }
     // 住所を取得
     var address = e.placeId;
     if (!address) {
@@ -403,6 +421,66 @@ var select_location;
     return false;
   });
 
+  $('#search-user-form').on('submit', function() {
+    // TODO: ユーザー検索
+    $('#nav-search-users').empty();
+
+    $.ajax({
+      cache    : false,
+      data     : {q: $('#search-user-form input').val(), user_id: localStorage['auth'] || ''},
+      dataType : 'json',
+      url      : YarNet.api + '/users',
+    })
+      .done(function(data) {
+        console.log(data);
+        if (data.length === 0) {
+          return;
+        }
+
+        data.forEach(function(user) {
+          var $media = $('.user-search-template .media').clone();
+          $media.data('user-id', user.id);
+          $('img', $media).attr('src', '/img/logo.png');
+          $('span', $media).text(user.name);
+
+          if (localStorage['auth']) {
+            if (user.your_id) {
+              $media.addClass('del');
+            } else {
+              $media.addClass('add');
+            }
+          }
+
+          $('#nav-search-users').append($media);
+        });
+      })
+      .fail(function(data) {
+        console.log(data);
+      });
+
+    return false;
+  });
+
+  $(document).on('click', '.add-favorite-user', function (e) {
+    var user_id = $(this).closest('.media').data('user-id');
+
+    $.ajax({
+      cache    : false,
+      data     : {
+        user_id: user_id,
+      },
+      dataType : 'json',
+      type     : 'POST',
+      url      : YarNet.api + '/users/' + localStorage['auth'] + '/favorite_users',
+    })
+      .done(function(data) {
+        alert('お気に入りに追加しました。');
+      })
+      .fail(function(data) {
+        console.log(data);
+      });
+  });
+
   //右ドロワー
   // WindowHeight = $(window).height();
   // $('.right-nav-drawer').css('height', WindowHeight); //メニューをwindowの高さいっぱいにする
@@ -505,7 +583,15 @@ var select_location;
   });
 
   $('.left-drawer .nav-link').on('shown.bs.tab', function() {
-    $('#search_form').submit();
+    if ($(this).attr('href') == '#nav-search-users') {
+      $('#search_form').hide();
+      $('#search-user-form').show();
+      $('#search-user-form').submit();
+    } else {
+      $('#search-user-form').hide();
+      $('#search_form').show();
+      $('#search_form').submit();
+    }
   });
 
   function codeAddress(address) {
@@ -527,7 +613,9 @@ var select_location;
         //document.getElementById('lat').value=results[0].geometry.location.lat();
         //document.getElementById('lng').value=results[0].geometry.location.lng();
 
+
         // マーカー設定
+        if (marker) marker.setMap(null);
         marker = new google.maps.Marker({
           map: YarNet.map,
           position: results[0].geometry.location
@@ -541,7 +629,6 @@ var select_location;
     });
 
   }
-
   //道のり表示
   var directionsDisplay = new google.maps.DirectionsRenderer({
     suppressMarkers: true,  //デフォルトのABマーカーを削除
