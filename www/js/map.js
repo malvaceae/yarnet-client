@@ -215,7 +215,7 @@ $(function() {
       return;
     }
     your_location = [clickLat, clickLng];
-    //$('#geoButtonMessage').append("現在位置を設定しました");
+    alert("現在地を変更しました");
   });
 
   var select_location;
