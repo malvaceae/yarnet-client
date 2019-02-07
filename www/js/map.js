@@ -72,25 +72,57 @@ $(function() {
   $('#sampleModal').on('show.bs.modal', function() {
     $('#video-friends').empty();
 
+    $.ajax({
+      cache    : false,
+      dataType : 'json',
+      url      : YarNet.api + '/users/' + localStorage['auth'] + '/favorite_users',
+    })
+    .done(function(data) {
     if (localStorage['auth']) {
-      for (var i = 0; i < 10; i++) {
-        $('#video-friends').append(
-          $('<div class="media py-1 my-2">')
-            .append(
-              $('<img class="mr-3" src="/img/logo.png" alt="" width="40" height="40">')
-            )
-            .append(
-              $('<div class="media-body">')
-              .append(
-                $('<h5 class="my-0">').text(localStorage['name'])
-              )
-              .append(
-                $('<span class="friends-id">').text(btoa(btoa(btoa('aite'))))
-              )
-            )
-        );
+        if (data.length) {
+          data.forEach(function (user) {
+            var $video_user = $('<div class="video_user media py-1 my-2">');
+            $video_user.data('user-id', user.id);
+
+            $video_user.append(
+                $('<img class="mr-3" src="/img/logo.png" alt="" width="40" height="40">')
+            ).append(
+                $('<div class="media-body">')
+                  .append(
+                      $('<h5 class="my-0">').text(user.name)
+                  )
+                  .append(
+                      $('<span class="friends-id">').text(btoa(btoa(btoa(user.id))).slice(0, -1))
+                  )
+            );
+
+            $('#video-friends').append($video_user);
+          });
+        }else {
+          $('#video-friends').html('<div class="mx-3 my-3">お気に入りユーザーがいません。</div>');
+        }
       }
-    }
+      });
+
+
+      // for (var i = 0; i < 10; i++) {
+      //   $('#video-friends').append(
+      //     $('<div class="media py-1 my-2">')
+      //       .append(
+      //         $('<img class="mr-3" src="/img/logo.png" alt="" width="40" height="40">')
+      //       )
+      //       .append(
+      //         $('<div class="media-body">')
+      //         .append(
+      //           $('<h5 class="my-0">').text(localStorage['name'])
+      //         )
+      //         .append(
+      //           $('<span class="friends-id">').text(btoa(btoa(btoa('aite'))))
+      //         )
+      //       )
+      //   );
+      // }
+
   });
 
   $('#video-friends').on('click', '.media', function(){
@@ -386,34 +418,45 @@ $(function() {
 
     $.ajax({
       cache    : false,
-      data     : {q: $('#search-user-form input').val(), user_id: localStorage['auth'] || ''},
       dataType : 'json',
-      url      : YarNet.api + '/users',
+      url      : YarNet.api + '/users/' + localStorage['auth'] + '/favorite_users',
     })
-      .done(function(data) {
-        console.log(data);
-        if (data.length === 0) {
-          return;
-        }
-
-        data.forEach(function(user) {
-          var $media = $('.user-search-template .media').clone();
-          $media.data('user-id', user.id);
-          $('img', $media).attr('src', '/img/logo.png');
-          $('span', $media).text(user.name);
-
-          if (localStorage['auth']) {
-            if (user.your_id) {
-              $media.addClass('del');
-            } else {
-              $media.addClass('add');
+      .done(function (favorite_users) {
+        $.ajax({
+          cache    : false,
+          data     : {q: $('#search-user-form input').val(), user_id: localStorage['auth'] || ''},
+          dataType : 'json',
+          url      : YarNet.api + '/users',
+        })
+          .done(function(data) {
+            if (data.length === 0) {
+              return;
             }
-          }
 
-          $('#nav-search-users').append($media);
-        });
+            data.forEach(function(user) {
+              var $media = $('.user-search-template .user').clone();
+              $media.data('user-id', user.id);
+              $('img', $media).attr('src', '/img/logo.png');
+              $('span', $media).text(user.name);
+
+              if (!localStorage['auth']) {
+                return;
+              }
+
+              if (favorite_users.some(function (favorite_user) { return favorite_user.id == user.id; })) {
+                $media.addClass('del');
+              } else {
+                $media.addClass('add');
+              }
+
+              $('#nav-search-users').append($media);
+            });
+          })
+          .fail(function(data) {
+            console.log(data);
+          });
       })
-      .fail(function(data) {
+      .fail(function (data) {
         console.log(data);
       });
 
@@ -434,6 +477,7 @@ $(function() {
     })
       .done(function(data) {
         alert('お気に入りに追加しました。');
+        $('#search-user-form').submit();
       })
       .fail(function(data) {
         console.log(data);

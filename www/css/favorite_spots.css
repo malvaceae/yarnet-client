@@ -48,3 +48,8 @@
 #favorite-spots-modal .place:first-child {
   border-top : 0;
 }
+
+.close{
+  position: absolute;
+  right: 3%;
+}
