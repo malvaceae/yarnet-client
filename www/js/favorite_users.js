@@ -1,5 +1,4 @@
 $('#favorite-spots-modal').on('show.bs.modal', function (e) {
-  console.log("aaa");
   $.ajax({
     cache    : false,
     dataType : 'json',
@@ -10,15 +9,25 @@ $('#favorite-spots-modal').on('show.bs.modal', function (e) {
         $('#nav-users').html('');
         data.forEach(function (user) {
           var $user = $('<div class="user">');
-          $user.data('user-id', user.user_id);
+          $user.data('user-id', user.id);
 
           $user.append(
+            $('<i class="fas fa-user"></i>')
+          );
+          $user.append(
             $('<div class="user-name">')
-            .text(user.user_name)
+            .text(user.name)
+          );
+          $user.append(
+            $('<button class="btn btn-danger btn-sm del-favorite-users" type="button">')
+              .text('お気に入り解除')
           );
 
           $('#nav-users').append($user);
         });
+      }else {
+        $('#nav-users').html('<div class="mx-3 my-3">お気に入りユーザーがいません。</div>');
       }
+
     });
   });

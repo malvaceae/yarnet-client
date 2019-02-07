@@ -72,25 +72,66 @@ $(function() {
   $('#sampleModal').on('show.bs.modal', function() {
     $('#video-friends').empty();
 
+    $.ajax({
+      cache    : false,
+      dataType : 'json',
+      url      : YarNet.api + '/users/' + localStorage['auth'] + '/favorite_users',
+    })
+
+
+.done(function(data) {
     if (localStorage['auth']) {
-      for (var i = 0; i < 10; i++) {
-        $('#video-friends').append(
-          $('<div class="media py-1 my-2">')
-            .append(
-              $('<img class="mr-3" src="/img/logo.png" alt="" width="40" height="40">')
-            )
-            .append(
-              $('<div class="media-body">')
-              .append(
-                $('<h5 class="my-0">').text(localStorage['name'])
-              )
-              .append(
-                $('<span class="friends-id">').text(btoa(btoa(btoa('aite'))))
-              )
-            )
-        );
+        if (data.length) {
+          $('#video-friends').html('');
+          data.forEach(function (user) {
+            var $video_user = $('<div class="video_user">');
+            $video_user.data('user-id', user.id);
+
+            $video_user.append(
+              $('#video-friends').append(
+                $('<div class="media py-1 my-2">')
+                  .append(
+                    $('<img class="mr-3" src="/img/logo.png" alt="" width="40" height="40">')
+                  )
+                  .append(
+                    $('<div class="media-body">')
+                    .append(
+                      $('<h5 class="my-0">').text(user.name)
+                    )
+                    .append(
+                      $('<span class="friends-id">').text(btoa(btoa(btoa('aite'))))
+                    )
+                  )
+                )
+            );
+
+            $('#video-friends').append($video_user);
+          });
+        }else {
+          $('#video-friends').html('<div class="mx-3 my-3">お気に入りユーザーがいません。</div>');
+        }
       }
-    }
+      });
+
+
+      // for (var i = 0; i < 10; i++) {
+      //   $('#video-friends').append(
+      //     $('<div class="media py-1 my-2">')
+      //       .append(
+      //         $('<img class="mr-3" src="/img/logo.png" alt="" width="40" height="40">')
+      //       )
+      //       .append(
+      //         $('<div class="media-body">')
+      //         .append(
+      //           $('<h5 class="my-0">').text(localStorage['name'])
+      //         )
+      //         .append(
+      //           $('<span class="friends-id">').text(btoa(btoa(btoa('aite'))))
+      //         )
+      //       )
+      //   );
+      // }
+
   });
 
   $('#video-friends').on('click', '.media', function(){
