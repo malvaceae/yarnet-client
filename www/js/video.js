@@ -1,7 +1,7 @@
 let peer         = null;
 let existingCall = null;
 let timeoutID    = null;
-let beforeAuth   = null;
+let beforeAuth   = 0;
 
 function createPeer() {
   if (existingCall) {
