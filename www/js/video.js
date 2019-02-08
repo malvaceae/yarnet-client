@@ -1,12 +1,24 @@
 let peer         = null;
 let existingCall = null;
+let timeoutID    = null;
+let beforeAuth   = null;
 
 function createPeer() {
+  if (existingCall) {
+    existingCall.close();
+  }
+
   if (peer != null) {
     peer.disconnect();
   }
 
-  var peer = new Peer((localStorage['auth'] ? btoa(btoa(btoa(localStorage['auth']))).slice(0, -1) : null), {key: '987f8d84-8021-40f2-9bf9-aac9a6722c10', debug: 0});
+  var auth = (localStorage['auth'] ? btoa(btoa(btoa(localStorage['auth']))).slice(0, -1) : null);
+  if (auth === beforeAuth) {
+    return null;
+  }
+
+  beforeAuth = auth;
+  var peer = new Peer(auth, {key: '987f8d84-8021-40f2-9bf9-aac9a6722c10', debug: 0});
 
   peer.on('open', function(id) {
     $('#my-id').text(peer.id);
@@ -59,11 +71,16 @@ $('#make-call').submit(function(e) {
   getLocalStream(function(stream) {
     var call = peer.call(callToId, stream);
 
-    setTimeout(function() {
+    timeoutID = setTimeout(function() {
       if (!call.open) {
         if (existingCall) {
           existingCall.close();
         }
+
+        $('.t-video').removeClass('main-video');
+        $('.m-video').removeClass('main-video');
+        $('.t-video')[0].srcObject = null;
+        $('.m-video')[0].srcObject = null;
 
         $('#video-content [data-toggle="goBackward"]').click();
       }
@@ -77,6 +94,15 @@ $('#make-call').submit(function(e) {
 });
 
 $('#end-call').on('click', function() {
+  if (timeoutID) {
+    clearTimeout(timeoutID);
+  }
+
+  $('.t-video').removeClass('main-video');
+  $('.m-video').removeClass('main-video');
+  $('.t-video')[0].srcObject = null;
+  $('.m-video')[0].srcObject = null;
+
   $('#video-content [data-toggle="goBackward"]').click();
 
   if (existingCall) {
@@ -101,7 +127,20 @@ function setupCallEventHandlers(call) {
 
   call.on('close', function() {
     setupMakeCallUI();
-    $('#video-content [data-toggle="goBackward"]').click();
+
+    if (timeoutID) {
+      clearTimeout(timeoutID);
+    }
+
+    var state = history.state.slice(-1)[0];
+    if (state === 'video-content') {
+      $('.t-video').removeClass('main-video');
+      $('.m-video').removeClass('main-video');
+      $('.t-video')[0].srcObject = null;
+      $('.m-video')[0].srcObject = null;
+
+      $('#video-content [data-toggle="goBackward"]').click();
+    }
   });
 }
 

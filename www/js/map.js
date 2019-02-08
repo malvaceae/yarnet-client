@@ -66,7 +66,7 @@ $(function() {
     }
 
     $('#menu-circle').circleMenu('init');
-    peer = createPeer();
+    peer = createPeer() || peer;
   });
 
   $('#sampleModal').on('show.bs.modal', function() {
