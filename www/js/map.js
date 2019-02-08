@@ -294,17 +294,26 @@ $(function() {
               '</div>'
             ).find('.body').text(data[i].body).end();
             $('#chatLog').append($message);
-          } else if (data[i].user_id != null) {
+          } else if (data[i].user_id != 0) {
             var $message = $(
               '<div class ="left message">' +
               '<figure>'+
               '  <figcaption>' + data[i].name + '</figcaption>'+
-              '  <a href="#"><img src="/img/logo.png"></a>'+
+              '  <a><img src="/img/logo.png"></a>'+
               '</figure>'+
               '<div class="body"></div>'+
               '<div class="date">' + data[i].date + '</div>'+
               '</div>'
-            ).find('.body').text(data[i].body).end();
+            )
+              .find('.body').text(data[i].body).end()
+              .find('a').data('user-id', data[i].user_id).end();
+
+            if (localStorage['auth']) {
+              $('a', $message)
+                .attr('href', '#')
+                .prepend('<i class="fas fa-plus"></i>');
+            }
+
             $('#chatLog').append($message);
           } else if (data[i].name == localStorage['name']) {
             var $message = $(
@@ -319,7 +328,7 @@ $(function() {
               '<div class ="left message">' +
               '<figure>'+
               '  <figcaption>' + data[i].name + '</figcaption>'+
-              '  <a href="#"><img src="/img/logo.png"></a>'+
+              '  <a><img src="/img/logo.png"></a>'+
               '</figure>'+
               '<div class="body"></div>'+
               '<div class="date">' + data[i].date + '</div>'+
@@ -484,6 +493,32 @@ $(function() {
       });
   });
 
+  $('#chatLog').on('click', 'a', function() {
+    if (!localStorage['auth']) return false;
+
+    var user_id = $(this).data('user-id');
+    if (user_id == null) return false;
+
+    $.ajax({
+      cache    : false,
+      data     : {
+        user_id: user_id,
+      },
+      dataType : 'json',
+      type     : 'POST',
+      url      : YarNet.api + '/users/' + localStorage['auth'] + '/favorite_users',
+    })
+      .done(function(data) {
+        alert('お気に入りに追加しました。');
+        $('#search-user-form').submit();
+      })
+      .fail(function(data) {
+        alert('お気に入りに追加済みです。');
+      });
+
+    return false;
+  });
+
   //右ドロワー
   // WindowHeight = $(window).height();
   // $('.right-nav-drawer').css('height', WindowHeight); //メニューをwindowの高さいっぱいにする
@@ -520,17 +555,26 @@ $(function() {
                 '</div>'
               ).find('.body').text(data[i].body).end();
               $('#chatLog').append($message);
-            } else if (data[i].user_id != null) {
+            } else if (data[i].user_id != 0) {
               var $message = $(
                 '<div class ="left message">' +
                 '<figure>'+
                 '  <figcaption>' + data[i].name + '</figcaption>'+
-                '  <a href="#"><img src="/img/logo.png"></a>'+
+                '  <a><img src="/img/logo.png"></a>'+
                 '</figure>'+
                 '<div class="body"></div>'+
                 '<div class="date">' + data[i].date + '</div>'+
                 '</div>'
-              ).find('.body').text(data[i].body).end();
+              )
+                .find('.body').text(data[i].body).end()
+                .find('a').data('user-id', data[i].user_id).end();
+
+              if (localStorage['auth']) {
+                $('a', $message)
+                  .attr('href', '#')
+                  .prepend('<i class="fas fa-plus"></i>');
+              }
+
               $('#chatLog').append($message);
             } else if (data[i].name == localStorage['name']) {
               var $message = $(
@@ -545,7 +589,7 @@ $(function() {
                 '<div class ="left message">' +
                 '<figure>'+
                 '  <figcaption>' + data[i].name + '</figcaption>'+
-                '  <a href="#"><img src="/img/logo.png"></a>'+
+                '  <a><img src="/img/logo.png"></a>'+
                 '</figure>'+
                 '<div class="body"></div>'+
                 '<div class="date">' + data[i].date + '</div>'+
