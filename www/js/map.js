@@ -239,7 +239,7 @@ $(function() {
   var clickLng;
 
   //マーカー位置を現在地へ
-  $('#geo_button').on('click', function(){
+  $('#create_route').on('click', function(){
     if (clickLat == null) {
       return;
     }
@@ -248,6 +248,16 @@ $(function() {
     }
     your_location = [clickLat, clickLng];
     alert("現在地を変更しました");
+  });
+
+  var directionsDisplay;
+  //ルート削除
+  $('#delete_route').on('click', function(){
+    if(directionsDisplay == null){
+      return;
+    }
+    directionsDisplay.setMap(null);
+    directionsDisplay.setPanel(null);
   });
 
   var select_location;
@@ -259,7 +269,7 @@ $(function() {
     clickLat = e.latLng.lat();
     clickLng = e.latLng.lng();
     if(buttonInvisibleControl){
-    $('#geo_button').removeClass('invisible');
+    $('.geo_button').removeClass('invisible');
       buttonInvisibleControl=false;
     }
     // 住所を取得
@@ -677,12 +687,12 @@ $(function() {
 
   }
   //道のり表示
-  var directionsDisplay = new google.maps.DirectionsRenderer({
+    directionsDisplay = new google.maps.DirectionsRenderer({
     suppressMarkers: true,  //デフォルトのABマーカーを削除
     preserveViewport: true, // ルートを表示するときに今までの倍率のままにする
   });
+
   function getRoute(e){
-    //後で変えるかも、現在地があればルート検索開始
     if(your_location != null){
       var directionsService = new google.maps.DirectionsService();
       directionsDisplay.setMap(YarNet.map);
