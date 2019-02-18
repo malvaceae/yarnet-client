@@ -145,7 +145,7 @@ function setupCallEventHandlers(call) {
 }
 
 function getLocalStream(callback) {
-  navigator.mediaDevices.getUserMedia({video: true, audio: true}).catch(alert).then(function(stream) {
+  navigator.mediaDevices.getUserMedia({video: true, audio: true})/*.catch(alert)*/.then(function(stream) {
     $('.m-video')[0].srcObject = stream;
     callback(stream);
   });
